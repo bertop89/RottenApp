@@ -2,7 +2,6 @@ package com.example.rottenapp;
 
 import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,10 +9,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,8 +22,11 @@ import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -67,14 +68,14 @@ public class MainActivity extends ActionBarActivity {
 
 
 
-    private class GetData extends AsyncTask<String, Void, String> {
+    private class GetData extends AsyncTask<String, Void, ArrayList> {
 
         private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
 
         @Override
-        protected String doInBackground(String... data) {
+        protected ArrayList doInBackground(String... data) {
             String title= data[0].replace(' ','+');
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title+"&page_limit=1";
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title+"&page_limit=5";
             String jsonReturnText = "";
 
             HttpParams httpParameters = new BasicHttpParams();
@@ -94,22 +95,35 @@ public class MainActivity extends ActionBarActivity {
             } catch (Exception e) {
                 jsonReturnText = e.getMessage();
             }
-            String total = "";
+            JSONArray movies = new JSONArray();
             try {
                 JSONObject oData = new JSONObject(jsonReturnText);
-                total = oData.getString("total");
+                movies = oData.getJSONArray("movies");
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-            return total;
+            ArrayList<String> yourData = new ArrayList<String>();
+            try {
+
+                for(int i=0;i<movies.length();i++) {
+                    JSONObject movie=movies.getJSONObject(i);
+                    yourData.add(movie.getString("title"));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            return yourData;
 
         }
 
 
-        protected void onPostExecute(String result) {
-            TextView results = (TextView) findViewById(R.id.lvResults);
-            results.setText(result);
+        protected void onPostExecute(ArrayList result) {
+            ListView results = (ListView) findViewById(R.id.lvResults);
+            ArrayAdapter<String> itemsAdapter;
+            itemsAdapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,result);
+            results.setAdapter(itemsAdapter);
         }
     }
 
