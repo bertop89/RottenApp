@@ -22,9 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.example.rottenapp.MovieActivity"
+            android:label="@string/title_activity_movie" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
-
 
 </manifest>
