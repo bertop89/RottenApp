@@ -69,6 +69,7 @@ public class MainActivity extends ListActivity {
         Movie m = (Movie)movieList.get(position);
         b.putString("id", m.getId());
         b.putString("title", m.getTitle());
+        b.putString("year", m.getYear());
         myIntent.putExtras(b);
 
         startActivity(myIntent);
@@ -123,7 +124,7 @@ public class MainActivity extends ListActivity {
 
                 for(int i=0;i<movies.length();i++) {
                     JSONObject movie=movies.getJSONObject(i);
-                    Movie currentMovie = new Movie(movie.getString("id"),movie.getString("title"),"99");
+                    Movie currentMovie = new Movie(movie.getString("id"),movie.getString("title"),"99", movie.getString("year"));
                     movieList.add(currentMovie);
                 }
             } catch (JSONException e) {
