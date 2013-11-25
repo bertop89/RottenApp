@@ -65,12 +65,8 @@ public class MainActivity extends ListActivity {
 
         Intent myIntent = new Intent(v.getContext(), MovieActivity.class);
         // save id
-        Bundle b = new Bundle();
         Movie m = (Movie)movieList.get(position);
-        b.putString("id", m.getId());
-        b.putString("title", m.getTitle());
-        b.putString("year", m.getYear());
-        myIntent.putExtras(b);
+        myIntent.putExtra("movie",m);
 
         startActivity(myIntent);
     }
@@ -124,7 +120,11 @@ public class MainActivity extends ListActivity {
 
                 for(int i=0;i<movies.length();i++) {
                     JSONObject movie=movies.getJSONObject(i);
-                    Movie currentMovie = new Movie(movie.getString("id"),movie.getString("title"),"99", movie.getString("year"));
+                    Movie currentMovie = new Movie();
+                    currentMovie.setId(movie.getString("id"));
+                    currentMovie.setTitle(movie.getString("title"));
+                    currentMovie.setScore("99");
+                    currentMovie.setYear(movie.getString("year"));
                     movieList.add(currentMovie);
                 }
             } catch (JSONException e) {
