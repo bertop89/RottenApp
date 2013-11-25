@@ -34,7 +34,7 @@ import java.io.InputStream;
 
 public class MovieActivity extends ActionBarActivity {
 
-    String id,title,year;
+    Movie currentMovie;
     ImageView ivPoster;
     TextView tvTitle, tvYear;
 
@@ -43,60 +43,29 @@ public class MovieActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_activity_main);
         Intent i = getIntent();
-        Movie movieObject = (Movie) i.getParcelableExtra("movie");
-        id = movieObject.getId();
-        title = movieObject.getTitle();
-        year = movieObject.getYear();
+        currentMovie = (Movie) i.getParcelableExtra("movie");
         setTitle("Movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvYear = (TextView) findViewById(R.id.tvYear);
-        tvTitle.setText(title);
-        tvYear.setText("("+year+")");
-        new FillMovieTask().execute(id);
+        tvTitle.setText(currentMovie.getTitle());
+        tvYear.setText("("+currentMovie.getYear()+")");
+        new FillMovieTask().execute(currentMovie.getId());
     }
 
     private class FillMovieTask extends AsyncTask<String, Void, Bitmap> {
 
-        private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-
         @Override
         protected Bitmap doInBackground(String... strings) {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies/"+strings[0]+".json?apikey="+apikey;
-            String jsonReturnText = "";
             InputStream in = null;
-
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 10000; // 10 second timeout for connecting to site
-            HttpConnectionParams.setConnectionTimeout(httpParameters,
-                    timeoutConnection);
-            int timeoutSocket = 30000; // 30 second timeout for obtaining results
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-            HttpClient httpclient = new DefaultHttpClient(httpParameters);
-            HttpGet httpget = new HttpGet(URL);
-
+            String imageURL = currentMovie.getPosters().getDetailed();
             try {
-                HttpResponse response = httpclient.execute(httpget);
-                HttpEntity r_entity = response.getEntity();
-                jsonReturnText = EntityUtils.toString(r_entity);
-            } catch (Exception e) {
-                jsonReturnText = e.getMessage();
-            }
-
-            try {
-                JSONObject oData = new JSONObject(jsonReturnText);
-                JSONObject posters = oData.getJSONObject("posters");
-                String imageURL = posters.getString("detailed");
-                try {
-                    in = new java.net.URL(imageURL).openStream();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            } catch (JSONException e) {
+                in = new java.net.URL(imageURL).openStream();
+            } catch (IOException e) {
                 e.printStackTrace();
             }
+
             Bitmap image = BitmapFactory.decodeStream(in);
             return image;
         }
