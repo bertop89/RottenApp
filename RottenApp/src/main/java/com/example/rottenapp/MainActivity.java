@@ -3,7 +3,6 @@ package com.example.rottenapp;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +13,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+
+import com.google.gson.Gson;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -116,15 +117,11 @@ public class MainActivity extends ListActivity {
             }
 
             movieList = new ArrayList<Movie>();
+            Gson gson = new Gson();
             try {
-
                 for(int i=0;i<movies.length();i++) {
                     JSONObject movie=movies.getJSONObject(i);
-                    Movie currentMovie = new Movie();
-                    currentMovie.setId(movie.getString("id"));
-                    currentMovie.setTitle(movie.getString("title"));
-                    currentMovie.setScore("99");
-                    currentMovie.setYear(movie.getString("year"));
+                    Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
                     movieList.add(currentMovie);
                 }
             } catch (JSONException e) {

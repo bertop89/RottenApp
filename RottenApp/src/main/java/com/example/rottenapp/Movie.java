@@ -32,22 +32,6 @@ public class Movie implements Parcelable{
         return year;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public void setScore(String score) {
-        this.score = score;
-    }
-
-    public void setYear(String year) {
-        this.year = year;
-    }
-
     @Override
     public String toString() {
         return title;
