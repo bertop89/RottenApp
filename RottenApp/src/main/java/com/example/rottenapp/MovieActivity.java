@@ -48,6 +48,7 @@ public class MovieActivity extends ActionBarActivity {
         title = movieObject.getTitle();
         year = movieObject.getYear();
         setTitle("Movie");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvYear = (TextView) findViewById(R.id.tvYear);

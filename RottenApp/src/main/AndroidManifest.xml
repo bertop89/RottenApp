@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="9"
+        android:minSdkVersion="14"
         android:targetSdkVersion="18" />
 
     <application
@@ -24,7 +24,8 @@
         </activity>
         <activity
             android:name="com.example.rottenapp.MovieActivity"
-            android:label="@string/title_activity_movie" >
+            android:label="@string/title_activity_movie"
+            android:parentActivityName="com.example.rottenapp.MainActivity" >
         </activity>
     </application>
 
