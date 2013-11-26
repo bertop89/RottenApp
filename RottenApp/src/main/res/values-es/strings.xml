@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <string name="search">Buscar</string>
+
+    <string name="title_activity_movie">Película</string>
+
+    <string name="runtime">Duración</string>
+    <string name="genre">Género</string>
+    <string name="rating">Clasificación</string>
+    <string name="release">Estreno</string>
+    <string name="director">Director</string>
+
+
+    <string name="critics">de críticos</string>
+    <string name="audience">de usuarios</string>
+
+</resources>

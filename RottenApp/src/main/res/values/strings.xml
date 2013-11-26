@@ -1,9 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
     <string name="app_name">RottenApp</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_movie">Movie</string>
+
+    <string name="search">Search</string>
+    
+    <string name="runtime">Running Time</string>
+    <string name="genre">Genre</string>
+    <string name="rating">Rating</string>
+    <string name="release">Theater Release</string>
+    <string name="director">Director</string>
+
+    <string name="critics">of critics liked it</string>
+    <string name="audience">of audience liked it</string>
 
 </resources>
