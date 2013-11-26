@@ -35,8 +35,8 @@ import java.io.InputStream;
 public class MovieActivity extends ActionBarActivity {
 
     Movie currentMovie;
-    ImageView ivPoster;
-    TextView tvTitle, tvYear;
+    ImageView ivPoster, ivCritics, ivAudience;
+    TextView tvTitle, tvYear, tvCritics, tvAudience;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,11 +47,36 @@ public class MovieActivity extends ActionBarActivity {
         setTitle("Movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
+        ivCritics = (ImageView) findViewById(R.id.ivCritics);
+        ivAudience = (ImageView) findViewById(R.id.ivAudience);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvYear = (TextView) findViewById(R.id.tvYear);
+        tvCritics = (TextView) findViewById(R.id.tvCritics);
+        tvAudience = (TextView) findViewById(R.id.tvAudience);
         tvTitle.setText(currentMovie.getTitle());
         tvYear.setText("("+currentMovie.getYear()+")");
+        tvCritics.setText(currentMovie.getRatings().getCritics_score()+"% of critics liked it");
+        tvAudience.setText(currentMovie.getRatings().getAudience_score()+"% of users liked it");
+        representRatings();
         new FillMovieTask().execute(currentMovie.getId());
+    }
+
+    public void representRatings () {
+        String critics = currentMovie.getRatings().getCritics_rating();
+        if (critics.equals("Certified Fresh")) {
+            ivCritics.setImageResource(R.drawable.fresh);
+        } else if (critics.equals("Fresh")) {
+            ivCritics.setImageResource(R.drawable.ic_launcher);
+        } else if (critics.equals("Rotten")) {
+            ivCritics.setImageResource(R.drawable.rotten);
+        }
+
+        String audience = currentMovie.getRatings().getAudience_rating();
+        if (audience.equals("Upright")) {
+            ivAudience.setImageResource(R.drawable.bucket);
+        } else if (audience.equals("Spilled")) {
+            ivAudience.setImageResource(R.drawable.spilled);
+        }
     }
 
     private class FillMovieTask extends AsyncTask<String, Void, Bitmap> {
