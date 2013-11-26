@@ -77,7 +77,7 @@ public class MovieActivity extends ActionBarActivity {
         }
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
-        tvRuntime.setText(currentMovie.getRuntime());
+        tvRuntime.setText(currentMovie.getRuntime()+" min");
     }
 
     public void representRatings () {

@@ -91,7 +91,7 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:id="@+id/tvSynopsis"
-        android:paddingBottom="5dp" />
+        android:paddingBottom="10dp" />
 
     <LinearLayout
         android:layout_height="wrap_content"
@@ -100,8 +100,10 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:paddingRight="5dp"
             android:text="@string/rating"
-            android:id="@+id/tvRatingText" />
+            android:id="@+id/tvRatingText"
+            android:textStyle="bold" />
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
@@ -131,8 +133,10 @@
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:paddingRight="5dp"
             android:text="@string/runtime"
-            android:id="@+id/tvRunningText"/>
+            android:id="@+id/tvRunningText"
+            android:textStyle="bold" />
         <TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
