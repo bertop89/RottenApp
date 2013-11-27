@@ -14,8 +14,8 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="147dp"
             android:id="@+id/ivPoster"
             android:layout_gravity="left|top"
             android:paddingRight="15dp"
@@ -35,16 +35,21 @@
                     android:layout_width="wrap_content"
                     android:layout_gravity="left|top"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:paddingRight="5dp"
                     android:id="@+id/tvTitle"
-                    />
+                    android:text="Here goes the longest movie title you can think of"
+                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:enabled="true"
+                    android:maxWidth="220dp" />
 
                 <TextView
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
+                    android:layout_width="50dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/tvYear"
-                    />
+                    android:text="year"
+                    android:layout_gravity="left|top"
+                    android:autoText="false" />
 
             </LinearLayout>
 
