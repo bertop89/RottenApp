@@ -18,10 +18,10 @@
 
             <EditText
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_weight="0.75"
                 android:id="@+id/editText"
-                android:layout_gravity="left|top" />
+                android:layout_gravity="bottom" />
 
             <Button
                 android:layout_width="wrap_content"
@@ -36,6 +36,8 @@
         <ListView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:divider="#b5b5b5"
+            android:dividerHeight="1dp"
             android:id="@+id/android:list"
             ></ListView>
 

@@ -135,9 +135,7 @@ public class MainActivity extends ListActivity {
 
         protected void onPostExecute(ArrayList result) {
             ListView results = getListView();
-            ArrayAdapter<String> itemsAdapter;
-            itemsAdapter = new ArrayAdapter<String>(MainActivity.this,android.R.layout.simple_list_item_1,movieList);
-            results.setAdapter(itemsAdapter);
+            results.setAdapter(new MyAdapter(MainActivity.this,movieList));
         }
     }
 
