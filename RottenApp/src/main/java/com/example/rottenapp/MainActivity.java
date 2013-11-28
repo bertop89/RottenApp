@@ -3,9 +3,9 @@ package com.example.rottenapp;
 import android.app.ListActivity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,17 +15,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -79,68 +74,55 @@ public class MainActivity extends ListActivity {
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(title.getWindowToken(), 0);
         String input = title.getText().toString();
-        new GetData().execute(input);
+        //new GetData().execute(input);
+        getRequest(input);
     }
 
 
+    private void getRequest(String input) {
+        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+        String title= input.replace(' ','+');
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        JSONArray movies = new JSONArray();
+                        try {
+                            movies = response.getJSONArray("movies");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
 
-
-    private class GetData extends AsyncTask<String, Void, ArrayList> {
-
-        private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-
-        @Override
-        protected ArrayList doInBackground(String... data) {
-            String title= data[0].replace(' ','+');
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
-            String jsonReturnText = "";
-
-            HttpParams httpParameters = new BasicHttpParams();
-            int timeoutConnection = 10000; // 10 second timeout for connecting to site
-            HttpConnectionParams.setConnectionTimeout(httpParameters,
-                    timeoutConnection);
-            int timeoutSocket = 30000; // 30 second timeout for obtaining results
-            HttpConnectionParams.setSoTimeout(httpParameters, timeoutSocket);
-
-            HttpClient httpclient = new DefaultHttpClient(httpParameters);
-            HttpGet httpget = new HttpGet(URL);
-
-            try {
-                HttpResponse response = httpclient.execute(httpget);
-                HttpEntity r_entity = response.getEntity();
-                jsonReturnText = EntityUtils.toString(r_entity);
-            } catch (Exception e) {
-                jsonReturnText = e.getMessage();
-            }
-            JSONArray movies = new JSONArray();
-            try {
-                JSONObject oData = new JSONObject(jsonReturnText);
-                movies = oData.getJSONArray("movies");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            movieList = new ArrayList<Movie>();
-            Gson gson = new Gson();
-            try {
-                for(int i=0;i<movies.length();i++) {
-                    JSONObject movie=movies.getJSONObject(i);
-                    Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
-                    movieList.add(currentMovie);
+                        movieList = new ArrayList<Movie>();
+                        Gson gson = new Gson();
+                        try {
+                            for(int i=0;i<movies.length();i++) {
+                                JSONObject movie=movies.getJSONObject(i);
+                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
+                                movieList.add(currentMovie);
+                            }
+                            ListView results = getListView();
+                            results.setAdapter(new MyAdapter(MainActivity.this,movieList));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        );
 
-            return null;
-
-        }
-
-
-        protected void onPostExecute(ArrayList result) {
-            ListView results = getListView();
-            results.setAdapter(new MyAdapter(MainActivity.this,movieList));
-        }
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
     }
 
     /**

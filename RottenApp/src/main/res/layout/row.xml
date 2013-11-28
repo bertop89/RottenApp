@@ -12,7 +12,7 @@
         android:layout_alignParentLeft="true"
         android:layout_marginRight="5dip">
 
-        <ImageView
+        <com.android.volley.toolbox.NetworkImageView
             android:id="@+id/laList_image"
             android:layout_width="50dip"
             android:layout_height="50dip"

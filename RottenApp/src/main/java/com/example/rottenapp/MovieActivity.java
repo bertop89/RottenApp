@@ -1,9 +1,6 @@
 package com.example.rottenapp;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -14,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import java.io.IOException;
-import java.io.InputStream;
+
+import com.android.volley.toolbox.NetworkImageView;
 
 public class MovieActivity extends ActionBarActivity {
 
     Movie currentMovie;
-    ImageView ivPoster, ivCritics, ivAudience;
+    ImageView ivCritics, ivAudience;
+    NetworkImageView ivPoster;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
 
     @Override
@@ -28,10 +26,10 @@ public class MovieActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_activity_main);
         Intent i = getIntent();
-        currentMovie = (Movie) i.getParcelableExtra("movie");
+        currentMovie = i.getParcelableExtra("movie");
         //setTitle("Movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        ivPoster = (ImageView) findViewById(R.id.ivPoster);
+        ivPoster = (NetworkImageView) findViewById(R.id.ivPoster);
         ivCritics = (ImageView) findViewById(R.id.ivCritics);
         ivAudience = (ImageView) findViewById(R.id.ivAudience);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -46,7 +44,6 @@ public class MovieActivity extends ActionBarActivity {
         tvDirector = (TextView) findViewById(R.id.tvDiretorValue);
         representUI();
         representRatings();
-        new FillMovieTask().execute(currentMovie.getId());
     }
 
     public void representUI() {
@@ -63,6 +60,7 @@ public class MovieActivity extends ActionBarActivity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
+        ivPoster.setImageUrl(currentMovie.getPosters().getDetailed(),VolleySingleton.getInstance(this).getImageLoader());
     }
 
     public void representRatings () {
@@ -86,30 +84,6 @@ public class MovieActivity extends ActionBarActivity {
             }
         }
     }
-
-    private class FillMovieTask extends AsyncTask<String, Void, Bitmap> {
-
-        @Override
-        protected Bitmap doInBackground(String... strings) {
-            InputStream in = null;
-            String imageURL = currentMovie.getPosters().getDetailed();
-            try {
-                in = new java.net.URL(imageURL).openStream();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            Bitmap image = BitmapFactory.decodeStream(in);
-            return image;
-        }
-
-        @Override
-        protected void onPostExecute(Bitmap bitmap) {
-            super.onPostExecute(bitmap);
-            ivPoster.setImageBitmap(bitmap);
-        }
-    }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
