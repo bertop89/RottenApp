@@ -28,7 +28,7 @@
                     android:id="@+id/ivPoster"
                     android:layout_gravity="left|top"
                     android:paddingRight="15dp"
-                    />
+                    android:onClick="openFullPoster" />
 
                 <LinearLayout
                     android:layout_height="wrap_content"

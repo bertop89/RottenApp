@@ -85,6 +85,12 @@ public class MovieActivity extends ActionBarActivity {
         }
     }
 
+    public void openFullPoster(View v) {
+        Intent myIntent = new Intent(v.getContext(), FullImageActivity.class);
+        myIntent.putExtra("url",currentMovie.getPosters().getOriginal());
+        startActivity(myIntent);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         

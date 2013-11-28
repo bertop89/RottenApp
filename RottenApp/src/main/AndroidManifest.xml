@@ -27,6 +27,10 @@
             android:label="@string/title_activity_movie"
             android:parentActivityName="com.example.rottenapp.MainActivity" >
         </activity>
+        <activity
+            android:name="com.example.rottenapp.FullImageActivity"
+            android:label="@string/title_activity_full_image" >
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />
