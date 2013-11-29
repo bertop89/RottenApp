@@ -2,7 +2,9 @@ package com.example.rottenapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,8 +20,9 @@ public class FullImageActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_image);
-        String url = getIntent().getStringExtra("url");
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 
+        String url = getIntent().getStringExtra("url");
         fullPoster = (NetworkImageView)findViewById(R.id.fullPoster);
         fullPoster.setImageUrl(url,VolleySingleton.getInstance(this).getImageLoader());
     }
@@ -40,6 +43,11 @@ public class FullImageActivity extends Activity {
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
             case R.id.action_settings:
+                return true;
+            case android.R.id.home:
+                Intent upIntent = new Intent(this, MovieActivity.class);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                NavUtils.navigateUpTo(this, upIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
