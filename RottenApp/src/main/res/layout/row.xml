@@ -29,8 +29,11 @@
         android:layout_marginTop="5dp"
         android:text="Movie Title"
         android:textColor="#040404"
-        android:textSize="20dip"
-        android:textStyle="bold"/>
+        android:textSize="15dip"
+        android:textStyle="bold"
+        android:singleLine="true"
+        android:maxWidth="260dp"
+        />
 
     <!-- Year -->
     <TextView

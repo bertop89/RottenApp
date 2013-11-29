@@ -59,7 +59,14 @@ public class MyAdapter extends BaseAdapter {
         Movie m = (Movie)data.get(i);
         laTitle.setText(m.getTitle());
         laYear.setText(m.getYear());
-        laScore.setText(m.getRatings().getCritics_score());
+
+        String score = m.getRatings().getCritics_score();
+        if (score.equals("-1")) {
+            laScore.setText("");
+        } else {
+            laScore.setText(score+"%");
+        }
+
 
         if (laImage!=null) {
             laImage.setImageUrl(m.getPosters().getThumbnail(),mImageLoader);

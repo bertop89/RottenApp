@@ -13,9 +13,6 @@ public class Movie implements Parcelable{
     private Posters posters;
 
 
-
-
-
     public Movie() {
     }
 

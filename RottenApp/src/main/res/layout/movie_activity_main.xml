@@ -10,7 +10,8 @@
 
     <ScrollView
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:scrollbars="none">
 
         <LinearLayout
             android:layout_height="match_parent"
@@ -47,7 +48,6 @@
                             android:id="@+id/tvTitle"
                             android:text="Here goes the longest movie title you can think of"
                             android:singleLine="true"
-                            android:ellipsize="end"
                             android:enabled="true"
                             android:maxWidth="220dp" />
 
