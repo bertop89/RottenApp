@@ -1,6 +1,5 @@
 package com.example.rottenapp;
 
-import android.app.TaskStackBuilder;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v7.app.ActionBarActivity;
@@ -109,7 +108,7 @@ public class MovieActivity extends ActionBarActivity {
             case R.id.action_settings:
                 return true;
             case android.R.id.home:
-                Intent upIntent = new Intent(this, MainActivity.class);
+                Intent upIntent = new Intent(this, SearchActivity.class);
                 upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 NavUtils.navigateUpTo(this, upIntent);
                 return true;

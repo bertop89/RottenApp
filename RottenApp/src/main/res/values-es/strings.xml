@@ -15,5 +15,11 @@
 
     <string name="critics">de críticos</string>
     <string name="audience">de usuarios</string>
+    <string name="title_activity_full_image">Póster</string>
+    <string name="title_activity_search">Resultados búsqueda</string>
+
+    <string name="box_office">Últimos Estrenos</string>
+    <string name="see_more">Ver más</string>
+    <string name="search_film">Buscar película</string>
 
 </resources>

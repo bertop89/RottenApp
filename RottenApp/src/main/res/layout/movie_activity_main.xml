@@ -14,7 +14,7 @@
         android:scrollbars="none">
 
         <LinearLayout
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:orientation="vertical">
 
@@ -58,7 +58,7 @@
                             android:id="@+id/tvYear"
                             android:text="year"
                             android:layout_gravity="left|top"
-                            android:autoText="false" />
+                        />
 
                     </LinearLayout>
 

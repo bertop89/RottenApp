@@ -1,18 +1,19 @@
 package com.example.rottenapp;
 
-import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.app.ListActivity;
+import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.AdapterView;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -28,74 +29,19 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
+public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener {
 
-    private ArrayList boxList;
-    ListView boxView;
+    private ArrayList movieList;
     private SearchView searchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
-        boxView = (ListView) findViewById(R.id.listBoxOffice);
-        boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                // save id
-                Movie m = (Movie)boxList.get(i);
-                myIntent.putExtra("movie",m);
-
-                startActivity(myIntent);
-            }
-        });
-        refreshBoxOffice();
+        setContentView(R.layout.search_activity);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getRequest(getIntent().getStringExtra("title"));
     }
 
-    public void refreshBoxOffice() {
-        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=4";
-        // prepare the Request
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // display response
-                        JSONArray movies = new JSONArray();
-                        try {
-                            movies = response.getJSONArray("movies");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        boxList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
-                        try {
-                            for(int i=0;i<movies.length();i++) {
-                                JSONObject movie=movies.getJSONObject(i);
-                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
-                                boxList.add(currentMovie);
-                            }
-                            boxView.setAdapter(new MyAdapter(MainActivity.this,boxList));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        );
-
-        // add it to the RequestQueue
-        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -119,15 +65,74 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
+            case android.R.id.home:
+                Intent upIntent = new Intent(this, MainActivity.class);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                NavUtils.navigateUpTo(this, upIntent);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    public void onListItemClick(ListView parent, View v, int position, long id) {
+
+        Intent myIntent = new Intent(v.getContext(), MovieActivity.class);
+        // save id
+        Movie m = (Movie)movieList.get(position);
+        myIntent.putExtra("movie",m);
+
+        startActivity(myIntent);
+    }
+
+    private void getRequest(String input) {
+        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+        String title= input.replace(' ','+');
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        JSONArray movies = new JSONArray();
+                        try {
+                            movies = response.getJSONArray("movies");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        movieList = new ArrayList<Movie>();
+                        Gson gson = new Gson();
+                        try {
+                            for(int i=0;i<movies.length();i++) {
+                                JSONObject movie=movies.getJSONObject(i);
+                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
+                                movieList.add(currentMovie);
+                            }
+                            ListView results = getListView();
+                            results.setAdapter(new MyAdapter(SearchActivity.this,movieList));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
+    }
+
     @Override
     public boolean onQueryTextSubmit(String s) {
-        Intent myIntent = new Intent(this, SearchActivity.class);
-        myIntent.putExtra("title",s);
-        startActivity(myIntent);
+        getRequest(s);
         return false;
     }
 
@@ -147,9 +152,11 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+            View rootView = inflater.inflate(R.layout.search_fragment, container, false);
             return rootView;
         }
     }
+
+
 
 }
