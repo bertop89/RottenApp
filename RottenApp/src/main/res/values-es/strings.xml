@@ -18,7 +18,8 @@
     <string name="title_activity_full_image">Póster</string>
     <string name="title_activity_search">Resultados búsqueda</string>
 
-    <string name="box_office">Últimos Estrenos</string>
+    <string name="box_office">Top en taquilla</string>
+    <string name="upcoming">Próximos estrenos</string>
     <string name="see_more">Ver más</string>
     <string name="search_film">Buscar película</string>
 

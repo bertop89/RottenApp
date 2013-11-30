@@ -18,8 +18,9 @@
     <string name="title_activity_full_image">Poster</string>
     <string name="title_activity_search">Search results</string>
     
-    <string name="box_office">Box Office</string>
+    <string name="box_office">Top Box Office</string>
     <string name="see_more">See more</string>
+    <string name="upcoming">Upcoming</string>
     <string name="search_film">Search film</string>
 
 </resources>

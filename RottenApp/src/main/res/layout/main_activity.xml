@@ -3,6 +3,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="4dp"
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame">
 
@@ -10,24 +11,45 @@
     <TextView
         android:id="@+id/tvBoxOffice"
     android:text="@string/box_office"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+        style="?android:listSeparatorTextViewStyle"
         />
 
     <ListView
-    android:layout_height="wrap_content"
+    android:layout_height="207dp"
     android:layout_width="wrap_content"
     android:layout_below="@+id/tvBoxOffice"
     android:divider="#b5b5b5"
     android:dividerHeight="1dp"
     android:id="@+id/listBoxOffice" />
 
-    <TextView
+    <Button
         android:id="@+id/tvSeeMore"
         android:text="@string/see_more"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/listBoxOffice"
+        android:layout_alignRight="@+id/listBoxOffice"
+        android:layout_marginRight="8dp"
+        android:onClick="openFullBox"
         />
+
+    <TextView
+        android:id="@+id/tvUpcoming"
+        android:text="@string/upcoming"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSeeMore"
+        style="?android:listSeparatorTextViewStyle"
+        />
+
+    <ListView
+        android:layout_height="207dp"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/tvUpcoming"
+        android:divider="#b5b5b5"
+        android:dividerHeight="1dp"
+        android:id="@+id/listUpcoming" />
 
 </RelativeLayout>

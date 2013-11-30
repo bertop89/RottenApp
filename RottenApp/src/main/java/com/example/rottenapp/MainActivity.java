@@ -30,8 +30,8 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
-    private ArrayList boxList;
-    ListView boxView;
+    private ArrayList boxList, upcomingList;
+    ListView boxView, upcomingView;
     private SearchView searchView;
 
     @Override
@@ -50,7 +50,53 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 startActivity(myIntent);
             }
         });
+        upcomingView = (ListView) findViewById(R.id.listUpcoming);
         refreshBoxOffice();
+        refreshUpcoming();
+    }
+
+    private void refreshUpcoming() {
+        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        JSONArray movies = new JSONArray();
+                        try {
+                            movies = response.getJSONArray("movies");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        upcomingList = new ArrayList<Movie>();
+                        Gson gson = new Gson();
+                        try {
+                            for(int i=0;i<movies.length();i++) {
+                                JSONObject movie=movies.getJSONObject(i);
+                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
+                                upcomingList.add(currentMovie);
+                            }
+                            upcomingView.setAdapter(new MyAdapter(MainActivity.this,upcomingList));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
     }
 
     public void refreshBoxOffice() {
