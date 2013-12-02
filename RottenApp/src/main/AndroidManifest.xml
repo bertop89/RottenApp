@@ -32,7 +32,7 @@
             android:label="@string/title_activity_full_image" >
         </activity>
         <activity
-            android:name="com.example.rottenapp.SearchActivity"
+            android:name=".ListActivity"
             android:label="@string/title_activity_search" >
         </activity>
     </application>

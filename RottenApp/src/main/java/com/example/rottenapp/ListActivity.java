@@ -1,7 +1,5 @@
 package com.example.rottenapp;
 
-import android.app.ListActivity;
-import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -12,8 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -29,7 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class SearchActivity extends ListActivity implements SearchView.OnQueryTextListener {
+public class ListActivity extends android.app.ListActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList movieList;
     private SearchView searchView;
@@ -39,7 +35,8 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.search_activity);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        getRequest(getIntent().getStringExtra("title"));
+        setTitle(getIntent().getStringExtra("title"));
+        getRequest(getIntent().getStringExtra("URL"));
     }
 
 
@@ -85,11 +82,8 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
     }
 
     private void getRequest(String input) {
-        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-        String title= input.replace(' ','+');
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
         // prepare the Request
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, input, null,
                 new Response.Listener<JSONObject>()
                 {
                     @Override
@@ -111,7 +105,7 @@ public class SearchActivity extends ListActivity implements SearchView.OnQueryTe
                                 movieList.add(currentMovie);
                             }
                             ListView results = getListView();
-                            results.setAdapter(new MyAdapter(SearchActivity.this,movieList));
+                            results.setAdapter(new MyAdapter(ListActivity.this,movieList));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

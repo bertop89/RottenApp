@@ -1,7 +1,6 @@
 package com.example.rottenapp;
 
 import android.app.Activity;
-import android.app.ActionBar;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
@@ -30,6 +28,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
+    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private ArrayList boxList, upcomingList;
     ListView boxView, upcomingView;
     private SearchView searchView;
@@ -51,12 +50,22 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             }
         });
         upcomingView = (ListView) findViewById(R.id.listUpcoming);
+        upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                // save id
+                Movie m = (Movie)upcomingList.get(i);
+                myIntent.putExtra("movie",m);
+
+                startActivity(myIntent);
+            }
+        });
         refreshBoxOffice();
         refreshUpcoming();
     }
 
     private void refreshUpcoming() {
-        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
         String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -100,7 +109,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     }
 
     public void refreshBoxOffice() {
-        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
         String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=4";
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -143,6 +151,24 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
     }
 
+    public boolean openFullBox(View v) {
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES";
+        Intent myIntent = new Intent(this, ListActivity.class);
+        myIntent.putExtra("URL",URL);
+        myIntent.putExtra("title",getString(R.string.box_office));
+        startActivity(myIntent);
+        return false;
+    }
+
+    public boolean openFullUpcoming(View v) {
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&country=ES";
+        Intent myIntent = new Intent(this, ListActivity.class);
+        myIntent.putExtra("URL",URL);
+        myIntent.putExtra("title",getString(R.string.upcoming));
+        startActivity(myIntent);
+        return false;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -171,8 +197,11 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        Intent myIntent = new Intent(this, SearchActivity.class);
-        myIntent.putExtra("title",s);
+        String title= s.replace(' ','+');
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        Intent myIntent = new Intent(this, ListActivity.class);
+        myIntent.putExtra("URL",URL);
+        myIntent.putExtra("title",getString(R.string.title_activity_search));
         startActivity(myIntent);
         return false;
     }

@@ -108,7 +108,7 @@ public class MovieActivity extends ActionBarActivity {
             case R.id.action_settings:
                 return true;
             case android.R.id.home:
-                Intent upIntent = new Intent(this, SearchActivity.class);
+                Intent upIntent = new Intent(this, ListActivity.class);
                 upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 NavUtils.navigateUpTo(this, upIntent);
                 return true;
