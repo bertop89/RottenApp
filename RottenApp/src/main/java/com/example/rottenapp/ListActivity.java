@@ -33,7 +33,7 @@ public class ListActivity extends android.app.ListActivity implements SearchView
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.search_activity);
+        setContentView(R.layout.list_activity);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getIntent().getStringExtra("title"));
         getRequest(getIntent().getStringExtra("URL"));
@@ -146,7 +146,7 @@ public class ListActivity extends android.app.ListActivity implements SearchView
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.search_fragment, container, false);
+            View rootView = inflater.inflate(R.layout.list_fragment, container, false);
             return rootView;
         }
     }

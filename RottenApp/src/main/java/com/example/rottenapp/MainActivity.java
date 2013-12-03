@@ -19,17 +19,22 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private ArrayList boxList, upcomingList;
+    Type typeList = new TypeToken<List <Movie>>(){}.getType();
     ListView boxView, upcomingView;
     private SearchView searchView;
 
@@ -61,11 +66,37 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 startActivity(myIntent);
             }
         });
-        refreshBoxOffice();
-        refreshUpcoming();
+
+        loadData();
     }
 
-    private void refreshUpcoming() {
+    private void loadData() {
+        String cachedEntries = null;
+        Gson gson = new Gson();
+
+        try {
+            cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "boxlist");
+            boxList = gson.fromJson(cachedEntries,typeList);
+            boxView.setAdapter(new MyAdapter(this,boxList));
+        } catch (IOException e) {
+            refreshBoxOffice();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "upcominglist");
+            upcomingList = gson.fromJson(cachedEntries,typeList);
+            upcomingView.setAdapter(new MyAdapter(this,upcomingList));
+        } catch (IOException e) {
+            refreshUpcoming();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void refreshUpcoming() {
         String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -83,14 +114,11 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
                         upcomingList = new ArrayList<Movie>();
                         Gson gson = new Gson();
+                        upcomingList = gson.fromJson(movies.toString(),typeList);
+                        upcomingView.setAdapter(new MyAdapter(MainActivity.this,upcomingList));
                         try {
-                            for(int i=0;i<movies.length();i++) {
-                                JSONObject movie=movies.getJSONObject(i);
-                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
-                                upcomingList.add(currentMovie);
-                            }
-                            upcomingView.setAdapter(new MyAdapter(MainActivity.this,upcomingList));
-                        } catch (JSONException e) {
+                            InternalStorage.writeObject(MainActivity.this, "upcominglist", movies.toString());
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
@@ -123,17 +151,13 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         boxList = new ArrayList<Movie>();
                         Gson gson = new Gson();
+                        boxList = gson.fromJson(movies.toString(),typeList);
+                        boxView.setAdapter(new MyAdapter(MainActivity.this,boxList));
                         try {
-                            for(int i=0;i<movies.length();i++) {
-                                JSONObject movie=movies.getJSONObject(i);
-                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
-                                boxList.add(currentMovie);
-                            }
-                            boxView.setAdapter(new MyAdapter(MainActivity.this,boxList));
-                        } catch (JSONException e) {
+                            InternalStorage.writeObject(MainActivity.this, "boxlist", movies.toString());
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
