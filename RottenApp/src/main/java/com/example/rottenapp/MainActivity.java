@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -30,18 +31,42 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
+public class MainActivity extends Activity implements SearchView.OnQueryTextListener, OnRefreshListener {
 
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private ArrayList boxList, upcomingList;
     Type typeList = new TypeToken<List <Movie>>(){}.getType();
     ListView boxView, upcomingView;
     private SearchView searchView;
+    private PullToRefreshLayout mPullToRefreshLayout;
+    private int pendingRequest = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
+
+        // Now find the PullToRefreshLayout to setup
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
+
+        // Now setup the PullToRefreshLayout
+        ActionBarPullToRefresh.from(this)
+                // Mark All Children as pullable
+                .allChildrenArePullable()
+                        // Set the OnRefreshListener
+                .listener(this)
+                        // Finally commit the setup to our PullToRefreshLayout
+                .setup(mPullToRefreshLayout);
+
+        loadUI();
+        loadData();
+    }
+
+    private void loadUI() {
         boxView = (ListView) findViewById(R.id.listBoxOffice);
         boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -67,7 +92,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             }
         });
 
-        loadData();
     }
 
     private void loadData() {
@@ -121,6 +145,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        pendingRequest--;
+                        if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
                     }
                 },
                 new Response.ErrorListener()
@@ -160,6 +186,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        pendingRequest--;
+                        if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
                     }
                 },
                 new Response.ErrorListener()
@@ -215,6 +243,12 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;
+            case R.id.refresh:
+                mPullToRefreshLayout.setRefreshing(true);
+                pendingRequest+=2;
+                refreshBoxOffice();
+                refreshUpcoming();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -233,6 +267,13 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     @Override
     public boolean onQueryTextChange(String s) {
         return false;
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        pendingRequest+=2;
+        refreshBoxOffice();
+        refreshUpcoming();
     }
 
     /**

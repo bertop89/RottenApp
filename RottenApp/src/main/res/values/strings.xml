@@ -22,5 +22,7 @@
     <string name="see_more">See more</string>
     <string name="upcoming">Upcoming</string>
     <string name="search_film">Search film</string>
+    <string name="refresh">Refresh</string>
+    <string name="refreshing">Refreshing...</string>
 
 </resources>

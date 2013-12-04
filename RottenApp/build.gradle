@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        mavenCentral()
+        maven { url 'http://repo1.maven.org/maven2' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:0.6.+'
@@ -26,4 +26,5 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:+'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/volley.jar')
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
 }

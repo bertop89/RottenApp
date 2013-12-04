@@ -7,6 +7,12 @@
     tools:context=".MainActivity"
     tools:ignore="MergeRootFrame">
 
+    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/ptr_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <ScrollView
         android:layout_height="match_parent"
         android:layout_width="match_parent"
@@ -76,5 +82,7 @@
         </RelativeLayout>
 
     </ScrollView>
+
+    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 
 </RelativeLayout>

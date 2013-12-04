@@ -60,7 +60,7 @@ public class MovieActivity extends ActionBarActivity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
-        ivPoster.setImageUrl(currentMovie.getPosters().getDetailed(),VolleySingleton.getInstance(this).getImageLoader());
+        ivPoster.setImageUrl(currentMovie.getPosters().getProfile(),VolleySingleton.getInstance(this).getImageLoader());
     }
 
     public void representRatings () {
@@ -87,7 +87,7 @@ public class MovieActivity extends ActionBarActivity {
 
     public void openFullPoster(View v) {
         Intent myIntent = new Intent(v.getContext(), FullImageActivity.class);
-        myIntent.putExtra("url",currentMovie.getPosters().getOriginal());
+        myIntent.putExtra("url",currentMovie.getPosters().getDetailed());
         startActivity(myIntent);
     }
 

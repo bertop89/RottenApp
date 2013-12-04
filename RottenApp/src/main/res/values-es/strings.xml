@@ -22,5 +22,7 @@
     <string name="upcoming">Próximos estrenos</string>
     <string name="see_more">Ver más</string>
     <string name="search_film">Buscar película</string>
+    <string name="refresh">Actualizar</string>
+    <string name="refreshing">Actualizando ...</string>
 
 </resources>
