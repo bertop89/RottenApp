@@ -1,5 +1,6 @@
 package com.example.rottenapp;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -29,6 +31,7 @@ public class ListActivity extends android.app.ListActivity implements SearchView
 
     private ArrayList movieList;
     private SearchView searchView;
+    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -126,7 +129,12 @@ public class ListActivity extends android.app.ListActivity implements SearchView
 
     @Override
     public boolean onQueryTextSubmit(String s) {
-        getRequest(s);
+        String title= s.replace(' ','+');
+        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        Intent myIntent = new Intent(this, ListActivity.class);
+        myIntent.putExtra("URL",URL);
+        myIntent.putExtra("title",getString(R.string.title_activity_search));
+        startActivity(myIntent);
         return false;
     }
 
