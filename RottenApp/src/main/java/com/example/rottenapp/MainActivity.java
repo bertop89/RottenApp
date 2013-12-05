@@ -3,7 +3,10 @@ package com.example.rottenapp;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -45,28 +49,22 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     private PullToRefreshLayout mPullToRefreshLayout;
     private int pendingRequest = 0;
 
+    private String[] mDrawerArray;
+    private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private ListView mDrawerList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-
-        // Now find the PullToRefreshLayout to setup
-        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
-
-        // Now setup the PullToRefreshLayout
-        ActionBarPullToRefresh.from(this)
-                // Mark All Children as pullable
-                .allChildrenArePullable()
-                        // Set the OnRefreshListener
-                .listener(this)
-                        // Finally commit the setup to our PullToRefreshLayout
-                .setup(mPullToRefreshLayout);
-
         loadUI();
         loadData();
     }
 
     private void loadUI() {
+
+        //Load lists
         boxView = (ListView) findViewById(R.id.listBoxOffice);
         boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -91,6 +89,38 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 startActivity(myIntent);
             }
         });
+
+        //Load Navigation Drawer
+        mDrawerArray = getResources().getStringArray(R.array.drawer_list);
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        // Set the adapter for the list view
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_list_item, mDrawerArray));
+        mDrawerToggle = new ActionBarDrawerToggle(
+                this,                  /* host Activity */
+                mDrawerLayout,         /* DrawerLayout object */
+                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
+                R.string.drawer_open,  /* "open drawer" description */
+                R.string.drawer_close  /* "close drawer" description */
+        ) {
+
+        };
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+
+        // Now find the PullToRefreshLayout to setup
+        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
+        // Now setup the PullToRefreshLayout
+        ActionBarPullToRefresh.from(this)
+                // Mark All Children as pullable
+                .allChildrenArePullable()
+                        // Set the OnRefreshListener
+                .listener(this)
+                        // Finally commit the setup to our PullToRefreshLayout
+                .setup(mPullToRefreshLayout);
 
     }
 
@@ -221,6 +251,18 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         return false;
     }
 
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -240,6 +282,9 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
         switch (item.getItemId()) {
             case R.id.action_settings:
                 return true;

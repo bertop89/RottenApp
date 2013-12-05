@@ -24,5 +24,12 @@
     <string name="search_film">Search film</string>
     <string name="refresh">Refresh</string>
     <string name="refreshing">Refreshing...</string>
+    <string name="drawer_open">Drawer opened</string>
+    <string name="drawer_close">Drawer closed</string>
+
+    <string-array name="drawer_list">
+        <item>Home</item>
+        <item>Favourites</item>
+    </string-array>
 
 </resources>
