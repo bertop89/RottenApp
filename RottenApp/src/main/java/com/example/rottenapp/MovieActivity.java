@@ -21,6 +21,7 @@ public class MovieActivity extends ActionBarActivity {
     ImageView ivCritics, ivAudience;
     NetworkImageView ivPoster;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
+    MySQLiteHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +45,8 @@ public class MovieActivity extends ActionBarActivity {
         tvDirector = (TextView) findViewById(R.id.tvDiretorValue);
         representUI();
         representRatings();
+        db = new MySQLiteHelper(this);
+        db.getWritableDatabase();
     }
 
     public void representUI() {
@@ -96,6 +99,15 @@ public class MovieActivity extends ActionBarActivity {
         
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.movie, menu);
+
+        MenuItem favItem = menu.findItem(R.id.action_favourite);
+        if (db.checkMovie(currentMovie)) {
+            favItem.setChecked(true);
+            favItem.setIcon(R.drawable.ic_action_important);
+        } else {
+            favItem.setChecked(false);
+            favItem.setIcon(R.drawable.ic_action_not_important);
+        }
         return true;
     }
 
@@ -112,6 +124,15 @@ public class MovieActivity extends ActionBarActivity {
                 upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 NavUtils.navigateUpTo(this, upIntent);
                 return true;
+            case R.id.action_favourite:
+                if (!item.isChecked()) {
+                    item.setIcon(R.drawable.ic_action_important);
+                    db.addMovie(currentMovie);
+                } else {
+                    item.setIcon(R.drawable.ic_action_not_important);
+                    db.deleteMovie(currentMovie);
+                }
+                item.setChecked(!item.isChecked());
         }
         return super.onOptionsItemSelected(item);
     }

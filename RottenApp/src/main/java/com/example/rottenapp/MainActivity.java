@@ -97,6 +97,16 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         // Set the adapter for the list view
         mDrawerList.setAdapter(new ArrayAdapter<String>(this,
                 R.layout.drawer_list_item, mDrawerArray));
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (i==1) {
+                    Intent myIntent = new Intent(view.getContext(), FavouritesActivity.class);
+                    startActivity(myIntent);
+                }
+                mDrawerLayout.closeDrawer(mDrawerList);
+            }
+        });
         mDrawerToggle = new ActionBarDrawerToggle(
                 this,                  /* host Activity */
                 mDrawerLayout,         /* DrawerLayout object */

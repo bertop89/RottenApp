@@ -6,18 +6,15 @@
     <string name="action_settings">Ajustes</string>
     <string name="title_activity_movie">Movie</string>
     <string name="search">Search</string>
-    
     <string name="runtime">Running Time</string>
     <string name="genre">Genre</string>
     <string name="rating">Rating</string>
     <string name="release">Theater Release</string>
     <string name="director">Director</string>
-    
     <string name="critics">of critics liked it</string>
     <string name="audience">of audience liked it</string>
     <string name="title_activity_full_image">Poster</string>
     <string name="title_activity_search">Search results</string>
-    
     <string name="box_office">Top Box Office</string>
     <string name="see_more">See more</string>
     <string name="upcoming">Upcoming</string>
@@ -26,10 +23,13 @@
     <string name="refreshing">Refreshing...</string>
     <string name="drawer_open">Drawer opened</string>
     <string name="drawer_close">Drawer closed</string>
+    <string name="favourite">Favourite</string>
 
     <string-array name="drawer_list">
         <item>Home</item>
         <item>Favourites</item>
     </string-array>
+
+    <string name="title_activity_favourites">Favourites</string>
 
 </resources>

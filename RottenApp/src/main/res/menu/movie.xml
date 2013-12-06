@@ -5,4 +5,8 @@
         android:title="@string/action_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+    <item android:id="@+id/action_favourite" app:showAsAction="ifRoom"
+        android:title="@string/favourite"
+        android:icon="@drawable/ic_action_not_important"/>
 </menu>
