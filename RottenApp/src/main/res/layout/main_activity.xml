@@ -4,95 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- The main content view -->
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/container"
+    <!-- Framelayout to display Fragments -->
+    <FrameLayout
+        android:id="@+id/frame_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="4dp"
-        tools:context=".MainActivity"
-        tools:ignore="MergeRootFrame">
-
-        <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/ptr_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        <ScrollView
-            android:layout_height="match_parent"
-            android:layout_width="match_parent"
-            android:scrollbars="none">
-
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/tvBoxOffice"
-                android:text="@string/box_office"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                    style="?android:listSeparatorTextViewStyle"
-                    />
-
-                <ListView
-                android:layout_height="207dp"
-                android:layout_width="wrap_content"
-                android:layout_below="@+id/tvBoxOffice"
-                android:divider="#b5b5b5"
-                android:dividerHeight="1dp"
-                android:id="@+id/listBoxOffice" />
-
-                <Button
-                    android:id="@+id/tvSeeMoreBox"
-                    android:text="@string/see_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/listBoxOffice"
-                    android:layout_alignRight="@+id/listBoxOffice"
-                    android:layout_marginRight="8dp"
-                    android:onClick="openFullBox"
-                    />
-
-                <TextView
-                    android:id="@+id/tvUpcoming"
-                    android:text="@string/upcoming"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSeeMoreBox"
-                    style="?android:listSeparatorTextViewStyle"
-                    />
-
-                <ListView
-                    android:layout_height="207dp"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@+id/tvUpcoming"
-                    android:divider="#b5b5b5"
-                    android:dividerHeight="1dp"
-                    android:id="@+id/listUpcoming" />
-
-                <Button
-                    android:id="@+id/tvSeeMore"
-                    android:text="@string/see_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/listUpcoming"
-                    android:layout_alignRight="@+id/listUpcoming"
-                    android:layout_marginRight="8dp"
-                    android:onClick="openFullUpcoming"
-                    />
-
-            </RelativeLayout>
-
-        </ScrollView>
-
-        </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
-
-    </RelativeLayout>
+        android:layout_height="match_parent" />
 
     <!-- The navigation drawer -->
     <ListView android:id="@+id/left_drawer"
@@ -100,8 +16,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp"
         android:background="#111"/>
 
 </android.support.v4.widget.DrawerLayout>

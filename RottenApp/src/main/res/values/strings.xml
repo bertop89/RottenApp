@@ -30,6 +30,11 @@
         <item>Favourites</item>
     </string-array>
 
+    <array name="nav_drawer_icons">
+        <item>@drawable/ic_menu_home</item>
+        <item>@drawable/ic_action_important</item>
+    </array>
+
     <string name="title_activity_favourites">Favourites</string>
 
 </resources>

@@ -2,6 +2,7 @@ package com.example.rottenapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -17,7 +18,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -58,37 +58,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        loadUI();
-        loadData();
-    }
-
-    private void loadUI() {
-
-        //Load lists
-        boxView = (ListView) findViewById(R.id.listBoxOffice);
-        boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                // save id
-                Movie m = (Movie)boxList.get(i);
-                myIntent.putExtra("movie",m);
-
-                startActivity(myIntent);
-            }
-        });
-        upcomingView = (ListView) findViewById(R.id.listUpcoming);
-        upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                // save id
-                Movie m = (Movie)upcomingList.get(i);
-                myIntent.putExtra("movie",m);
-
-                startActivity(myIntent);
-            }
-        });
 
         //Load Navigation Drawer
         mDrawerArray = getResources().getStringArray(R.array.drawer_list);
@@ -100,11 +69,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (i==1) {
-                    Intent myIntent = new Intent(view.getContext(), FavouritesActivity.class);
-                    startActivity(myIntent);
-                }
-                mDrawerLayout.closeDrawer(mDrawerList);
+                displayView(i);
             }
         });
         mDrawerToggle = new ActionBarDrawerToggle(
@@ -121,8 +86,72 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
+        if (savedInstanceState == null) {
+            // on first time display view for first nav item
+            displayView(0);
+        }
+
+    }
+
+    private void displayView(int position) {
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new PlaceholderFragment();
+                break;
+            case 1:
+                fragment = new FavouritesActivity.PlaceholderFragment();
+                break;
+        default:
+            break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            getActionBar().setTitle(mDrawerArray[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }
+
+    private void loadUI(View V) {
+
+        //Load lists
+        boxView = (ListView) V.findViewById(R.id.listBoxOffice);
+        boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                // save id
+                Movie m = (Movie)boxList.get(i);
+                myIntent.putExtra("movie",m);
+
+                startActivity(myIntent);
+            }
+        });
+        upcomingView = (ListView) V.findViewById(R.id.listUpcoming);
+        upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                // save id
+                Movie m = (Movie)upcomingList.get(i);
+                myIntent.putExtra("movie",m);
+
+                startActivity(myIntent);
+            }
+        });
+
         // Now find the PullToRefreshLayout to setup
-        mPullToRefreshLayout = (PullToRefreshLayout) findViewById(R.id.ptr_layout);
+        mPullToRefreshLayout = (PullToRefreshLayout) V.findViewById(R.id.ptr_layout);
         // Now setup the PullToRefreshLayout
         ActionBarPullToRefresh.from(this)
                 // Mark All Children as pullable
@@ -334,7 +363,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     /**
      * A placeholder fragment containing a simple view.
      */
-    public static class PlaceholderFragment extends Fragment {
+    public class PlaceholderFragment extends Fragment {
 
         public PlaceholderFragment() {
         }
@@ -343,6 +372,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+            loadUI(rootView);
+            loadData();
             return rootView;
         }
     }
