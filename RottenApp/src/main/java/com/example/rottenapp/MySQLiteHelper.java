@@ -9,6 +9,9 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by alberto on 6/12/13.
  */
@@ -88,5 +91,30 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
             return false;
             /* record not exist */
         }
+    }
+
+    public ArrayList<Movie> getMovies() {
+        ArrayList<Movie> movies = new ArrayList<Movie>();
+        // 1. build the query
+        String query = "SELECT * FROM favourite_movies";
+
+        // 2. get reference to writable DB
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+
+        // 3. go over each row, build book and add it to list
+        Movie movie = null;
+        Gson gson = new Gson();
+        if (cursor.moveToFirst()) {
+            do {
+                movie = gson.fromJson(cursor.getString(1),Movie.class);
+                movies.add(movie);
+            } while (cursor.moveToNext());
+        }
+
+        Log.d("getAllBooks()", movies.toString());
+
+        // return books
+        return movies;
     }
 }

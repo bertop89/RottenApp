@@ -100,7 +100,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 fragment = new PlaceholderFragment();
                 break;
             case 1:
-                fragment = new FavouritesActivity.PlaceholderFragment();
+                fragment = new FavouritesFragment();
                 break;
         default:
             break;
