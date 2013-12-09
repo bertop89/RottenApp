@@ -36,10 +36,6 @@
             android:name="com.example.rottenapp.ListActivity"
             android:label="@string/title_activity_search" >
         </activity>
-        <activity
-            android:name="com.example.rottenapp.FavouritesActivity"
-            android:label="@string/title_activity_favourites" >
-        </activity>
     </application>
 
 </manifest>

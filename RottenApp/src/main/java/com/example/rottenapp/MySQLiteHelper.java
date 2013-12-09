@@ -10,7 +10,6 @@ import android.util.Log;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by alberto on 6/12/13.
