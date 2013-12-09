@@ -41,7 +41,6 @@ public class FavouritesFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
-        new LoadCursorTask().execute();
         return rootView;
     }
 

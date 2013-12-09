@@ -67,7 +67,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             // on first time display view for first nav item
             displayView(0);
         }
-
     }
 
     private void displayView(int position) {
@@ -352,6 +351,9 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
     @Override
     public boolean onQueryTextSubmit(String s) {
+        searchView.clearFocus();
+        searchView.setQuery("", false);
+        searchView.setIconified(true);
         String title= s.replace(' ','+');
         String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
         Intent myIntent = new Intent(this, ListActivity.class);
