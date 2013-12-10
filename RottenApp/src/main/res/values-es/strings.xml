@@ -23,11 +23,12 @@
     <string name="see_more">Ver más</string>
     <string name="search_film">Buscar película</string>
     <string name="refresh">Actualizar</string>
-    <string name="refreshing">Actualizando ...</string>
     <string name="drawer_open">Drawer abierto</string>
     <string name="drawer_close">Drawer cerrado</string>
     <string name="favourite">Favourite</string>
-    <string name="desc_list_item_icon">Item Icon</string>
+    <string name="desc_list_item_icon">Icono</string>
+    <string name="share">Compartir</string>
+    <string name="chooser_title">Compartir con</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

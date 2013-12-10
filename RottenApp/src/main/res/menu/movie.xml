@@ -1,12 +1,17 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
     
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"
-        app:showAsAction="never" />
+        android:showAsAction="never" />
 
-    <item android:id="@+id/action_favourite" app:showAsAction="ifRoom"
+    <item
+        android:id="@+id/menu_item_share"
+        android:showAsAction="ifRoom"
+        android:title="Share"
+        android:icon="@drawable/ic_action_share" />
+
+    <item android:id="@+id/action_favourite" android:showAsAction="ifRoom"
         android:title="@string/favourite"
         android:icon="@drawable/ic_action_not_important"/>
 </menu>

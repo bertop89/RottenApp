@@ -11,6 +11,7 @@ public class Movie implements Parcelable{
     private String id,title,year,mpaa_rating,runtime,critics_consensus,synopsis;
     private Ratings ratings;
     private Posters posters;
+    private Links links;
 
 
     public Movie() {
@@ -48,6 +49,10 @@ public class Movie implements Parcelable{
         return runtime;
     }
 
+    public Links getLinks() {
+        return links;
+    }
+
     @Override
     public String toString() {
         return title;
@@ -68,6 +73,7 @@ public class Movie implements Parcelable{
         parcel.writeString(runtime);
         parcel.writeValue(posters);
         parcel.writeValue(ratings);
+        parcel.writeValue(links);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -89,5 +95,6 @@ public class Movie implements Parcelable{
         runtime = in.readString();
         posters = (Posters)in.readValue(Posters.class.getClassLoader());
         ratings = (Ratings)in.readValue(Ratings.class.getClassLoader());
+        links = (Links)in.readValue(Links.class.getClassLoader());
     }
 }

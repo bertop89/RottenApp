@@ -20,7 +20,6 @@
     <string name="upcoming">Upcoming</string>
     <string name="search_film">Search film</string>
     <string name="refresh">Refresh</string>
-    <string name="refreshing">Refreshing...</string>
     <string name="drawer_open">Drawer opened</string>
     <string name="drawer_close">Drawer closed</string>
     <string name="favourite">Favourite</string>
@@ -37,5 +36,7 @@
 
     <string name="title_activity_favourites">Favourites</string>
     <string name="desc_list_item_icon">Item Icon</string>
+    <string name="share">Share</string>
+    <string name="chooser_title">Share With</string>
 
 </resources>

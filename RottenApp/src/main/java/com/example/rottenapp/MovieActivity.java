@@ -1,8 +1,8 @@
 package com.example.rottenapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -15,13 +15,14 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
 
-public class MovieActivity extends ActionBarActivity {
+public class MovieActivity extends Activity {
 
     Movie currentMovie;
     ImageView ivCritics, ivAudience;
     NetworkImageView ivPoster;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
     MySQLiteHelper db;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,6 +109,7 @@ public class MovieActivity extends ActionBarActivity {
             favItem.setChecked(false);
             favItem.setIcon(R.drawable.ic_action_not_important);
         }
+
         return true;
     }
 
@@ -133,6 +135,20 @@ public class MovieActivity extends ActionBarActivity {
                     db.deleteMovie(currentMovie);
                 }
                 item.setChecked(!item.isChecked());
+                return true;
+            case R.id.menu_item_share:
+                Intent sendIntent = new Intent();
+                sendIntent.setAction(Intent.ACTION_SEND);
+                String text = currentMovie.getTitle() + " - " + currentMovie.getLinks().getAlternate();
+                sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+                sendIntent.setType("text/plain");
+                // Always use string resources for UI text.
+                // This says something like "Share this photo with"
+                String title = getResources().getString(R.string.chooser_title);
+                // Create and start the chooser
+                Intent chooser = Intent.createChooser(sendIntent, title);
+                startActivity(chooser);
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
