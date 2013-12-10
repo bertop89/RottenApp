@@ -18,16 +18,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListActivity extends android.app.ListActivity implements SearchView.OnQueryTextListener {
 
     private ArrayList movieList;
+    Type typeList = new TypeToken<List<Movie>>(){}.getType();
     private SearchView searchView;
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
 
@@ -94,20 +98,12 @@ public class ListActivity extends android.app.ListActivity implements SearchView
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                         movieList = new ArrayList<Movie>();
                         Gson gson = new Gson();
-                        try {
-                            for(int i=0;i<movies.length();i++) {
-                                JSONObject movie=movies.getJSONObject(i);
-                                Movie currentMovie = gson.fromJson(movie.toString(),Movie.class);
-                                movieList.add(currentMovie);
-                            }
-                            ListView results = getListView();
-                            results.setAdapter(new MyAdapter(ListActivity.this,movieList));
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        movieList = gson.fromJson(movies.toString(),typeList);
+                        ListView results = getListView();
+                        results.setAdapter(new MyAdapter(ListActivity.this,movieList));
+
                     }
                 },
                 new Response.ErrorListener()

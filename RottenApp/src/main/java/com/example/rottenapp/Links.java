@@ -18,6 +18,10 @@ public class Links implements Parcelable {
         return alternate;
     }
 
+    public String getReviews() {
+        return reviews;
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(self);

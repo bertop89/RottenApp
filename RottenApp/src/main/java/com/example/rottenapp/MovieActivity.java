@@ -22,6 +22,7 @@ public class MovieActivity extends Activity {
     NetworkImageView ivPoster;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
     MySQLiteHelper db;
+    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
 
 
     @Override
@@ -92,6 +93,12 @@ public class MovieActivity extends Activity {
     public void openFullPoster(View v) {
         Intent myIntent = new Intent(v.getContext(), FullImageActivity.class);
         myIntent.putExtra("url",currentMovie.getPosters().getDetailed());
+        startActivity(myIntent);
+    }
+
+    public void openFullCritics(View v) {
+        Intent myIntent = new Intent(v.getContext(), CriticsActivity.class);
+        myIntent.putExtra("URL",currentMovie.getLinks().getReviews()+"?apikey="+apikey);
         startActivity(myIntent);
     }
 

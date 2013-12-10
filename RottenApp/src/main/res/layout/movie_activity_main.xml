@@ -21,7 +21,8 @@
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingBottom="8dp">
 
                 <com.android.volley.toolbox.NetworkImageView
                     android:layout_width="100dp"
@@ -39,7 +40,9 @@
 
                     <LinearLayout
                         android:layout_height="wrap_content"
-                        android:layout_width="wrap_content">
+                        android:layout_width="wrap_content"
+                        android:paddingBottom="4dp"
+                        >
 
                         <TextView
                             android:layout_height="wrap_content"
@@ -67,13 +70,18 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:columnCount="2"
-                        android:rowCount="2">
+                        android:rowCount="2"
+                        android:onClick="openFullCritics"
+                        android:clickable="true"
+                        android:background="@drawable/border"
+                        android:padding="10dp">
 
                         <ImageView
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:contentDescription="@string/critics"
-                            android:id="@+id/ivCritics" />
+                            android:id="@+id/ivCritics"
+                            />
 
                         <TextView
                             android:layout_height="wrap_content"
