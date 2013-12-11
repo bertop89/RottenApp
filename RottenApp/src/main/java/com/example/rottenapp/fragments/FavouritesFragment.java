@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -10,6 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+
+import com.example.rottenapp.models.Movie;
+import com.example.rottenapp.data.MySQLiteHelper;
+import com.example.rottenapp.R;
+import com.example.rottenapp.activities.MovieActivity;
+import com.example.rottenapp.adapters.MovieAdapter;
 
 import java.util.ArrayList;
 
@@ -28,8 +34,8 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.favourites_fragment, container, false);
-        favouritesView = (ListView) rootView.findViewById(R.id.lvFavourites);
+        View rootView = inflater.inflate(R.layout.list_layout, container, false);
+        favouritesView = (ListView) rootView.findViewById(R.id.lvMainList);
         favouritesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -67,7 +73,7 @@ public class FavouritesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            favouritesView.setAdapter(new MyAdapter(getActivity(),movies));
+            favouritesView.setAdapter(new MovieAdapter(getActivity(),movies));
             super.onPostExecute(aVoid);
         }
     }

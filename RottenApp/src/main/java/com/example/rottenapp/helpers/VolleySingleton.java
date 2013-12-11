@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.helpers;
 
 /**
  * Created by alberto on 28/11/13.

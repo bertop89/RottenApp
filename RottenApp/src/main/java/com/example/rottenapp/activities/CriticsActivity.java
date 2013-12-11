@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.rottenapp.models.Critic;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
+import com.example.rottenapp.adapters.CriticsAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -23,7 +27,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +42,8 @@ public class CriticsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.favourites_fragment);
-        listView = (ListView) findViewById(R.id.lvFavourites);
+        setContentView(R.layout.list_layout);
+        listView = (ListView) findViewById(R.id.lvMainList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

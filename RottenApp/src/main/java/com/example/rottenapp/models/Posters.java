@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;

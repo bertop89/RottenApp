@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.helpers;
 
 import android.content.Context;
 

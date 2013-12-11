@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.models;
 
 /**
  * Created by alberto on 10/12/13.

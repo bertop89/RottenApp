@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -14,6 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.rottenapp.models.Movie;
+import com.example.rottenapp.data.MySQLiteHelper;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
 
 public class MovieActivity extends Activity {
 
@@ -28,7 +32,7 @@ public class MovieActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.movie_activity_main);
+        setContentView(R.layout.movie_activity);
         Intent i = getIntent();
         currentMovie = i.getParcelableExtra("movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -65,7 +69,7 @@ public class MovieActivity extends Activity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
-        ivPoster.setImageUrl(currentMovie.getPosters().getProfile(),VolleySingleton.getInstance(this).getImageLoader());
+        ivPoster.setImageUrl(currentMovie.getPosters().getProfile(), VolleySingleton.getInstance(this).getImageLoader());
     }
 
     public void representRatings () {
@@ -171,7 +175,7 @@ public class MovieActivity extends Activity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.movie_fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.movie_fragment, container, false);
             return rootView;
         }
     }

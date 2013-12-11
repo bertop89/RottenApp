@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.example.rottenapp.models.Movie;
 import com.google.gson.Gson;
 
 import java.util.ArrayList;

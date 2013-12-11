@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,20 +9,23 @@ import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.rottenapp.models.Movie;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
 
 import java.util.ArrayList;
 
 /**
  * Created by alberto on 27/11/13.
  */
-public class MyAdapter extends BaseAdapter {
+public class MovieAdapter extends BaseAdapter {
 
     Context context;
     private ArrayList data;
     private static LayoutInflater inflater = null;
     private ImageLoader mImageLoader;
 
-    public MyAdapter(Context context, ArrayList data) {
+    public MovieAdapter(Context context, ArrayList data) {
         this.context=context;
         this.data=data;
         inflater = (LayoutInflater) context

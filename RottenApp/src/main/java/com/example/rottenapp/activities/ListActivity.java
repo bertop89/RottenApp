@@ -1,5 +1,6 @@
-package com.example.rottenapp;
+package com.example.rottenapp.activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -17,6 +19,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.rottenapp.models.Movie;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
+import com.example.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,20 +34,33 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends android.app.ListActivity implements SearchView.OnQueryTextListener {
+public class ListActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
     private SearchView searchView;
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+    private ListView listView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_activity);
+        setContentView(R.layout.list_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(getIntent().getStringExtra("title"));
         getRequest(getIntent().getStringExtra("URL"));
+        listView = (ListView) findViewById(R.id.lvMainList);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                // save id
+                Movie m = (Movie)movieList.get(position);
+                myIntent.putExtra("movie",m);
+
+                startActivity(myIntent);
+            }
+        });
     }
 
 
@@ -68,20 +87,12 @@ public class ListActivity extends android.app.ListActivity implements SearchView
             case R.id.action_settings:
                 return true;
             case android.R.id.home:
-                NavUtils.navigateUpFromSameTask(this);
+                Intent upIntent = new Intent(this, MainActivity.class);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                NavUtils.navigateUpTo(this, upIntent);
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public void onListItemClick(ListView parent, View v, int position, long id) {
-
-        Intent myIntent = new Intent(v.getContext(), MovieActivity.class);
-        // save id
-        Movie m = (Movie)movieList.get(position);
-        myIntent.putExtra("movie",m);
-
-        startActivity(myIntent);
     }
 
     private void getRequest(String input) {
@@ -101,8 +112,7 @@ public class ListActivity extends android.app.ListActivity implements SearchView
                         movieList = new ArrayList<Movie>();
                         Gson gson = new Gson();
                         movieList = gson.fromJson(movies.toString(),typeList);
-                        ListView results = getListView();
-                        results.setAdapter(new MyAdapter(ListActivity.this,movieList));
+                        listView.setAdapter(new MovieAdapter(ListActivity.this, movieList));
 
                     }
                 },

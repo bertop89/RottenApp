@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.activities;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.android.volley.toolbox.NetworkImageView;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
 
 public class FullImageActivity extends Activity {
 
@@ -24,7 +26,7 @@ public class FullImageActivity extends Activity {
 
         String url = getIntent().getStringExtra("url");
         fullPoster = (NetworkImageView)findViewById(R.id.fullPoster);
-        fullPoster.setImageUrl(url,VolleySingleton.getInstance(this).getImageLoader());
+        fullPoster.setImageUrl(url, VolleySingleton.getInstance(this).getImageLoader());
     }
 
 

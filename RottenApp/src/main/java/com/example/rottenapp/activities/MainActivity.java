@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.activities;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -23,6 +23,14 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.rottenapp.fragments.FavouritesFragment;
+import com.example.rottenapp.helpers.InternalStorage;
+import com.example.rottenapp.models.Movie;
+import com.example.rottenapp.models.NavDrawerItem;
+import com.example.rottenapp.adapters.NavDrawerListAdapter;
+import com.example.rottenapp.R;
+import com.example.rottenapp.helpers.VolleySingleton;
+import com.example.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -182,7 +190,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         try {
             cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "boxlist");
             boxList = gson.fromJson(cachedEntries,typeList);
-            boxView.setAdapter(new MyAdapter(this,boxList));
+            boxView.setAdapter(new MovieAdapter(this,boxList));
         } catch (IOException e) {
             refreshBoxOffice();
         } catch (ClassNotFoundException e) {
@@ -192,7 +200,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         try {
             cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "upcominglist");
             upcomingList = gson.fromJson(cachedEntries,typeList);
-            upcomingView.setAdapter(new MyAdapter(this,upcomingList));
+            upcomingView.setAdapter(new MovieAdapter(this,upcomingList));
         } catch (IOException e) {
             refreshUpcoming();
         } catch (ClassNotFoundException e) {
@@ -220,7 +228,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                         upcomingList = new ArrayList<Movie>();
                         Gson gson = new Gson();
                         upcomingList = gson.fromJson(movies.toString(),typeList);
-                        upcomingView.setAdapter(new MyAdapter(MainActivity.this,upcomingList));
+                        upcomingView.setAdapter(new MovieAdapter(MainActivity.this,upcomingList));
                         try {
                             InternalStorage.writeObject(MainActivity.this, "upcominglist", movies.toString());
                         } catch (IOException e) {
@@ -261,7 +269,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                         boxList = new ArrayList<Movie>();
                         Gson gson = new Gson();
                         boxList = gson.fromJson(movies.toString(),typeList);
-                        boxView.setAdapter(new MyAdapter(MainActivity.this,boxList));
+                        boxView.setAdapter(new MovieAdapter(MainActivity.this,boxList));
                         try {
                             InternalStorage.writeObject(MainActivity.this, "boxlist", movies.toString());
                         } catch (IOException e) {

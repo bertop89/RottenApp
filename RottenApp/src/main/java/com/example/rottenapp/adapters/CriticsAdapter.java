@@ -1,4 +1,4 @@
-package com.example.rottenapp;
+package com.example.rottenapp.adapters;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -7,6 +7,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.rottenapp.models.Critic;
+import com.example.rottenapp.R;
 
 import java.util.ArrayList;
 
