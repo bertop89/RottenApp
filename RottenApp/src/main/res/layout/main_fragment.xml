@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="4dp"
-    tools:context=".MainActivity"
+    tools:context=".MainActivity$PlaceholderFragmen"
     tools:ignore="MergeRootFrame">
 
     <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
@@ -42,7 +42,7 @@
                     android:id="@+id/listBoxOffice" />
 
                 <Button
-                    android:id="@+id/tvSeeMoreBox"
+                    android:id="@+id/bSeeMoreBox"
                     android:text="@string/see_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -57,7 +57,7 @@
                     android:text="@string/upcoming"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/tvSeeMoreBox"
+                    android:layout_below="@+id/bSeeMoreBox"
                     style="?android:listSeparatorTextViewStyle"
                     />
 
@@ -70,7 +70,7 @@
                     android:id="@+id/listUpcoming" />
 
                 <Button
-                    android:id="@+id/tvSeeMore"
+                    android:id="@+id/bSeeMoreUpcoming"
                     android:text="@string/see_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -16,6 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -47,15 +48,12 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class MainActivity extends Activity implements SearchView.OnQueryTextListener, OnRefreshListener {
+public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
-    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-    private ArrayList boxList, upcomingList;
-    Type typeList = new TypeToken<List <Movie>>(){}.getType();
-    ListView boxView, upcomingView;
+    private static final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private SearchView searchView;
-    private PullToRefreshLayout mPullToRefreshLayout;
-    private int pendingRequest = 0;
+
+
 
     private String[] mDrawerArray;
     private TypedArray navMenuIcons;
@@ -142,173 +140,9 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         getActionBar().setHomeButtonEnabled(true);
     }
 
-    private void loadUI(View V) {
 
-        //Load lists
-        boxView = (ListView) V.findViewById(R.id.listBoxOffice);
-        boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                // save id
-                Movie m = (Movie)boxList.get(i);
-                myIntent.putExtra("movie",m);
 
-                startActivity(myIntent);
-            }
-        });
-        upcomingView = (ListView) V.findViewById(R.id.listUpcoming);
-        upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                // save id
-                Movie m = (Movie)upcomingList.get(i);
-                myIntent.putExtra("movie",m);
 
-                startActivity(myIntent);
-            }
-        });
-
-        // Now find the PullToRefreshLayout to setup
-        mPullToRefreshLayout = (PullToRefreshLayout) V.findViewById(R.id.ptr_layout);
-        // Now setup the PullToRefreshLayout
-        ActionBarPullToRefresh.from(this)
-                // Mark All Children as pullable
-                .allChildrenArePullable()
-                        // Set the OnRefreshListener
-                .listener(this)
-                        // Finally commit the setup to our PullToRefreshLayout
-                .setup(mPullToRefreshLayout);
-
-    }
-
-    private void loadData() {
-        String cachedEntries = null;
-        Gson gson = new Gson();
-
-        try {
-            cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "boxlist");
-            boxList = gson.fromJson(cachedEntries,typeList);
-            boxView.setAdapter(new MovieAdapter(this,boxList));
-        } catch (IOException e) {
-            refreshBoxOffice();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            cachedEntries = (String) InternalStorage.readObject(MainActivity.this, "upcominglist");
-            upcomingList = gson.fromJson(cachedEntries,typeList);
-            upcomingView.setAdapter(new MovieAdapter(this,upcomingList));
-        } catch (IOException e) {
-            refreshUpcoming();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    public void refreshUpcoming() {
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
-        // prepare the Request
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // display response
-                        JSONArray movies = new JSONArray();
-                        try {
-                            movies = response.getJSONArray("movies");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-
-                        upcomingList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
-                        upcomingList = gson.fromJson(movies.toString(),typeList);
-                        upcomingView.setAdapter(new MovieAdapter(MainActivity.this,upcomingList));
-                        try {
-                            InternalStorage.writeObject(MainActivity.this, "upcominglist", movies.toString());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        pendingRequest--;
-                        if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        );
-
-        // add it to the RequestQueue
-        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
-    }
-
-    public void refreshBoxOffice() {
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=4";
-        // prepare the Request
-        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
-                new Response.Listener<JSONObject>()
-                {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        // display response
-                        JSONArray movies = new JSONArray();
-                        try {
-                            movies = response.getJSONArray("movies");
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                        boxList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
-                        boxList = gson.fromJson(movies.toString(),typeList);
-                        boxView.setAdapter(new MovieAdapter(MainActivity.this,boxList));
-                        try {
-                            InternalStorage.writeObject(MainActivity.this, "boxlist", movies.toString());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        pendingRequest--;
-                        if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
-                    }
-                },
-                new Response.ErrorListener()
-                {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
-                    }
-                }
-        );
-
-        // add it to the RequestQueue
-        VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
-    }
-
-    public boolean openFullBox(View v) {
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES";
-        Intent myIntent = new Intent(this, ListActivity.class);
-        myIntent.putExtra("URL",URL);
-        myIntent.putExtra("title",getString(R.string.box_office));
-        startActivity(myIntent);
-        return false;
-    }
-
-    public boolean openFullUpcoming(View v) {
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&country=ES";
-        Intent myIntent = new Intent(this, ListActivity.class);
-        myIntent.putExtra("URL",URL);
-        myIntent.putExtra("title",getString(R.string.upcoming));
-        startActivity(myIntent);
-        return false;
-    }
 
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
@@ -348,10 +182,11 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             case R.id.action_settings:
                 return true;
             case R.id.refresh:
+                /*PlaceholderFragment fragment = (PlaceholderFragment) getFragmentManager().findFragmentById(R.id.main_container);
                 mPullToRefreshLayout.setRefreshing(true);
                 pendingRequest+=2;
                 refreshBoxOffice();
-                refreshUpcoming();
+                refreshUpcoming();*/
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -376,17 +211,20 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         return false;
     }
 
-    @Override
-    public void onRefreshStarted(View view) {
-        pendingRequest+=2;
-        refreshBoxOffice();
-        refreshUpcoming();
-    }
+
 
     /**
      * A placeholder fragment containing a simple view.
      */
-    public class PlaceholderFragment extends Fragment {
+    public static class PlaceholderFragment extends Fragment implements OnRefreshListener {
+
+
+        private ArrayList boxList, upcomingList;
+        Type typeList = new TypeToken<List <Movie>>(){}.getType();
+        ListView boxView, upcomingView;
+        Button boxButton, upcomingButton;
+        private PullToRefreshLayout mPullToRefreshLayout;
+        private int pendingRequest = 0;
 
         public PlaceholderFragment() {
         }
@@ -398,6 +236,200 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             loadUI(rootView);
             loadData();
             return rootView;
+        }
+
+        private void loadUI(View V) {
+
+            //Load lists
+            boxView = (ListView) V.findViewById(R.id.listBoxOffice);
+            boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                    // save id
+                    Movie m = (Movie)boxList.get(i);
+                    myIntent.putExtra("movie",m);
+
+                    startActivity(myIntent);
+                }
+            });
+            upcomingView = (ListView) V.findViewById(R.id.listUpcoming);
+            upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                    // save id
+                    Movie m = (Movie)upcomingList.get(i);
+                    myIntent.putExtra("movie",m);
+
+                    startActivity(myIntent);
+                }
+            });
+            boxButton = (Button) V.findViewById(R.id.bSeeMoreBox);
+            boxButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullBox(v);
+                }
+            });
+            upcomingButton = (Button) V.findViewById(R.id.bSeeMoreUpcoming);
+            upcomingButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullUpcoming(v);
+                }
+            });
+
+            // Now find the PullToRefreshLayout to setup
+            mPullToRefreshLayout = (PullToRefreshLayout) V.findViewById(R.id.ptr_layout);
+            // Now setup the PullToRefreshLayout
+            ActionBarPullToRefresh.from(getActivity())
+                    // Mark All Children as pullable
+                    .allChildrenArePullable()
+                            // Set the OnRefreshListener
+                    .listener(this)
+                            // Finally commit the setup to our PullToRefreshLayout
+                    .setup(mPullToRefreshLayout);
+
+        }
+
+        private void loadData() {
+            String cachedEntries = null;
+            Gson gson = new Gson();
+
+            try {
+                cachedEntries = (String) InternalStorage.readObject(getActivity(), "boxlist");
+                boxList = gson.fromJson(cachedEntries,typeList);
+                boxView.setAdapter(new MovieAdapter(getActivity(),boxList));
+            } catch (IOException e) {
+                refreshBoxOffice();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                cachedEntries = (String) InternalStorage.readObject(getActivity(), "upcominglist");
+                upcomingList = gson.fromJson(cachedEntries,typeList);
+                upcomingView.setAdapter(new MovieAdapter(getActivity(),upcomingList));
+            } catch (IOException e) {
+                refreshUpcoming();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        public void refreshUpcoming() {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
+            // prepare the Request
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // display response
+                            JSONArray movies = new JSONArray();
+                            try {
+                                movies = response.getJSONArray("movies");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                            upcomingList = new ArrayList<Movie>();
+                            Gson gson = new Gson();
+                            upcomingList = gson.fromJson(movies.toString(),typeList);
+                            upcomingView.setAdapter(new MovieAdapter(getActivity(),upcomingList));
+                            try {
+                                InternalStorage.writeObject(getActivity(), "upcominglist", movies.toString());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pendingRequest--;
+                            if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            );
+
+            // add it to the RequestQueue
+            VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+        }
+
+        public void refreshBoxOffice() {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=4";
+            // prepare the Request
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // display response
+                            JSONArray movies = new JSONArray();
+                            try {
+                                movies = response.getJSONArray("movies");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            boxList = new ArrayList<Movie>();
+                            Gson gson = new Gson();
+                            boxList = gson.fromJson(movies.toString(),typeList);
+                            boxView.setAdapter(new MovieAdapter(getActivity(),boxList));
+                            try {
+                                InternalStorage.writeObject(getActivity(), "boxlist", movies.toString());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pendingRequest--;
+                            if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            );
+
+            // add it to the RequestQueue
+            VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+        }
+
+        public boolean openFullBox(View v) {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES";
+            Intent myIntent = new Intent(v.getContext(), ListActivity.class);
+            myIntent.putExtra("URL",URL);
+            myIntent.putExtra("title",getString(R.string.box_office));
+            startActivity(myIntent);
+            return false;
+        }
+
+        public boolean openFullUpcoming(View v) {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&country=ES";
+            Intent myIntent = new Intent(v.getContext(), ListActivity.class);
+            myIntent.putExtra("URL",URL);
+            myIntent.putExtra("title",getString(R.string.upcoming));
+            startActivity(myIntent);
+            return false;
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            return super.onOptionsItemSelected(item);
+        }
+
+        @Override
+        public void onRefreshStarted(View view) {
+            pendingRequest+=2;
+            refreshBoxOffice();
+            refreshUpcoming();
         }
     }
 
