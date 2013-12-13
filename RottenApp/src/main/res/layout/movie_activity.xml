@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context=".MovieActivity"
     tools:ignore="MergeRootFrame"
-    android:padding="10dp">
+>
 
     <ScrollView
         android:layout_height="match_parent"
@@ -46,12 +46,15 @@
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    >
 
                     <LinearLayout
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:paddingBottom="4dp"
+                        android:orientation="vertical"
                         >
 
                         <TextView
@@ -63,11 +66,13 @@
                             android:text="Here goes the longest movie title you can think of"
                             android:singleLine="true"
                             android:enabled="true"
-                            android:maxWidth="220dp" />
+                            android:maxWidth="260dp"
+                            android:layout_marginRight="4dp"
+                            />
 
                         <TextView
                             android:layout_height="wrap_content"
-                            android:layout_width="50dp"
+                            android:layout_width="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
                             android:id="@+id/tvYear"
                             android:text="year"
@@ -83,14 +88,14 @@
                         android:rowCount="2"
                         android:onClick="openFullCritics"
                         android:clickable="true"
-                        android:background="@drawable/border"
                         android:padding="10dp">
 
                         <ImageView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_width="32dp"
                             android:contentDescription="@string/critics"
                             android:id="@+id/ivCritics"
+                            android:layout_marginRight="8dp"
                             />
 
                         <TextView
@@ -101,10 +106,12 @@
                             android:layout_gravity="center_vertical" />
 
                         <ImageView
-                            android:layout_height="wrap_content"
-                            android:layout_width="wrap_content"
+                            android:layout_height="32dp"
+                            android:layout_width="32dp"
                             android:contentDescription="@string/critics"
-                            android:id="@+id/ivAudience" />
+                            android:id="@+id/ivAudience"
+                            android:layout_marginRight="8dp"
+                            />
 
                         <TextView
                             android:layout_height="wrap_content"
@@ -117,96 +124,111 @@
 
                 </LinearLayout>
 
-
-
             </LinearLayout>
 
+            <!-- Synopsis Separator -->
+            <TextView
+                android:id="@+id/tvBoxOffice"
+                android:text="@string/synopsis"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                style="?android:listSeparatorTextViewStyle"
+                />
+
+            <!-- Synopsis -->
             <TextView
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/tvSynopsis"
-                android:paddingBottom="10dp" />
+                android:text="No synopsis available"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="8dp"
+                />
 
-            <LinearLayout
+            <!-- Details Separator -->
+            <TextView
+                android:id="@+id/tvBoxOffice"
+                android:text="@string/details"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
+                android:layout_marginBottom="8dp"
+                style="?android:listSeparatorTextViewStyle"
+                />
 
-                <TextView
+            <!-- Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="8dp"
+                >
+
+                <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:paddingRight="5dp"
-                    android:text="@string/rating"
-                    android:id="@+id/tvRatingText"
-                    android:textStyle="bold" />
-                <TextView
+                    android:layout_marginBottom="8dp"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="@string/rating"
+                        android:id="@+id/tvRatingText"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tvRatingValue"/>
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvRatingValue"/>
+                    android:layout_width="wrap_content">
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="@string/runtime"
+                        android:id="@+id/tvRunningText"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tvRunningValue"/>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-            <LinearLayout
+            <!-- Cast Separator -->
+            <TextView
+                android:id="@+id/tvBoxOffice"
+                android:text="@string/cast"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
+                android:layout_marginBottom="8dp"
+                style="?android:listSeparatorTextViewStyle"
+                />
 
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvGenreText"/>
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvGenreValue"/>
+            <GridView
+                android:id="@+id/gridView"
+                android:layout_width="fill_parent"
+                android:layout_height="125dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:columnWidth="90dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center">
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:paddingRight="5dp"
-                    android:text="@string/runtime"
-                    android:id="@+id/tvRunningText"
-                    android:textStyle="bold" />
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvRunningValue"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvReleaseText"/>
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvReleaseValue"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content">
-
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvDirectorText"/>
-                <TextView
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:id="@+id/tvDiretorValue"/>
-
-            </LinearLayout>
+                </GridView>
 
         </LinearLayout>
 

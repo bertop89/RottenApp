@@ -31,6 +31,9 @@
     <string name="chooser_title">Compartir con</string>
     <string name="title_activity_critics">Críticas</string>
     <string name="critic_icon">Icono</string>
+    <string name="synopsis">Sinopsis</string>
+    <string name="details">Detalles</string>
+    <string name="cast">Reparto</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

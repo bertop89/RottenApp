@@ -52,9 +52,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
     private static final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private SearchView searchView;
-
-
-
     private String[] mDrawerArray;
     private TypedArray navMenuIcons;
 

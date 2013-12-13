@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,6 +23,8 @@ import com.example.rottenapp.data.MySQLiteHelper;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 
+import java.util.ArrayList;
+
 public class MovieActivity extends Activity {
 
     Movie currentMovie;
@@ -30,6 +34,10 @@ public class MovieActivity extends Activity {
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
     MySQLiteHelper db;
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+
+    GridView castView;
+    ArrayList<String> cast = new ArrayList<String>();
+
 
 
     @Override
@@ -49,10 +57,17 @@ public class MovieActivity extends Activity {
         tvAudience = (TextView) findViewById(R.id.tvAudience);
         tvSynopsis = (TextView) findViewById(R.id.tvSynopsis);
         tvRating = (TextView) findViewById(R.id.tvRatingValue);
-        tvGenre = (TextView) findViewById(R.id.tvGenreValue);
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
-        tvRelease = (TextView) findViewById(R.id.tvReleaseValue);
-        tvDirector = (TextView) findViewById(R.id.tvDiretorValue);
+
+        cast.add("Cast Name 1");
+        cast.add("Cast Name 2");
+        cast.add("Cast Name 3");
+        cast.add("Cast Name 4");
+        cast.add("Cast Name 5");
+        castView = (GridView) findViewById(R.id.gridView);
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cast);
+        castView.setAdapter(adaptador);
+
         representUI();
         representRatings();
         db = new MySQLiteHelper(this);

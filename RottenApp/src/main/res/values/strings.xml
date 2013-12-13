@@ -40,5 +40,8 @@
     <string name="chooser_title">Share With</string>
     <string name="title_activity_critics">Critics</string>
     <string name="critic_icon">Critic Icon</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="details">Details</string>
+    <string name="cast">Cast</string>
 
 </resources>
