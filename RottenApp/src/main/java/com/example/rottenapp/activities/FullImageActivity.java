@@ -10,14 +10,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.android.volley.toolbox.NetworkImageView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 
 public class FullImageActivity extends Activity {
 
-    NetworkImageView fullPoster;
+    ImageView fullPoster;
+    ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,8 +28,23 @@ public class FullImageActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         String url = getIntent().getStringExtra("url");
-        fullPoster = (NetworkImageView)findViewById(R.id.fullPoster);
-        fullPoster.setImageUrl(url, VolleySingleton.getInstance(this).getImageLoader());
+        fullPoster = (ImageView)findViewById(R.id.fullPoster);
+        progressBar = (ProgressBar)findViewById(R.id.progressImage);
+        VolleySingleton.getInstance(this).getImageLoader().get(url, new ImageLoader.ImageListener() {
+            @Override
+            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                if (imageContainer.getBitmap() != null) {
+                    progressBar.setVisibility(View.GONE);
+                    fullPoster.setImageBitmap(imageContainer.getBitmap());
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                fullPoster.setImageResource(R.drawable.rotten);
+            }
+        });
+
     }
 
 

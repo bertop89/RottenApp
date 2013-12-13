@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -38,6 +39,7 @@ public class CriticsActivity extends Activity {
     private ArrayList criticList;
     Type typeList = new TypeToken<List<Critic>>(){}.getType();
     ListView listView;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +55,10 @@ public class CriticsActivity extends Activity {
                 startActivity(intent);
             }
         });
+        loading = (ProgressBar) findViewById(R.id.progress);
+        loading.setVisibility(View.VISIBLE);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
         getRequest(getIntent().getStringExtra("URL"));
     }
 
@@ -73,6 +78,7 @@ public class CriticsActivity extends Activity {
                         criticList = new ArrayList<Critic>();
                         Gson gson = new Gson();
                         criticList = gson.fromJson(critics.toString(),typeList);
+                        loading.setVisibility(View.GONE);
                         listView.setAdapter(new CriticsAdapter(CriticsActivity.this,criticList));
                     }
                 },

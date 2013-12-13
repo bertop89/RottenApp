@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 
 import com.android.volley.Request;
@@ -41,6 +42,7 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
     private SearchView searchView;
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private ListView listView;
+    ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,8 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
                 startActivity(myIntent);
             }
         });
+        loading = (ProgressBar) findViewById(R.id.progress);
+        loading.setVisibility(View.VISIBLE);
     }
 
 
@@ -112,6 +116,7 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
                         movieList = new ArrayList<Movie>();
                         Gson gson = new Gson();
                         movieList = gson.fromJson(movies.toString(),typeList);
+                        loading.setVisibility(View.GONE);
                         listView.setAdapter(new MovieAdapter(ListActivity.this, movieList));
 
                     }

@@ -24,14 +24,24 @@
                 android:orientation="horizontal"
                 android:paddingBottom="8dp">
 
-                <com.android.volley.toolbox.NetworkImageView
+                <ProgressBar
+                    android:id="@+id/progressPoster"
+                    style="?android:attr/progressBarStyleLarge"
+                    android:layout_width="100dp"
+                    android:layout_height="147dp"
+                    android:layout_gravity="center_vertical|center_horizontal"
+                    android:layout_marginRight="15dp"
+                    android:visibility="visible" />
+
+                <ImageView
                     android:layout_width="100dp"
                     android:layout_height="147dp"
                     android:id="@+id/ivPoster"
                     android:layout_gravity="left|top"
-                    android:src="@android:color/darker_gray"
                     android:onClick="openFullPoster"
-                    android:layout_marginRight="15dp" />
+                    android:layout_marginRight="15dp"
+                    android:visibility="gone"
+                    />
 
                 <LinearLayout
                     android:layout_height="wrap_content"

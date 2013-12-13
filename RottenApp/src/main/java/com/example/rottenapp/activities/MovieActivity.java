@@ -11,9 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageLoader;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
 import com.example.rottenapp.R;
@@ -23,7 +25,8 @@ public class MovieActivity extends Activity {
 
     Movie currentMovie;
     ImageView ivCritics, ivAudience;
-    NetworkImageView ivPoster;
+    ImageView ivPoster;
+    ProgressBar progressBar;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
     MySQLiteHelper db;
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
@@ -36,7 +39,8 @@ public class MovieActivity extends Activity {
         Intent i = getIntent();
         currentMovie = i.getParcelableExtra("movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        ivPoster = (NetworkImageView) findViewById(R.id.ivPoster);
+        ivPoster = (ImageView) findViewById(R.id.ivPoster);
+        progressBar = (ProgressBar) findViewById(R.id.progressPoster);
         ivCritics = (ImageView) findViewById(R.id.ivCritics);
         ivAudience = (ImageView) findViewById(R.id.ivAudience);
         tvTitle = (TextView) findViewById(R.id.tvTitle);
@@ -69,7 +73,21 @@ public class MovieActivity extends Activity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
-        ivPoster.setImageUrl(currentMovie.getPosters().getProfile(), VolleySingleton.getInstance(this).getImageLoader());
+        VolleySingleton.getInstance(this).getImageLoader().get(currentMovie.getPosters().getProfile(), new ImageLoader.ImageListener() {
+            @Override
+            public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
+                if (imageContainer.getBitmap() != null) {
+                    ivPoster.setImageBitmap(imageContainer.getBitmap());
+                    progressBar.setVisibility(View.GONE);
+                    ivPoster.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                ivPoster.setImageResource(R.drawable.rotten);
+            }
+        });
     }
 
     public void representRatings () {
