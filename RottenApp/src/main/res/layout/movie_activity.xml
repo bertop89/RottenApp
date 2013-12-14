@@ -216,17 +216,21 @@
                 />
 
             <GridView
+                android:scrollbars="none"
                 android:id="@+id/gridView"
                 android:layout_width="fill_parent"
                 android:layout_height="125dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:columnWidth="90dp"
                 android:numColumns="auto_fit"
                 android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp"
                 android:stretchMode="columnWidth"
-                android:gravity="center">
+                android:gravity="center"
+                android:clickable="false"
+                android:horizontalSpacing="8dp"
+                android:columnWidth="115dp"
+                android:drawSelectorOnTop="false"
+                android:textFilterEnabled="false">
 
                 </GridView>
 

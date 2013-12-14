@@ -18,6 +18,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.example.rottenapp.adapters.CastAdapter;
+import com.example.rottenapp.models.Cast;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
 import com.example.rottenapp.R;
@@ -36,7 +38,7 @@ public class MovieActivity extends Activity {
     private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
 
     GridView castView;
-    ArrayList<String> cast = new ArrayList<String>();
+    ArrayList<Cast> cast = new ArrayList<Cast>();
 
 
 
@@ -59,14 +61,9 @@ public class MovieActivity extends Activity {
         tvRating = (TextView) findViewById(R.id.tvRatingValue);
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
 
-        cast.add("Cast Name 1");
-        cast.add("Cast Name 2");
-        cast.add("Cast Name 3");
-        cast.add("Cast Name 4");
-        cast.add("Cast Name 5");
         castView = (GridView) findViewById(R.id.gridView);
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, cast);
-        castView.setAdapter(adaptador);
+        cast = currentMovie.getAbridged_cast();
+        castView.setAdapter(new CastAdapter(this,cast));
 
         representUI();
         representRatings();

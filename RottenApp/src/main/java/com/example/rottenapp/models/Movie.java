@@ -56,6 +56,10 @@ public class Movie implements Parcelable{
         return links;
     }
 
+    public ArrayList<Cast> getAbridged_cast() {
+        return abridged_cast;
+    }
+
     @Override
     public String toString() {
         return title;
