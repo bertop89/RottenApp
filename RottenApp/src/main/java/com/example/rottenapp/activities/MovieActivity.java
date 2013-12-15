@@ -77,10 +77,14 @@ public class MovieActivity extends Activity {
         String critic_score = currentMovie.getRatings().getCritics_score();
         if (!critic_score.equals("-1")) {
             tvCritics.setText(critic_score+"% "+ getResources().getString(R.string.critics));
+        } else {
+            tvCritics.setText(getResources().getString(R.string.no_score));
         }
         String audience_score = currentMovie.getRatings().getAudience_score();
         if (!audience_score.equals("-1")) {
             tvAudience.setText(audience_score+"% "+ getResources().getString(R.string.audience));
+        } else {
+            tvCritics.setText(getResources().getString(R.string.no_score));
         }
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
@@ -112,6 +116,8 @@ public class MovieActivity extends Activity {
             } else if (critics.equals("Rotten")) {
                 ivCritics.setImageResource(R.drawable.rotten);
             }
+        } else {
+            ivCritics.setImageResource(R.drawable.more);
         }
 
         String audience = currentMovie.getRatings().getAudience_rating();
@@ -121,6 +127,8 @@ public class MovieActivity extends Activity {
             } else if (audience.equals("Spilled")) {
                 ivAudience.setImageResource(R.drawable.spilled);
             }
+        } else {
+            ivAudience.setImageResource(R.drawable.more);
         }
     }
 

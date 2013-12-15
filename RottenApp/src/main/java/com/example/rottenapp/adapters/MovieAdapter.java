@@ -64,8 +64,8 @@ public class MovieAdapter extends BaseAdapter {
         laYear.setText(m.getYear());
 
         String score = m.getRatings().getCritics_score();
-        if (score.equals("-1")) {
-            laScore.setText("");
+        if (score.equals("-1") || score.equals("")) {
+            laScore.setText("——");
         } else {
             laScore.setText(score+"%");
         }
