@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.rottenapp.data.Global;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
@@ -37,10 +38,10 @@ import java.util.List;
 
 public class ListActivity extends Activity implements SearchView.OnQueryTextListener {
 
+    private String apikey;
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
     private SearchView searchView;
-    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
     private ListView listView;
     ProgressBar loading;
 
@@ -49,6 +50,8 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        final Global global = (Global)getApplicationContext();
+        apikey = global.getApikey();
         setTitle(getIntent().getStringExtra("title"));
         getRequest(getIntent().getStringExtra("URL"));
         listView = (ListView) findViewById(R.id.lvMainList);

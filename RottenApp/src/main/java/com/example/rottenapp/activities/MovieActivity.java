@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.example.rottenapp.adapters.CastAdapter;
+import com.example.rottenapp.data.Global;
 import com.example.rottenapp.models.Cast;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
@@ -35,7 +36,7 @@ public class MovieActivity extends Activity {
     ProgressBar progressBar;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
     MySQLiteHelper db;
-    private final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+    private String apikey;
 
     GridView castView;
     ArrayList<Cast> cast = new ArrayList<Cast>();
@@ -49,6 +50,8 @@ public class MovieActivity extends Activity {
         Intent i = getIntent();
         currentMovie = i.getParcelableExtra("movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
+        final Global global = (Global)getApplicationContext();
+        apikey = global.getApikey();
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
         progressBar = (ProgressBar) findViewById(R.id.progressPoster);
         ivCritics = (ImageView) findViewById(R.id.ivCritics);

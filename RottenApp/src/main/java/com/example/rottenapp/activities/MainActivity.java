@@ -24,6 +24,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.example.rottenapp.data.Global;
 import com.example.rottenapp.fragments.FavouritesFragment;
 import com.example.rottenapp.helpers.InternalStorage;
 import com.example.rottenapp.models.Movie;
@@ -50,7 +51,7 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
-    private static final String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
+    private static String apikey;
     private SearchView searchView;
     private String[] mDrawerArray;
     private TypedArray navMenuIcons;
@@ -66,6 +67,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         loadDrawer();
+        final Global global = (Global)getApplicationContext();
+        apikey = global.getApikey();
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);
