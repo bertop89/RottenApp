@@ -41,7 +41,8 @@
                     android:onClick="openFullPoster"
                     android:layout_marginRight="15dp"
                     android:visibility="gone"
-                    android:adjustViewBounds="true" />
+                    android:adjustViewBounds="true"
+                    android:scaleType="fitStart" />
 
                 <LinearLayout
                     android:layout_height="wrap_content"

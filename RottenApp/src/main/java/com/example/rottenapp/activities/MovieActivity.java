@@ -92,7 +92,7 @@ public class MovieActivity extends Activity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
-        VolleySingleton.getInstance(this).getImageLoader().get(currentMovie.getPosters().getProfile(), new ImageLoader.ImageListener() {
+        VolleySingleton.getInstance(this).getImageLoader().get(currentMovie.getPosters().getDetailed(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
                 if (imageContainer.getBitmap() != null) {
