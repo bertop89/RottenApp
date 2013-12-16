@@ -22,6 +22,10 @@ public class Links implements Parcelable {
         return reviews;
     }
 
+    public String getSimilar() {
+        return similar;
+    }
+
     @Override
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeString(self);

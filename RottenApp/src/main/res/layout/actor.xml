@@ -10,12 +10,16 @@
         android:text="Name of Actor"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvActor"
+        android:maxWidth="115dp"
+        android:singleLine="true"
         android:textStyle="bold"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Role"
+        android:maxWidth="115dp"
+        android:singleLine="true"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:id="@+id/tvRole" />
 </LinearLayout>

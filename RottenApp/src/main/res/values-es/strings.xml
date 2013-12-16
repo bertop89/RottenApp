@@ -35,6 +35,7 @@
     <string name="details">Detalles</string>
     <string name="cast">Reparto</string>
     <string name="no_score">Sin puntuación</string>
+    <string name="similar">Similares</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

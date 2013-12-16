@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:layout_width="50dp"
+        android:layout_height="100dp"
+        android:id="@+id/ivSimilar"
+        android:src="@drawable/ic_launcher"
+        android:layout_marginBottom="8dp"
+     />
+
+    <TextView
+        android:id="@+id/tvSimilar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivSimilar"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Similar 1"
+        />
+</RelativeLayout>

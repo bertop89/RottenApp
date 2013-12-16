@@ -5,28 +5,47 @@ import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.GridLayout;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.rottenapp.adapters.CastAdapter;
+import com.example.rottenapp.adapters.MovieAdapter;
+import com.example.rottenapp.adapters.SimilarAdapter;
 import com.example.rottenapp.data.Global;
+import com.example.rottenapp.helpers.ExpandableHeightGridView;
+import com.example.rottenapp.helpers.InternalStorage;
 import com.example.rottenapp.models.Cast;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MovieActivity extends Activity {
 
@@ -38,10 +57,12 @@ public class MovieActivity extends Activity {
     MySQLiteHelper db;
     private String apikey;
 
-    GridView castView;
+    ExpandableHeightGridView castView;
     ArrayList<Cast> cast = new ArrayList<Cast>();
 
-
+    ExpandableHeightGridView gridSimilar;
+    ArrayList<Movie> similarList;
+    private Type typeList = new TypeToken<List<Movie>>(){}.getType();;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +71,56 @@ public class MovieActivity extends Activity {
         Intent i = getIntent();
         currentMovie = i.getParcelableExtra("movie");
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
         final Global global = (Global)getApplicationContext();
         apikey = global.getApikey();
+
+        representUI();
+        representRatings();
+        representSimilar();
+        db = new MySQLiteHelper(this);
+        db.getWritableDatabase();
+    }
+
+    private void representSimilar() {
+        String URL = currentMovie.getLinks().getSimilar() + "?limit=4&apikey="+apikey;
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        JSONArray movies = new JSONArray();
+                        try {
+                            movies = response.getJSONArray("movies");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                        similarList = new ArrayList<Movie>();
+                        Gson gson = new Gson();
+                        similarList = gson.fromJson(movies.toString(),typeList);
+                        gridSimilar.setFocusable(false);
+                        gridSimilar.setAdapter(new SimilarAdapter(getApplicationContext(),similarList));
+                        gridSimilar.setExpanded(true);
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(getApplicationContext()).getRequestQueue().add(getRequest);
+
+
+    }
+
+    public void representUI() {
         ivPoster = (ImageView) findViewById(R.id.ivPoster);
         progressBar = (ProgressBar) findViewById(R.id.progressPoster);
         ivCritics = (ImageView) findViewById(R.id.ivCritics);
@@ -64,17 +133,14 @@ public class MovieActivity extends Activity {
         tvRating = (TextView) findViewById(R.id.tvRatingValue);
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
 
-        castView = (GridView) findViewById(R.id.gridView);
+
+        castView = (ExpandableHeightGridView) findViewById(R.id.gridView);
+        castView.setFocusable(false);
         cast = currentMovie.getAbridged_cast();
         castView.setAdapter(new CastAdapter(this,cast));
+        castView.setExpanded(true);
 
-        representUI();
-        representRatings();
-        db = new MySQLiteHelper(this);
-        db.getWritableDatabase();
-    }
 
-    public void representUI() {
         tvTitle.setText(currentMovie.getTitle());
         tvYear.setText("("+currentMovie.getYear()+")");
         String critic_score = currentMovie.getRatings().getCritics_score();
@@ -107,6 +173,9 @@ public class MovieActivity extends Activity {
                 ivPoster.setImageResource(R.drawable.rotten);
             }
         });
+
+        gridSimilar = (ExpandableHeightGridView) findViewById(R.id.gridSimilar);
+
     }
 
     public void representRatings () {

@@ -9,6 +9,7 @@
 >
 
     <ScrollView
+        android:id="@+id/scrollMovie"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:scrollbars="none">
@@ -216,24 +217,53 @@
                 style="?android:listSeparatorTextViewStyle"
                 />
 
-            <GridView
-                android:scrollbars="none"
+            <com.example.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridView"
-                android:layout_width="fill_parent"
-                android:layout_height="125dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_marginBottom="8dp"
                 android:numColumns="auto_fit"
-                android:verticalSpacing="10dp"
                 android:stretchMode="columnWidth"
                 android:gravity="center"
                 android:clickable="false"
                 android:horizontalSpacing="8dp"
                 android:columnWidth="115dp"
-                android:drawSelectorOnTop="false"
-                android:textFilterEnabled="false">
+                android:isScrollContainer="false"
+                android:scrollbars="none"
+                android:verticalSpacing="20dp"
+                >
 
-                </GridView>
+            </com.example.rottenapp.helpers.ExpandableHeightGridView>
+
+            <!-- Similar Separator -->
+            <TextView
+                android:id="@+id/tvSimilarSeparator"
+                android:text="@string/similar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                style="?android:listSeparatorTextViewStyle"
+                />
+
+            <com.example.rottenapp.helpers.ExpandableHeightGridView
+                android:id="@+id/gridSimilar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:numColumns="4"
+                android:stretchMode="columnWidth"
+                android:gravity="center"
+                android:clickable="false"
+                android:horizontalSpacing="8dp"
+                android:isScrollContainer="false"
+                android:verticalSpacing="20dp"
+                android:scrollbars="none"
+                >
+
+            </com.example.rottenapp.helpers.ExpandableHeightGridView>
 
         </LinearLayout>
 
