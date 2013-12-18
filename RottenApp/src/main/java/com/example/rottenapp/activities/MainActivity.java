@@ -43,6 +43,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -222,6 +223,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         private ArrayList boxList, upcomingList;
         Type typeList = new TypeToken<List <Movie>>(){}.getType();
         ListView boxView, upcomingView;
+        MovieAdapter boxAdapter, upcomingAdapter;
         Button boxButton, upcomingButton;
         private PullToRefreshLayout mPullToRefreshLayout;
         private int pendingRequest = 0;
@@ -240,7 +242,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
         private void loadUI(View V) {
 
-            //Load lists
+            //Load box list
             boxView = (ListView) V.findViewById(R.id.listBoxOffice);
             boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -253,6 +255,19 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                     startActivity(myIntent);
                 }
             });
+            boxList = new ArrayList<Movie>();
+            boxAdapter = new MovieAdapter(getActivity(),boxList);
+            boxView.setAdapter(boxAdapter);
+
+            boxButton = (Button) V.findViewById(R.id.bSeeMoreBox);
+            boxButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullBox(v);
+                }
+            });
+
+            //Load upcoming list
             upcomingView = (ListView) V.findViewById(R.id.listUpcoming);
             upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
@@ -265,13 +280,10 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                     startActivity(myIntent);
                 }
             });
-            boxButton = (Button) V.findViewById(R.id.bSeeMoreBox);
-            boxButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openFullBox(v);
-                }
-            });
+            upcomingList = new ArrayList<Movie>();
+            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
+            upcomingView.setAdapter(upcomingAdapter);
+
             upcomingButton = (Button) V.findViewById(R.id.bSeeMoreUpcoming);
             upcomingButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -299,8 +311,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
             try {
                 cachedEntries = (String) InternalStorage.readObject(getActivity(), "boxlist");
-                boxList = gson.fromJson(cachedEntries,typeList);
-                boxView.setAdapter(new MovieAdapter(getActivity(),boxList));
+                boxList.addAll((Collection) gson.fromJson(cachedEntries,typeList));
+                boxAdapter.notifyDataSetChanged();
             } catch (IOException e) {
                 refreshBoxOffice();
             } catch (ClassNotFoundException e) {
@@ -309,8 +321,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
             try {
                 cachedEntries = (String) InternalStorage.readObject(getActivity(), "upcominglist");
-                upcomingList = gson.fromJson(cachedEntries,typeList);
-                upcomingView.setAdapter(new MovieAdapter(getActivity(),upcomingList));
+                upcomingList.addAll((Collection) gson.fromJson(cachedEntries,typeList));
+                upcomingAdapter.notifyDataSetChanged();
             } catch (IOException e) {
                 refreshUpcoming();
             } catch (ClassNotFoundException e) {
@@ -334,11 +346,10 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-
-                            upcomingList = new ArrayList<Movie>();
                             Gson gson = new Gson();
-                            upcomingList = gson.fromJson(movies.toString(),typeList);
-                            upcomingView.setAdapter(new MovieAdapter(getActivity(),upcomingList));
+                            upcomingList.clear();
+                            upcomingList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                            upcomingAdapter.notifyDataSetChanged();
                             try {
                                 InternalStorage.writeObject(getActivity(), "upcominglist", movies.toString());
                             } catch (IOException e) {
@@ -376,10 +387,10 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            boxList = new ArrayList<Movie>();
                             Gson gson = new Gson();
-                            boxList = gson.fromJson(movies.toString(),typeList);
-                            boxView.setAdapter(new MovieAdapter(getActivity(),boxList));
+                            boxList.clear();
+                            boxList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                            boxAdapter.notifyDataSetChanged();
                             try {
                                 InternalStorage.writeObject(getActivity(), "boxlist", movies.toString());
                             } catch (IOException e) {
