@@ -19,11 +19,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.commonsware.cwac.merge.MergeAdapter;
 import com.example.rottenapp.data.Global;
 import com.example.rottenapp.fragments.FavouritesFragment;
 import com.example.rottenapp.helpers.InternalStorage;
@@ -222,9 +224,10 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
         private ArrayList boxList, upcomingList;
         Type typeList = new TypeToken<List <Movie>>(){}.getType();
-        ListView boxView, upcomingView;
+        ListView mainList;
         MovieAdapter boxAdapter, upcomingAdapter;
-        Button boxButton, upcomingButton;
+        MergeAdapter mergeAdapter;
+
         private PullToRefreshLayout mPullToRefreshLayout;
         private int pendingRequest = 0;
 
@@ -241,56 +244,36 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         private void loadUI(View V) {
+            mergeAdapter = new MergeAdapter();
+            mainList = (ListView) V.findViewById(R.id.listMain);
 
-            //Load box list
-            boxView = (ListView) V.findViewById(R.id.listBoxOffice);
-            boxView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                    // save id
-                    Movie m = (Movie)boxList.get(i);
-                    myIntent.putExtra("movie",m);
-
-                    startActivity(myIntent);
-                }
-            });
-            boxList = new ArrayList<Movie>();
-            boxAdapter = new MovieAdapter(getActivity(),boxList);
-            boxView.setAdapter(boxAdapter);
-
-            boxButton = (Button) V.findViewById(R.id.bSeeMoreBox);
-            boxButton.setOnClickListener(new View.OnClickListener() {
+            View header1 = View.inflate(getActivity(),R.layout.header,null);
+            ((TextView)header1.findViewById(R.id.tvHeader)).setText(R.string.box_office);
+            header1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openFullBox(v);
                 }
             });
+            mergeAdapter.addView(header1);
 
-            //Load upcoming list
-            upcomingView = (ListView) V.findViewById(R.id.listUpcoming);
-            upcomingView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
-                    // save id
-                    Movie m = (Movie)upcomingList.get(i);
-                    myIntent.putExtra("movie",m);
+            boxList = new ArrayList<Movie>();
+            boxAdapter = new MovieAdapter(getActivity(),boxList);
+            mergeAdapter.addAdapter(boxAdapter);
 
-                    startActivity(myIntent);
-                }
-            });
-            upcomingList = new ArrayList<Movie>();
-            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
-            upcomingView.setAdapter(upcomingAdapter);
-
-            upcomingButton = (Button) V.findViewById(R.id.bSeeMoreUpcoming);
-            upcomingButton.setOnClickListener(new View.OnClickListener() {
+            View header2 = View.inflate(getActivity(),R.layout.header,null);
+            ((TextView)header2.findViewById(R.id.tvHeader)).setText(R.string.upcoming);
+            header2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     openFullUpcoming(v);
                 }
             });
+            mergeAdapter.addView(header2);
+
+            upcomingList = new ArrayList<Movie>();
+            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
+            mergeAdapter.addAdapter(upcomingAdapter);
 
             // Now find the PullToRefreshLayout to setup
             mPullToRefreshLayout = (PullToRefreshLayout) V.findViewById(R.id.ptr_layout);
@@ -303,6 +286,19 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             // Finally commit the setup to our PullToRefreshLayout
                     .setup(mPullToRefreshLayout);
 
+            mainList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                    // save id
+                    Movie m = (Movie)mergeAdapter.getItem(position);
+                    myIntent.putExtra("movie",m);
+
+                    startActivity(myIntent);
+                }
+            });
+
+            mainList.setAdapter(mergeAdapter);
         }
 
         private void loadData() {

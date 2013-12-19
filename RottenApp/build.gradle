@@ -26,5 +26,7 @@ dependencies {
 	compile 'com.android.support:appcompat-v7:18.0.+'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/volley.jar')
+    compile files('libs/CWAC-MergeAdapter.jar')
+    compile files('libs/CWAC-SackOfViewsAdapter.jar')
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
 }

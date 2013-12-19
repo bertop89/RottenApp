@@ -14,75 +14,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
-            android:layout_height="match_parent"
+        <ListView
+            android:id="@+id/listMain"
             android:layout_width="match_parent"
-            android:scrollbars="none">
-
-            <RelativeLayout
-                android:layout_height="wrap_content"
-                android:layout_width="match_parent"
-                android:orientation="vertical">
-
-
-                <TextView
-                    android:id="@+id/tvBoxOffice"
-                    android:text="@string/box_office"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="?android:listSeparatorTextViewStyle"
-                    />
-
-                <ListView
-                    android:layout_height="207dp"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@+id/tvBoxOffice"
-                    android:divider="#b5b5b5"
-                    android:dividerHeight="1dp"
-                    android:id="@+id/listBoxOffice" />
-
-                <Button
-                    android:id="@+id/bSeeMoreBox"
-                    android:text="@string/see_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/listBoxOffice"
-                    android:layout_alignRight="@+id/listBoxOffice"
-                    android:layout_marginRight="8dp"
-                    android:onClick="openFullBox"
-                    />
-
-                <TextView
-                    android:id="@+id/tvUpcoming"
-                    android:text="@string/upcoming"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/bSeeMoreBox"
-                    style="?android:listSeparatorTextViewStyle"
-                    />
-
-                <ListView
-                    android:layout_height="207dp"
-                    android:layout_width="wrap_content"
-                    android:layout_below="@+id/tvUpcoming"
-                    android:divider="#b5b5b5"
-                    android:dividerHeight="1dp"
-                    android:id="@+id/listUpcoming" />
-
-                <Button
-                    android:id="@+id/bSeeMoreUpcoming"
-                    android:text="@string/see_more"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/listUpcoming"
-                    android:layout_alignRight="@+id/listUpcoming"
-                    android:layout_marginRight="8dp"
-                    android:onClick="openFullUpcoming"
-                    />
-
-            </RelativeLayout>
-
-        </ScrollView>
+            android:layout_height="wrap_content"
+            android:divider="#b5b5b5"
+            android:dividerHeight="1dp"
+            >
+        </ListView>
 
     </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
 
