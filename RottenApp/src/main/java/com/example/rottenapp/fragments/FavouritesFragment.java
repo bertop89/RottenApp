@@ -41,7 +41,7 @@ public class FavouritesFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
                 // save id
-                Movie m = (Movie)movies.get(i);
+                Movie m = movies.get(i);
                 myIntent.putExtra("movie",m);
 
                 startActivity(myIntent);

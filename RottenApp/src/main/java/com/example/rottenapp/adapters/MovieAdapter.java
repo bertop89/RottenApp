@@ -16,7 +16,7 @@ import com.example.rottenapp.helpers.VolleySingleton;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 27/11/13.
+ * Created by Alberto Polidura on 27/11/13.
  */
 public class MovieAdapter extends BaseAdapter {
 

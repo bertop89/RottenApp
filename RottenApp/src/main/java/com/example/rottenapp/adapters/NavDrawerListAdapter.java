@@ -15,7 +15,7 @@ import com.example.rottenapp.R;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 9/12/13.
+ * Created by Alberto Polidura on 9/12/13.
  */
 public class NavDrawerListAdapter extends BaseAdapter {
 

@@ -2,24 +2,22 @@ package com.example.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.example.rottenapp.models.Critic;
 import com.example.rottenapp.R;
+import com.example.rottenapp.adapters.CastAdapter;
 import com.example.rottenapp.helpers.VolleySingleton;
-import com.example.rottenapp.adapters.CriticsAdapter;
+import com.example.rottenapp.models.Cast;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -32,33 +30,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Alberto Polidura on 10/12/13.
+ * Created by Alberto Polidura on 23/12/13.
  */
-public class CriticsActivity extends Activity {
+public class CastActivity extends Activity {
 
-    private ArrayList criticList;
-    Type typeList = new TypeToken<List<Critic>>(){}.getType();
-    ListView listView;
+    private ArrayList castList;
+    Type typeList = new TypeToken<List<Cast>>(){}.getType();
+    GridView gridView;
     ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_layout);
-        listView = (ListView) findViewById(R.id.lvMainList);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Critic critic = (Critic)criticList.get(i);
-                Intent intent = new Intent(Intent.ACTION_VIEW);
-                intent.setData(Uri.parse(critic.getLinks().getReview()));
-                startActivity(intent);
-            }
-        });
+        setContentView(R.layout.grid_layout);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        gridView = (GridView) findViewById(R.id.gvMainGrid);
         loading = (ProgressBar) findViewById(R.id.progress);
         loading.setVisibility(View.VISIBLE);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-
         getRequest(getIntent().getStringExtra("URL"));
     }
 
@@ -70,16 +58,16 @@ public class CriticsActivity extends Activity {
                         // display response
                         JSONArray critics = new JSONArray();
                         try {
-                            critics = response.getJSONArray("reviews");
+                            critics = response.getJSONArray("cast");
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-                        criticList = new ArrayList<Critic>();
+                        castList = new ArrayList<Cast>();
                         Gson gson = new Gson();
-                        criticList = gson.fromJson(critics.toString(),typeList);
+                        castList = gson.fromJson(critics.toString(),typeList);
                         loading.setVisibility(View.GONE);
-                        listView.setAdapter(new CriticsAdapter(CriticsActivity.this,criticList));
+                        gridView.setAdapter(new CastAdapter(CastActivity.this,castList));
                     }
                 },
                 new Response.ErrorListener()
@@ -93,6 +81,7 @@ public class CriticsActivity extends Activity {
 
         // add it to the RequestQueue
         VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
+
     }
 
     @Override

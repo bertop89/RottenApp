@@ -14,7 +14,7 @@ import com.example.rottenapp.R;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 10/12/13.
+ * Created by Alberto Polidura on 10/12/13.
  */
 public class CriticsAdapter extends BaseAdapter {
 

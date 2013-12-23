@@ -46,6 +46,6 @@
         android:layout_width="fill_parent"
         android:layout_height="2dp"
         android:layout_below="@+id/angry_btn"
-        android:background="@android:color/darker_gray"/>
+        android:background="@color/counter_text_color"/>
 
 </RelativeLayout>

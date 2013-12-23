@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 6/12/13.
+ * Created by Alberto Polidura on 6/12/13.
  */
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
@@ -81,16 +81,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         Cursor cursor = db.rawQuery("SELECT * FROM favourite_movies WHERE id=?", new String[]{movie.getId()});
 
         // 3. check cursor result
-        if (cursor.getCount()>0)
-        {
-            return true;
-            /* record exist */
-        }
-        else
-        {
-            return false;
-            /* record not exist */
-        }
+        /* record exist *//* record not exist */
+        return cursor.getCount() > 0;
     }
 
     public ArrayList<Movie> getMovies() {

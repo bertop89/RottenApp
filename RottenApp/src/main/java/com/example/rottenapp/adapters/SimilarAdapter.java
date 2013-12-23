@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -17,7 +16,7 @@ import com.example.rottenapp.models.Movie;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 16/12/13.
+ * Created by Alberto Polidura on 16/12/13.
  */
 public class SimilarAdapter extends BaseAdapter {
 

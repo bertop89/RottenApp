@@ -1,7 +1,7 @@
 package com.example.rottenapp.helpers;
 
 /**
- * Created by alberto on 28/11/13.
+ * Created by Alberto Polidura on 28/11/13.
  */
 import android.content.Context;
 import android.graphics.Bitmap;

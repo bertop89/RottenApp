@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_name">RottenApp</string>
-    <string name="hello_world">Hola Mundo!</string>
-    <string name="action_settings">Ajustes</string>
+    <string name="app_name" tools:ignore="MissingTranslation">RottenApp</string>
+    <string name="hello_world" tools:ignore="MissingTranslation">Hola Mundo!</string>
+    <string name="action_settings" tools:ignore="MissingTranslation">Ajustes</string>
     <string name="title_activity_movie">Movie</string>
     <string name="search">Search</string>
     <string name="runtime">Running Time</string>
@@ -34,7 +34,7 @@
         <item>@drawable/ic_action_important</item>
     </array>
 
-    <string name="title_activity_favourites">Favourites</string>
+    <string name="title_activity_favourites">Favoritos</string>
     <string name="desc_list_item_icon">Item Icon</string>
     <string name="share">Share</string>
     <string name="chooser_title">Share With</string>
@@ -45,5 +45,6 @@
     <string name="cast">Cast</string>
     <string name="no_score">No score</string>
     <string name="similar">Similar</string>
+    <string name="title_activity_cast">Cast</string>
 
 </resources>

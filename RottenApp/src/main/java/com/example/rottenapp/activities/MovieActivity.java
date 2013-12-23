@@ -11,9 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.GridLayout;
-import android.widget.GridView;
+
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -24,11 +22,11 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.rottenapp.adapters.CastAdapter;
-import com.example.rottenapp.adapters.MovieAdapter;
+
 import com.example.rottenapp.adapters.SimilarAdapter;
 import com.example.rottenapp.data.Global;
 import com.example.rottenapp.helpers.ExpandableHeightGridView;
-import com.example.rottenapp.helpers.InternalStorage;
+
 import com.example.rottenapp.models.Cast;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
@@ -41,19 +39,18 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.lang.reflect.Type;
-import java.net.URL;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class MovieActivity extends Activity {
 
     Movie currentMovie;
-    ImageView ivCritics, ivAudience;
-    ImageView ivPoster;
+    ImageView ivCritics, ivAudience,ivPoster;
     ProgressBar progressBar;
-    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvGenre, tvRuntime, tvRelease, tvDirector;
+    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime;
+    View headerCast, headerSimilar;
     MySQLiteHelper db;
     private String apikey;
 
@@ -62,7 +59,7 @@ public class MovieActivity extends Activity {
 
     ExpandableHeightGridView gridSimilar;
     ArrayList<Movie> similarList;
-    private Type typeList = new TypeToken<List<Movie>>(){}.getType();;
+    private Type typeList = new TypeToken<List<Movie>>(){}.getType();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,6 +131,13 @@ public class MovieActivity extends Activity {
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
 
 
+        headerCast = findViewById(R.id.castSeparator);
+        headerCast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFullCast(v);
+            }
+        });
         castView = (ExpandableHeightGridView) findViewById(R.id.gridView);
         castView.setFocusable(false);
         cast = currentMovie.getAbridged_cast();
@@ -178,6 +182,8 @@ public class MovieActivity extends Activity {
 
     }
 
+
+
     public void representRatings () {
         String critics = currentMovie.getRatings().getCritics_rating();
         if (critics!=null) {
@@ -213,6 +219,12 @@ public class MovieActivity extends Activity {
     public void openFullCritics(View v) {
         Intent myIntent = new Intent(v.getContext(), CriticsActivity.class);
         myIntent.putExtra("URL",currentMovie.getLinks().getReviews()+"?apikey="+apikey);
+        startActivity(myIntent);
+    }
+
+    private void openFullCast(View v) {
+        Intent myIntent = new Intent(v.getContext(), CastActivity.class);
+        myIntent.putExtra("URL",currentMovie.getLinks().getCast()+"?apikey="+apikey);
         startActivity(myIntent);
     }
 

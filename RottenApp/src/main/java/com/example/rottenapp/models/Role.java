@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 29/11/13.
+ * Created by Alberto Polidura on 29/11/13.
  */
 public class Role implements Parcelable {
 

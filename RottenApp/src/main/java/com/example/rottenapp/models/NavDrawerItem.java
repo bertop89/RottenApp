@@ -1,7 +1,7 @@
 package com.example.rottenapp.models;
 
 /**
- * Created by alberto on 9/12/13.
+ * Created by Alberto Polidura on 9/12/13.
  */
 public class NavDrawerItem {
 

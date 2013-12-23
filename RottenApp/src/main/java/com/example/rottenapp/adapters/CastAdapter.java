@@ -13,7 +13,7 @@ import com.example.rottenapp.models.Cast;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 14/12/13.
+ * Created by Alberto Polidura on 14/12/13.
  */
 public class CastAdapter extends BaseAdapter {
 

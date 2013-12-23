@@ -38,12 +38,14 @@
                     android:layout_width="100dp"
                     android:layout_height="147dp"
                     android:id="@+id/ivPoster"
+                    android:contentDescription="Movie Poster"
                     android:layout_gravity="left|top"
                     android:onClick="openFullPoster"
                     android:layout_marginRight="15dp"
                     android:visibility="gone"
                     android:adjustViewBounds="true"
-                    android:scaleType="fitStart" />
+                    android:scaleType="fitStart"
+                    android:background="?android:attr/selectableItemBackground" />
 
                 <LinearLayout
                     android:layout_height="wrap_content"
@@ -90,7 +92,8 @@
                         android:rowCount="2"
                         android:onClick="openFullCritics"
                         android:clickable="true"
-                        android:padding="10dp">
+                        android:padding="10dp"
+                        android:background="?android:attr/selectableItemBackground">
 
                         <ImageView
                             android:layout_height="32dp"
@@ -130,7 +133,7 @@
 
             <!-- Synopsis Separator -->
             <TextView
-                android:id="@+id/tvBoxOffice"
+                android:id="@+id/tvSynopsisSeparator"
                 android:text="@string/synopsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -150,7 +153,7 @@
 
             <!-- Details Separator -->
             <TextView
-                android:id="@+id/tvBoxOffice"
+                android:id="@+id/tvDetailsSeparator"
                 android:text="@string/details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -208,14 +211,58 @@
             </LinearLayout>
 
             <!-- Cast Separator -->
-            <TextView
-                android:id="@+id/tvBoxOffice"
-                android:text="@string/cast"
-                android:layout_width="match_parent"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/castSeparator"
+                android:orientation="horizontal" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true" android:background="?android:attr/selectableItemBackground"
                 android:layout_marginBottom="8dp"
-                style="?android:listSeparatorTextViewStyle"
-                />
+                >
+
+
+                <TextView
+                    android:id="@+id/tvSee_more_cast"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/cast"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:paddingRight="0dp"
+                    android:duplicateParentState="true"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignBaseline="@+id/angry_btn"
+                    android:clickable="false" />
+
+                <Button
+                    android:id="@+id/angry_btn"
+                    android:text="@string/see_more"
+                    android:duplicateParentState="true"
+                    android:textColor="#FFFFFF"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:background="@drawable/buttonshape"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:clickable="false"
+                    />
+
+                <View
+                    android:layout_marginTop="4dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/angry_btn"
+                    android:background="@color/counter_text_color"/>
+
+            </RelativeLayout>
 
             <com.example.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridView"
@@ -238,14 +285,58 @@
             </com.example.rottenapp.helpers.ExpandableHeightGridView>
 
             <!-- Similar Separator -->
-            <TextView
-                android:id="@+id/tvSimilarSeparator"
-                android:text="@string/similar"
-                android:layout_width="match_parent"
+            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/similarSeparator"
+                android:orientation="horizontal" android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="true" android:background="?android:attr/selectableItemBackground"
                 android:layout_marginBottom="8dp"
-                style="?android:listSeparatorTextViewStyle"
-                />
+                >
+
+
+                <TextView
+                    android:id="@+id/tvSee_more_similar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/similar"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:paddingRight="0dp"
+                    android:duplicateParentState="true"
+                    android:background="@android:color/transparent"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_alignParentBottom="false"
+                    android:layout_alignParentTop="false"
+                    android:layout_alignParentLeft="false"
+                    android:layout_alignParentRight="false"
+                    android:layout_alignBaseline="@+id/bSeemoresimilar"
+                    android:clickable="false" />
+
+                <Button
+                    android:id="@+id/bSeemoresimilar"
+                    android:text="@string/see_more"
+                    android:duplicateParentState="true"
+                    android:textColor="#FFFFFF"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="wrap_content"
+                    android:layout_height="23dp"
+                    android:background="@drawable/buttonshape"
+                    style="?android:listSeparatorTextViewStyle"
+                    android:layout_alignParentStart="false"
+                    android:layout_alignParentEnd="false"
+                    android:layout_marginRight="10dp"
+                    android:gravity="center"
+                    android:clickable="false"
+                    />
+
+                <View
+                    android:layout_marginTop="4dp"
+                    android:layout_width="fill_parent"
+                    android:layout_height="2dp"
+                    android:layout_below="@+id/bSeemoresimilar"
+                    android:background="@color/counter_text_color"/>
+
+            </RelativeLayout>
 
             <com.example.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridSimilar"

@@ -16,7 +16,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -328,7 +327,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshUpcoming() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=4";
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=3";
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()
@@ -369,7 +368,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshBoxOffice() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=4";
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=3";
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()

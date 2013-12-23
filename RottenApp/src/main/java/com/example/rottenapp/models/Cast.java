@@ -6,7 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 
 /**
- * Created by alberto on 13/12/13.
+ * Created by Alberto Polidura on 13/12/13.
  */
 public class Cast implements Parcelable{
     private String name, id;

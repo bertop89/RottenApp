@@ -42,6 +42,10 @@
             android:name=".activities.CriticsActivity"
             android:label="@string/title_activity_critics" >
         </activity>
+        <activity
+            android:name=".activities.CastActivity"
+            android:label="@string/title_activity_cast" >
+        </activity>
     </application>
 
 </manifest>

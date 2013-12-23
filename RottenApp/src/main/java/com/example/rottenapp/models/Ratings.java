@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by alberto on 25/11/13.
+ * Created by Alberto Polidura on 25/11/13.
  */
 public class Ratings implements Parcelable{
     private String critics_rating, critics_score, audience_rating, audience_score;

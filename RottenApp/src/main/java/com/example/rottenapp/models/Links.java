@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * Created by alberto on 10/12/13.
+ * Created by Alberto Polidura on 10/12/13.
  */
 public class Links implements Parcelable {
     public String self, alternate, cast, clips, reviews, similar;
@@ -24,6 +24,10 @@ public class Links implements Parcelable {
 
     public String getSimilar() {
         return similar;
+    }
+
+    public String getCast() {
+        return cast;
     }
 
     @Override
