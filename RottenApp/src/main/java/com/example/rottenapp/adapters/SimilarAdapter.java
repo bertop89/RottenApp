@@ -57,7 +57,7 @@ public class SimilarAdapter extends BaseAdapter {
         NetworkImageView ivSimilar = (NetworkImageView) convertView.findViewById(R.id.ivSimilar);
 
         Movie m = (Movie)data.get(position);
-        tvSimilar.setText(((Movie) data.get(position)).getTitle());
+        tvSimilar.setText(m.getTitle());
         ivSimilar.setImageResource(R.drawable.ic_launcher);
 
         if (ivSimilar!=null) {

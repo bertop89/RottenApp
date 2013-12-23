@@ -46,6 +46,10 @@
             android:name=".activities.CastActivity"
             android:label="@string/title_activity_cast" >
         </activity>
+        <activity
+            android:name=".activities.SimilarActivity"
+            android:label="@string/title_activity_similar" >
+        </activity>
     </application>
 
 </manifest>

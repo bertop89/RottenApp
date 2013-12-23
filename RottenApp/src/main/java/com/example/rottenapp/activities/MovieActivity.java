@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -178,11 +179,27 @@ public class MovieActivity extends Activity {
             }
         });
 
+        headerSimilar = findViewById(R.id.similarSeparator);
+        headerSimilar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openFullSimilar(v);
+            }
+        });
         gridSimilar = (ExpandableHeightGridView) findViewById(R.id.gridSimilar);
+        gridSimilar.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent myIntent = new Intent(view.getContext(), MovieActivity.class);
+                // save id
+                Movie m = (Movie)gridSimilar.getItemAtPosition(position);
+                myIntent.putExtra("movie",m);
+
+                startActivity(myIntent);
+            }
+        });
 
     }
-
-
 
     public void representRatings () {
         String critics = currentMovie.getRatings().getCritics_rating();
@@ -225,6 +242,12 @@ public class MovieActivity extends Activity {
     private void openFullCast(View v) {
         Intent myIntent = new Intent(v.getContext(), CastActivity.class);
         myIntent.putExtra("URL",currentMovie.getLinks().getCast()+"?apikey="+apikey);
+        startActivity(myIntent);
+    }
+
+    private void openFullSimilar(View v) {
+        Intent myIntent = new Intent(v.getContext(), SimilarActivity.class);
+        myIntent.putExtra("URL",currentMovie.getLinks().getSimilar()+"?apikey="+apikey);
         startActivity(myIntent);
     }
 

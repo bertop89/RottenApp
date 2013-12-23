@@ -46,5 +46,6 @@
     <string name="no_score">No score</string>
     <string name="similar">Similar</string>
     <string name="title_activity_cast">Cast</string>
+    <string name="title_activity_similar">Similar</string>
 
 </resources>
