@@ -47,5 +47,7 @@
     <string name="similar">Similar</string>
     <string name="title_activity_cast">Cast</string>
     <string name="title_activity_similar">Similar</string>
+    <string name="top_dvd">TOP DVD</string>
+    <string name="upcoming_dvd">Upcoming DVD</string>
 
 </resources>

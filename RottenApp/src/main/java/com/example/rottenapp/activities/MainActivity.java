@@ -221,10 +221,10 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     public static class PlaceholderFragment extends Fragment implements OnRefreshListener {
 
 
-        private ArrayList boxList, upcomingList;
+        private ArrayList topList, upcomingList, topDVDList, upcomingDVDList;
         Type typeList = new TypeToken<List <Movie>>(){}.getType();
         ListView mainList;
-        MovieAdapter boxAdapter, upcomingAdapter;
+        MovieAdapter boxAdapter, upcomingAdapter, topDVDAdapter, upcomingDVDAdapter;
         MergeAdapter mergeAdapter;
 
         private PullToRefreshLayout mPullToRefreshLayout;
@@ -246,33 +246,13 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mergeAdapter = new MergeAdapter();
             mainList = (ListView) V.findViewById(R.id.listMain);
 
-            View header1 = View.inflate(getActivity(),R.layout.header,null);
-            ((TextView)header1.findViewById(R.id.tvHeader)).setText(R.string.box_office);
-            header1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openFullBox(v);
-                }
-            });
-            mergeAdapter.addView(header1);
+            createBox();
 
-            boxList = new ArrayList<Movie>();
-            boxAdapter = new MovieAdapter(getActivity(),boxList);
-            mergeAdapter.addAdapter(boxAdapter);
+            createUpcoming();
 
-            View header2 = View.inflate(getActivity(),R.layout.header,null);
-            ((TextView)header2.findViewById(R.id.tvHeader)).setText(R.string.upcoming);
-            header2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    openFullUpcoming(v);
-                }
-            });
-            mergeAdapter.addView(header2);
+            createTopDVD();
 
-            upcomingList = new ArrayList<Movie>();
-            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
-            mergeAdapter.addAdapter(upcomingAdapter);
+            createUpcomingDVD();
 
             // Now find the PullToRefreshLayout to setup
             mPullToRefreshLayout = (PullToRefreshLayout) V.findViewById(R.id.ptr_layout);
@@ -300,13 +280,77 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mainList.setAdapter(mergeAdapter);
         }
 
+        private void createUpcoming() {
+            View header2 = View.inflate(getActivity(), R.layout.header,null);
+            ((TextView)header2.findViewById(R.id.tvHeader)).setText(R.string.upcoming);
+            header2.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullUpcoming(v);
+                }
+            });
+            mergeAdapter.addView(header2);
+
+            upcomingList = new ArrayList<Movie>();
+            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
+            mergeAdapter.addAdapter(upcomingAdapter);
+        }
+
+        private void createBox() {
+            View header1 = View.inflate(getActivity(), R.layout.header,null);
+            ((TextView)header1.findViewById(R.id.tvHeader)).setText(R.string.box_office);
+            header1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullBox(v);
+                }
+            });
+            mergeAdapter.addView(header1);
+
+            topList = new ArrayList<Movie>();
+            boxAdapter = new MovieAdapter(getActivity(), topList);
+            mergeAdapter.addAdapter(boxAdapter);
+        }
+
+        private void createTopDVD() {
+            View header1 = View.inflate(getActivity(), R.layout.header,null);
+            ((TextView)header1.findViewById(R.id.tvHeader)).setText(R.string.top_dvd);
+            header1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullTopDVD(v);
+                }
+            });
+            mergeAdapter.addView(header1);
+
+            topDVDList = new ArrayList<Movie>();
+            topDVDAdapter = new MovieAdapter(getActivity(), topDVDList);
+            mergeAdapter.addAdapter(topDVDAdapter);
+        }
+
+        private void createUpcomingDVD() {
+            View header1 = View.inflate(getActivity(), R.layout.header,null);
+            ((TextView)header1.findViewById(R.id.tvHeader)).setText(R.string.upcoming_dvd);
+            header1.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    openFullUpcomingDVD(v);
+                }
+            });
+            mergeAdapter.addView(header1);
+
+            upcomingDVDList = new ArrayList<Movie>();
+            upcomingDVDAdapter = new MovieAdapter(getActivity(), upcomingDVDList);
+            mergeAdapter.addAdapter(upcomingDVDAdapter);
+        }
+
         private void loadData() {
             String cachedEntries = null;
             Gson gson = new Gson();
 
             try {
                 cachedEntries = (String) InternalStorage.readObject(getActivity(), "boxlist");
-                boxList.addAll((Collection) gson.fromJson(cachedEntries,typeList));
+                topList.addAll((Collection) gson.fromJson(cachedEntries, typeList));
                 boxAdapter.notifyDataSetChanged();
             } catch (IOException e) {
                 refreshBoxOffice();
@@ -320,6 +364,26 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 upcomingAdapter.notifyDataSetChanged();
             } catch (IOException e) {
                 refreshUpcoming();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                cachedEntries = (String) InternalStorage.readObject(getActivity(), "topdvdlist");
+                topDVDList.addAll((Collection) gson.fromJson(cachedEntries,typeList));
+                topDVDAdapter.notifyDataSetChanged();
+            } catch (IOException e) {
+                refreshTopDVD();
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                cachedEntries = (String) InternalStorage.readObject(getActivity(), "upcomingdvdlist");
+                upcomingDVDList.addAll((Collection) gson.fromJson(cachedEntries,typeList));
+                upcomingDVDAdapter.notifyDataSetChanged();
+            } catch (IOException e) {
+                refreshDVDUpcoming();
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
             }
@@ -383,11 +447,95 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                                 e.printStackTrace();
                             }
                             Gson gson = new Gson();
-                            boxList.clear();
-                            boxList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                            topList.clear();
+                            topList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             boxAdapter.notifyDataSetChanged();
                             try {
                                 InternalStorage.writeObject(getActivity(), "boxlist", movies.toString());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pendingRequest--;
+                            if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            );
+
+            // add it to the RequestQueue
+            VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+        }
+
+        public void refreshTopDVD() {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey="+apikey+"&country=ES&limit=3";
+            // prepare the Request
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // display response
+                            JSONArray movies = new JSONArray();
+                            try {
+                                movies = response.getJSONArray("movies");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Gson gson = new Gson();
+                            topDVDList.clear();
+                            topDVDList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                            topDVDAdapter.notifyDataSetChanged();
+                            try {
+                                InternalStorage.writeObject(getActivity(), "topdvdlist", movies.toString());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                            pendingRequest--;
+                            if (pendingRequest==0) mPullToRefreshLayout.setRefreshComplete();
+                        }
+                    },
+                    new Response.ErrorListener()
+                    {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.d("Error.Response", error.toString());
+                        }
+                    }
+            );
+
+            // add it to the RequestQueue
+            VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+        }
+
+        public void refreshDVDUpcoming() {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey="+apikey+"&country=ES&limit=3";
+            // prepare the Request
+            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                    new Response.Listener<JSONObject>()
+                    {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            // display response
+                            JSONArray movies = new JSONArray();
+                            try {
+                                movies = response.getJSONArray("movies");
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                            Gson gson = new Gson();
+                            upcomingDVDList.clear();
+                            upcomingDVDList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                            upcomingDVDList = new ArrayList<Movie>(upcomingDVDList.subList(0,3));
+                            Log.e("here",String.valueOf(upcomingDVDList.size()));
+                            upcomingDVDAdapter.notifyDataSetChanged();
+                            try {
+                                InternalStorage.writeObject(getActivity(), "upcomingdvdlist", movies.toString());
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -426,6 +574,24 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             return false;
         }
 
+        public boolean openFullTopDVD(View v) {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey="+apikey+"&country=ES";
+            Intent myIntent = new Intent(v.getContext(), ListActivity.class);
+            myIntent.putExtra("URL",URL);
+            myIntent.putExtra("title",getString(R.string.top_dvd));
+            startActivity(myIntent);
+            return false;
+        }
+
+        public boolean openFullUpcomingDVD(View v) {
+            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey="+apikey+"&country=ES";
+            Intent myIntent = new Intent(v.getContext(), ListActivity.class);
+            myIntent.putExtra("URL",URL);
+            myIntent.putExtra("title",getString(R.string.upcoming_dvd));
+            startActivity(myIntent);
+            return false;
+        }
+
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
             return super.onOptionsItemSelected(item);
@@ -433,9 +599,11 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
         @Override
         public void onRefreshStarted(View view) {
-            pendingRequest+=2;
+            pendingRequest+=4;
             refreshBoxOffice();
             refreshUpcoming();
+            refreshDVDUpcoming();
+            refreshTopDVD();
         }
     }
 
