@@ -26,6 +26,7 @@ import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 import com.example.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -39,6 +40,7 @@ import java.util.List;
 public class ListActivity extends Activity implements SearchView.OnQueryTextListener {
 
     private String apikey;
+    private int type;
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
     private SearchView searchView;
@@ -53,7 +55,9 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
         final Global global = (Global)getApplicationContext();
         apikey = global.getApikey();
         setTitle(getIntent().getStringExtra("title"));
+        type = getIntent().getIntExtra("type",2);
         getRequest(getIntent().getStringExtra("URL"));
+
         listView = (ListView) findViewById(R.id.lvMainList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -117,10 +121,10 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
                             e.printStackTrace();
                         }
                         movieList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                         movieList = gson.fromJson(movies.toString(),typeList);
                         loading.setVisibility(View.GONE);
-                        listView.setAdapter(new MovieAdapter(ListActivity.this, movieList));
+                        listView.setAdapter(new MovieAdapter(ListActivity.this, movieList,type));
 
                     }
                 },

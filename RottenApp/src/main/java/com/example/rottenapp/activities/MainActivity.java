@@ -35,6 +35,7 @@ import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 import com.example.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -292,7 +293,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mergeAdapter.addView(header2);
 
             upcomingList = new ArrayList<Movie>();
-            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList);
+            upcomingAdapter = new MovieAdapter(getActivity(),upcomingList,0);
             mergeAdapter.addAdapter(upcomingAdapter);
         }
 
@@ -308,7 +309,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mergeAdapter.addView(header1);
 
             topList = new ArrayList<Movie>();
-            boxAdapter = new MovieAdapter(getActivity(), topList);
+            boxAdapter = new MovieAdapter(getActivity(), topList,0);
             mergeAdapter.addAdapter(boxAdapter);
         }
 
@@ -324,7 +325,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mergeAdapter.addView(header1);
 
             topDVDList = new ArrayList<Movie>();
-            topDVDAdapter = new MovieAdapter(getActivity(), topDVDList);
+            topDVDAdapter = new MovieAdapter(getActivity(), topDVDList,1);
             mergeAdapter.addAdapter(topDVDAdapter);
         }
 
@@ -340,13 +341,13 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             mergeAdapter.addView(header1);
 
             upcomingDVDList = new ArrayList<Movie>();
-            upcomingDVDAdapter = new MovieAdapter(getActivity(), upcomingDVDList);
+            upcomingDVDAdapter = new MovieAdapter(getActivity(), upcomingDVDList,1);
             mergeAdapter.addAdapter(upcomingDVDAdapter);
         }
 
         private void loadData() {
             String cachedEntries = null;
-            Gson gson = new Gson();
+            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
             try {
                 cachedEntries = (String) InternalStorage.readObject(getActivity(), "boxlist");
@@ -405,7 +406,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                             upcomingList.clear();
                             upcomingList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             upcomingAdapter.notifyDataSetChanged();
@@ -446,7 +447,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                             topList.clear();
                             topList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             boxAdapter.notifyDataSetChanged();
@@ -487,7 +488,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                             topDVDList.clear();
                             topDVDList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             topDVDAdapter.notifyDataSetChanged();
@@ -528,7 +529,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                            Gson gson = new Gson();
+                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                             upcomingDVDList.clear();
                             upcomingDVDList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             upcomingDVDList = new ArrayList<Movie>(upcomingDVDList.subList(0,3));
@@ -560,6 +561,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES";
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
+            myIntent.putExtra("type",0);
             myIntent.putExtra("title",getString(R.string.box_office));
             startActivity(myIntent);
             return false;
@@ -569,6 +571,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&country=ES";
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
+            myIntent.putExtra("type",0);
             myIntent.putExtra("title",getString(R.string.upcoming));
             startActivity(myIntent);
             return false;
@@ -578,6 +581,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey="+apikey+"&country=ES";
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
+            myIntent.putExtra("type",1);
             myIntent.putExtra("title",getString(R.string.top_dvd));
             startActivity(myIntent);
             return false;
@@ -587,6 +591,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey="+apikey+"&country=ES";
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
+            myIntent.putExtra("type",1);
             myIntent.putExtra("title",getString(R.string.upcoming_dvd));
             startActivity(myIntent);
             return false;

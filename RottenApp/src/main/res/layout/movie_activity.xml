@@ -170,6 +170,7 @@
                 android:layout_marginBottom="8dp"
                 >
 
+                <!-- Rating row -->
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
@@ -190,9 +191,12 @@
 
                 </LinearLayout>
 
+                <!-- Running time row -->
                 <LinearLayout
                     android:layout_height="wrap_content"
-                    android:layout_width="wrap_content">
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    >
 
                     <TextView
                         android:layout_height="wrap_content"
@@ -205,6 +209,47 @@
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
                         android:id="@+id/tvRunningValue"/>
+
+                </LinearLayout>
+
+                <!-- Theater Release -->
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="@string/theater_release"
+                        android:id="@+id/tvTheaterRelease"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tvTheaterReleaseDate"/>
+
+                </LinearLayout>
+
+                <!-- DVD Release -->
+                <LinearLayout
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    >
+
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:paddingRight="5dp"
+                        android:text="@string/dvd_release"
+                        android:id="@+id/tvDVDRelease"
+                        android:textStyle="bold" />
+                    <TextView
+                        android:layout_height="wrap_content"
+                        android:layout_width="wrap_content"
+                        android:id="@+id/tvDVDReleaseDate"/>
 
                 </LinearLayout>
 

@@ -15,6 +15,7 @@ public class Movie implements Parcelable{
     private Posters posters;
     private Links links;
     private ArrayList<Cast> abridged_cast;
+    private Dates release_dates;
 
 
     public Movie() {
@@ -60,6 +61,10 @@ public class Movie implements Parcelable{
         return abridged_cast;
     }
 
+    public Dates getRelease_dates() {
+        return release_dates;
+    }
+
     @Override
     public String toString() {
         return title;
@@ -82,6 +87,7 @@ public class Movie implements Parcelable{
         parcel.writeValue(ratings);
         parcel.writeValue(links);
         parcel.writeValue(abridged_cast);
+        parcel.writeValue(release_dates);
     }
 
     public static final Parcelable.Creator<Movie> CREATOR = new Parcelable.Creator<Movie>() {
@@ -105,5 +111,6 @@ public class Movie implements Parcelable{
         ratings = (Ratings)in.readValue(Ratings.class.getClassLoader());
         links = (Links)in.readValue(Links.class.getClassLoader());
         abridged_cast = (ArrayList)in.readValue(Cast.class.getClassLoader());
+        release_dates = (Dates)in.readValue(Dates.class.getClassLoader());
     }
 }

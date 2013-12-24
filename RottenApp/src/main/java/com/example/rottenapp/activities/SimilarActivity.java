@@ -21,6 +21,7 @@ import com.example.rottenapp.adapters.SimilarAdapter;
 import com.example.rottenapp.helpers.VolleySingleton;
 import com.example.rottenapp.models.Movie;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -77,7 +78,7 @@ public class SimilarActivity extends Activity {
                         }
 
                         similarList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                         similarList = gson.fromJson(similar.toString(),typeList);
                         loading.setVisibility(View.GONE);
                         gridView.setAdapter(new SimilarAdapter(SimilarActivity.this,similarList));

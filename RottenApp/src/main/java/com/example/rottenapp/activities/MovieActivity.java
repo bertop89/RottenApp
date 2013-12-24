@@ -34,6 +34,7 @@ import com.example.rottenapp.data.MySQLiteHelper;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
@@ -42,6 +43,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,7 +52,7 @@ public class MovieActivity extends Activity {
     Movie currentMovie;
     ImageView ivCritics, ivAudience,ivPoster;
     ProgressBar progressBar;
-    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime;
+    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime, tvTheater, tvDVD;
     View headerCast, headerSimilar;
     MySQLiteHelper db;
     private String apikey;
@@ -96,7 +98,7 @@ public class MovieActivity extends Activity {
                         }
 
                         similarList = new ArrayList<Movie>();
-                        Gson gson = new Gson();
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                         similarList = gson.fromJson(movies.toString(),typeList);
                         gridSimilar.setFocusable(false);
                         gridSimilar.setAdapter(new SimilarAdapter(getApplicationContext(),similarList));
@@ -130,6 +132,8 @@ public class MovieActivity extends Activity {
         tvSynopsis = (TextView) findViewById(R.id.tvSynopsis);
         tvRating = (TextView) findViewById(R.id.tvRatingValue);
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
+        tvTheater = (TextView) findViewById(R.id.tvTheaterReleaseDate);
+        tvDVD = (TextView) findViewById(R.id.tvDVDReleaseDate);
 
 
         headerCast = findViewById(R.id.castSeparator);
@@ -163,6 +167,10 @@ public class MovieActivity extends Activity {
         tvSynopsis.setText(currentMovie.getSynopsis());
         tvRating.setText(currentMovie.getMpaa_rating());
         tvRuntime.setText(currentMovie.getRuntime()+" min");
+
+        SimpleDateFormat iso = new SimpleDateFormat("dd/MM/yyyy");
+        tvTheater.setText(iso.format(currentMovie.getRelease_dates().getTheater()));
+        tvDVD.setText(iso.format(currentMovie.getRelease_dates().getDvd()));
         VolleySingleton.getInstance(this).getImageLoader().get(currentMovie.getPosters().getDetailed(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {

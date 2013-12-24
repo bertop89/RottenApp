@@ -73,7 +73,7 @@ public class FavouritesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            favouritesView.setAdapter(new MovieAdapter(getActivity(),movies));
+            favouritesView.setAdapter(new MovieAdapter(getActivity(),movies,2));
             super.onPostExecute(aVoid);
         }
     }

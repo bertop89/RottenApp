@@ -1,6 +1,7 @@
 package com.example.rottenapp.adapters;
 
 import android.content.Context;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -22,12 +24,14 @@ public class MovieAdapter extends BaseAdapter {
 
     Context context;
     private ArrayList data;
+    private int type;
     private static LayoutInflater inflater = null;
     private ImageLoader mImageLoader;
 
-    public MovieAdapter(Context context, ArrayList data) {
+    public MovieAdapter(Context context, ArrayList data, int type) {
         this.context=context;
         this.data=data;
+        this.type=type;
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mImageLoader = VolleySingleton.getInstance(context).getImageLoader();
@@ -61,7 +65,23 @@ public class MovieAdapter extends BaseAdapter {
 
         Movie m = (Movie)data.get(i);
         laTitle.setText(m.getTitle());
-        laYear.setText(m.getYear());
+
+        SimpleDateFormat iso = new SimpleDateFormat("dd/MM/yyyy");
+
+        switch (type) {
+            case 0:
+                laYear.setText(iso.format(m.getRelease_dates().getTheater()));
+                break;
+            case 1:
+                laYear.setText(iso.format(m.getRelease_dates().getDvd()));
+                break;
+            case 2:
+                laYear.setText(m.getYear());
+                break;
+            default:
+                break;
+        }
+
 
         String score = m.getRatings().getCritics_score();
         if (score.equals("-1") || score.equals("")) {

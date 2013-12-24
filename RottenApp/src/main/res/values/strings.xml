@@ -49,5 +49,7 @@
     <string name="title_activity_similar">Similar</string>
     <string name="top_dvd">TOP DVD</string>
     <string name="upcoming_dvd">Upcoming DVD</string>
+    <string name="theater_release">Theater Release</string>
+    <string name="dvd_release">DVD Release</string>
 
 </resources>
