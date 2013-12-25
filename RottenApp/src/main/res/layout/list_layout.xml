@@ -24,5 +24,15 @@
         android:scrollbars="none"
         xmlns:android="http://schemas.android.com/apk/res/android" />
 
+    <TextView android:id="@android:id/empty"
+        android:layout_margin="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_centerInParent="true"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/darker_gray"
+        android:visibility="visible" />
+
 </FrameLayout>
 

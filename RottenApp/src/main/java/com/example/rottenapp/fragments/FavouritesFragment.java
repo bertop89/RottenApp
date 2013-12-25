@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.data.MySQLiteHelper;
@@ -25,6 +26,7 @@ import java.util.ArrayList;
 public class FavouritesFragment extends Fragment {
 
     ListView favouritesView;
+    TextView tvEmpty;
     ArrayList<Movie>  movies;
     MySQLiteHelper db;
 
@@ -47,6 +49,8 @@ public class FavouritesFragment extends Fragment {
                 startActivity(myIntent);
             }
         });
+        tvEmpty = (TextView)rootView.findViewById(android.R.id.empty);
+        tvEmpty.setText(R.string.empty_favourites);
         return rootView;
     }
 
@@ -63,6 +67,8 @@ public class FavouritesFragment extends Fragment {
         new LoadCursorTask().execute();
     }
 
+
+
     private class LoadCursorTask extends AsyncTask<Void, Void, Void> {
 
         @Override
@@ -74,6 +80,7 @@ public class FavouritesFragment extends Fragment {
         @Override
         protected void onPostExecute(Void aVoid) {
             favouritesView.setAdapter(new MovieAdapter(getActivity(),movies,2));
+            favouritesView.setEmptyView(tvEmpty);
             super.onPostExecute(aVoid);
         }
     }

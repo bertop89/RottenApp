@@ -42,6 +42,7 @@
     <string name="upcoming_dvd">Upcoming DVD</string>
     <string name="theater_release">Estreno en Cines</string>
     <string name="dvd_release">Lanzamiento en DVD</string>
+    <string name="empty_favourites">No hay favoritos. Añade un favorito usando la estrella de la parte superior derecha en cualquier película.</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

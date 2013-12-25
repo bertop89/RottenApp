@@ -51,5 +51,6 @@
     <string name="upcoming_dvd">Upcoming DVD</string>
     <string name="theater_release">Theater Release</string>
     <string name="dvd_release">DVD Release</string>
+    <string name="empty_favourites">No favourites found. Add a favourite using the star icon in the upper right of any film.</string>
 
 </resources>
