@@ -9,6 +9,7 @@ import android.util.Log;
 
 import com.example.rottenapp.models.Movie;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 public class MySQLiteHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "rotten.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 6;
 
 
     public MySQLiteHelper(Context context) {
@@ -46,7 +47,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // 2. create ContentValues to add key "column"/value
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         ContentValues values = new ContentValues();
         values.put("id", Integer.parseInt(movie.getId())); // get title
         values.put("json", gson.toJson(movie)); // get author
@@ -96,7 +97,7 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         // 3. go over each row, build book and add it to list
         Movie movie = null;
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
         if (cursor.moveToFirst()) {
             do {
                 movie = gson.fromJson(cursor.getString(1),Movie.class);
