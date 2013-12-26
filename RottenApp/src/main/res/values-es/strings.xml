@@ -5,6 +5,7 @@
     <string name="search">Buscar</string>
 
     <string name="title_activity_movie">Película</string>
+    <string name="title_activity_favourites">Favoritos</string>
 
     <string name="runtime">Duración</string>
     <string name="genre">Género</string>

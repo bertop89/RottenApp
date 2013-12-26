@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.rottenapp.R;
-import com.example.rottenapp.adapters.MovieAdapter;
 import com.example.rottenapp.adapters.SimilarAdapter;
 import com.example.rottenapp.helpers.VolleySingleton;
 import com.example.rottenapp.models.Movie;

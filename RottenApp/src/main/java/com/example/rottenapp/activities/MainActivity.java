@@ -55,7 +55,6 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
 
-    private static String apikey;
     private SearchView searchView;
     private String[] mDrawerArray;
     private TypedArray navMenuIcons;
@@ -71,8 +70,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         loadDrawer();
-        final Global global = (Global)getApplicationContext();
-        apikey = global.getApikey();
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);

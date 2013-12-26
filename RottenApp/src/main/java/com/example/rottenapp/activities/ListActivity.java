@@ -40,7 +40,6 @@ import java.util.List;
 
 public class ListActivity extends Activity implements SearchView.OnQueryTextListener {
 
-    private String apikey;
     private int type;
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
@@ -53,8 +52,6 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);
-        final Global global = (Global)getApplicationContext();
-        apikey = global.getApikey();
         setTitle(getIntent().getStringExtra("title"));
         type = getIntent().getIntExtra("type",2);
         getRequest(getIntent().getStringExtra("URL"));
