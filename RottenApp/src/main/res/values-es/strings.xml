@@ -38,8 +38,8 @@
     <string name="similar">Similares</string>
     <string name="title_activity_cast">Reparto</string>
     <string name="title_activity_similar">Similares</string>
-    <string name="top_dvd">TOP DVD</string>
-    <string name="upcoming_dvd">Upcoming DVD</string>
+    <string name="top_dvd">Top DVD</string>
+    <string name="upcoming_dvd">Próximos DVD</string>
     <string name="theater_release">Estreno en Cines</string>
     <string name="dvd_release">Lanzamiento en DVD</string>
     <string name="empty_favourites">No hay favoritos. Añade un favorito usando la estrella de la parte superior derecha en cualquier película.</string>

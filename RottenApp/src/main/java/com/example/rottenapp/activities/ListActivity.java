@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.example.rottenapp.data.Global;
+import com.example.rottenapp.helpers.URLHelper;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.R;
 import com.example.rottenapp.helpers.VolleySingleton;
@@ -146,8 +147,7 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
         searchView.clearFocus();
         searchView.setQuery("", false);
         searchView.setIconified(true);
-        String title= s.replace(' ','+');
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        String URL = URLHelper.getSearchURL(s);
         Intent myIntent = new Intent(this, ListActivity.class);
         myIntent.putExtra("URL",URL);
         myIntent.putExtra("title",getString(R.string.title_activity_search));

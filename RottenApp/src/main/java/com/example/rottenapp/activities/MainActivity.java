@@ -28,6 +28,7 @@ import com.commonsware.cwac.merge.MergeAdapter;
 import com.example.rottenapp.data.Global;
 import com.example.rottenapp.fragments.FavouritesFragment;
 import com.example.rottenapp.helpers.InternalStorage;
+import com.example.rottenapp.helpers.URLHelper;
 import com.example.rottenapp.models.Movie;
 import com.example.rottenapp.models.NavDrawerItem;
 import com.example.rottenapp.adapters.NavDrawerListAdapter;
@@ -200,8 +201,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         searchView.clearFocus();
         searchView.setQuery("", false);
         searchView.setIconified(true);
-        String title= s.replace(' ','+');
-        String URL = "http://api.rottentomatoes.com/api/public/v1.0/movies.json?apikey="+apikey+"&q="+title;
+        String URL = URLHelper.getSearchURL(s);
         Intent myIntent = new Intent(this, ListActivity.class);
         myIntent.putExtra("URL",URL);
         myIntent.putExtra("title",getString(R.string.title_activity_search));
@@ -392,7 +392,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshUpcoming() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&page_limit=3";
+            String URL = URLHelper.getUpcomingURL(3);
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()
@@ -433,7 +433,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshBoxOffice() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES&limit=3";
+            String URL = URLHelper.getTopBoxOffice(3);
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()
@@ -474,7 +474,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshTopDVD() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey="+apikey+"&country=ES&limit=3";
+            String URL = URLHelper.getTopDVD(3);
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()
@@ -515,7 +515,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public void refreshDVDUpcoming() {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey="+apikey+"&country=ES&limit=3";
+            String URL = URLHelper.getUpcomingDVD(3);
             // prepare the Request
             JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>()
@@ -533,7 +533,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                             upcomingDVDList.clear();
                             upcomingDVDList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                             upcomingDVDList = new ArrayList<Movie>(upcomingDVDList.subList(0,3));
-                            Log.e("here",String.valueOf(upcomingDVDList.size()));
                             upcomingDVDAdapter.notifyDataSetChanged();
                             try {
                                 InternalStorage.writeObject(getActivity(), "upcomingdvdlist", movies.toString());
@@ -558,7 +557,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public boolean openFullBox(View v) {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/box_office.json?apikey="+apikey+"&country=ES";
+            String URL = URLHelper.getTopBoxOffice(0);
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
             myIntent.putExtra("type",0);
@@ -568,7 +567,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public boolean openFullUpcoming(View v) {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/movies/upcoming.json?apikey="+apikey+"&country=ES";
+            String URL = URLHelper.getUpcomingURL(0);
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
             myIntent.putExtra("type",0);
@@ -578,7 +577,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public boolean openFullTopDVD(View v) {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/top_rentals.json?apikey="+apikey+"&country=ES";
+            String URL = URLHelper.getTopDVD(0);
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
             myIntent.putExtra("type",1);
@@ -588,7 +587,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
 
         public boolean openFullUpcomingDVD(View v) {
-            String URL = "http://api.rottentomatoes.com/api/public/v1.0/lists/dvds/upcoming.json?apikey="+apikey+"&country=ES";
+            String URL = URLHelper.getUpcomingDVD(0);
             Intent myIntent = new Intent(v.getContext(), ListActivity.class);
             myIntent.putExtra("URL",URL);
             myIntent.putExtra("type",1);
