@@ -78,12 +78,15 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
     private void displayView(int position) {
         Fragment fragment = null;
+        String tag = null;
         switch (position) {
             case 0:
                 fragment = new PlaceholderFragment();
+                tag = "main";
                 break;
             case 1:
                 fragment = new FavouritesFragment();
+                tag = "favourites";
                 break;
         default:
             break;
@@ -92,7 +95,7 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         if (fragment != null) {
             FragmentManager fragmentManager = getFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
+                    .replace(R.id.frame_container, fragment,tag).commit();
 
             // update selected item and title, then close the drawer
             mDrawerList.setItemChecked(position, true);
@@ -183,12 +186,19 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             case R.id.action_settings:
                 return true;
             case R.id.refresh:
-                /*PlaceholderFragment fragment = (PlaceholderFragment) getFragmentManager().findFragmentById(R.id.main_container);
-                mPullToRefreshLayout.setRefreshing(true);
-                pendingRequest+=2;
-                refreshBoxOffice();
-                refreshUpcoming();*/
-                return true;
+                PlaceholderFragment fragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag("main");
+                try {
+                    fragment.mPullToRefreshLayout.setRefreshing(true);
+                    fragment.pendingRequest+=4;
+                    fragment.refreshBoxOffice();
+                    fragment.refreshUpcoming();
+                    fragment.refreshDVDUpcoming();
+                    fragment.refreshTopDVD();
+                } catch (NullPointerException e) {
+
+                } finally {
+                    return true;
+                }
         }
         return super.onOptionsItemSelected(item);
     }
