@@ -23,14 +23,15 @@
     <!-- Title -->
     <TextView
         android:id="@+id/laTitle"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/thumbnail"
+        android:layout_toLeftOf="@+id/laScore"
         android:layout_marginTop="4dp"
         style="?android:textAppearanceListItemSmall"
         android:text="Lord of the rings: Return of the king"
+        android:ellipsize="end"
         android:singleLine="true"
-        android:maxWidth="280dp"
         />
 
     <!-- Year -->
@@ -54,6 +55,7 @@
         android:layout_alignTop="@id/title"
         android:gravity="right"
         android:text=""
+        android:layout_marginLeft="4dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="10dp"
         android:textSize="15sp"

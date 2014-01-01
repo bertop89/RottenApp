@@ -11,8 +11,8 @@
     <string name="rating">Rating</string>
     <string name="release">Theater Release</string>
     <string name="director">Director</string>
-    <string name="critics">of critics liked it</string>
-    <string name="audience">of audience liked it</string>
+    <string name="critics">of critics</string>
+    <string name="audience">of audience</string>
     <string name="title_activity_full_image">Poster</string>
     <string name="title_activity_search">Search results</string>
     <string name="box_office">Top Box Office</string>
