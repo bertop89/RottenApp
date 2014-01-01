@@ -8,6 +8,8 @@ RottenApp is an Android Application using the Rotten Tomatoes API. It is my firs
 * Displays current top & upcoming movies
 * Single movie view with details
 * Extended critics with links per movie
+* Full cast for each movie
+* Similar movies displayed for each movie
 * Movies can be faved and quickly accessed from Navigation Drawer
 * Movies can be shared externally along with their link
 * Search movies functionality
