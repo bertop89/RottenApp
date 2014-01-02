@@ -52,5 +52,10 @@
     <string name="theater_release">Theater Release</string>
     <string name="dvd_release">DVD Release</string>
     <string name="empty_favourites">No favourites found. Add a favourite using the star icon in the upper right of any film.</string>
+    <string name="unrated">Unrated</string>
+    <string name="no_synopsis">No synopsis available</string>
+    <string name="unknown">Unknown</string>
+    <string name="empty_similar">No similar movies found</string>
+    <string name="empty_cast">No cast available</string>
 
 </resources>

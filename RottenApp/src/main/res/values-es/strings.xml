@@ -44,6 +44,11 @@
     <string name="theater_release">Estreno en Cines</string>
     <string name="dvd_release">Lanzamiento en DVD</string>
     <string name="empty_favourites">No hay favoritos. Añade un favorito usando la estrella de la parte superior derecha en cualquier película.</string>
+    <string name="unrated">Sin clasificación</string>
+    <string name="no_synopsis">Sin sinopsis</string>
+    <string name="unknown">Desconocido</string>
+    <string name="empty_similar">No se encontraron películas similares.</string>
+    <string name="empty_cast">No se encontró reparto.</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

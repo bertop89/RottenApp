@@ -5,8 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MovieActivity"
-    tools:ignore="MergeRootFrame"
->
+    tools:ignore="MergeRootFrame">
 
     <ScrollView
         android:id="@+id/scrollMovie"
@@ -315,7 +314,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_marginBottom="8dp"
                 android:numColumns="auto_fit"
                 android:stretchMode="columnWidth"
                 android:gravity="center"
@@ -329,6 +327,12 @@
 
             </com.example.rottenapp.helpers.ExpandableHeightGridView>
 
+            <TextView android:id="@+id/empty_cast"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginLeft="10dp" />
+
             <!-- Similar Separator -->
             <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/similarSeparator"
@@ -336,7 +340,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true" android:background="?android:attr/selectableItemBackground"
                 android:layout_marginBottom="8dp"
-                >
+                android:layout_marginTop="8dp">
 
 
                 <TextView
@@ -397,9 +401,16 @@
                 android:isScrollContainer="false"
                 android:verticalSpacing="20dp"
                 android:scrollbars="none"
-                >
+                android:layout_marginBottom="10dp">
 
             </com.example.rottenapp.helpers.ExpandableHeightGridView>
+
+            <TextView android:id="@+id/empty_similar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp" />
 
         </LinearLayout>
 

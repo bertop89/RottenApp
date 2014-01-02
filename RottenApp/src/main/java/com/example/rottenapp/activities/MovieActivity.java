@@ -45,6 +45,7 @@ import java.lang.reflect.Type;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class MovieActivity extends Activity {
@@ -52,7 +53,7 @@ public class MovieActivity extends Activity {
     Movie currentMovie;
     ImageView ivCritics, ivAudience,ivPoster;
     ProgressBar progressBar;
-    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime, tvTheater, tvDVD;
+    TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime, tvTheater, tvDVD, tvEmptySimilar, tvEmptyCast;
     View headerCast, headerSimilar;
     MySQLiteHelper db;
     private String apikey;
@@ -101,7 +102,8 @@ public class MovieActivity extends Activity {
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
                         similarList = gson.fromJson(movies.toString(),typeList);
                         gridSimilar.setFocusable(false);
-                        gridSimilar.setAdapter(new SimilarAdapter(getApplicationContext(),similarList));
+                        gridSimilar.setAdapter(new SimilarAdapter(getApplicationContext(), similarList));
+                        gridSimilar.setEmptyView(tvEmptySimilar);
                         gridSimilar.setExpanded(true);
                     }
                 },
@@ -135,7 +137,8 @@ public class MovieActivity extends Activity {
         tvTheater = (TextView) findViewById(R.id.tvTheaterReleaseDate);
         tvDVD = (TextView) findViewById(R.id.tvDVDReleaseDate);
 
-
+        tvEmptyCast = (TextView)findViewById(R.id.empty_cast);
+        tvEmptyCast.setText(R.string.empty_cast);
         headerCast = findViewById(R.id.castSeparator);
         headerCast.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -147,6 +150,7 @@ public class MovieActivity extends Activity {
         castView.setFocusable(false);
         cast = currentMovie.getAbridged_cast();
         castView.setAdapter(new CastAdapter(this,cast));
+        castView.setEmptyView(tvEmptyCast);
         castView.setExpanded(true);
 
 
@@ -164,13 +168,35 @@ public class MovieActivity extends Activity {
         } else {
             tvCritics.setText(getResources().getString(R.string.no_score));
         }
-        tvSynopsis.setText(currentMovie.getSynopsis());
-        tvRating.setText(currentMovie.getMpaa_rating());
+        String synopsis = currentMovie.getSynopsis();
+        if (synopsis.equals("")) {
+            tvSynopsis.setText(R.string.no_synopsis);
+        } else {
+            tvSynopsis.setText(synopsis);
+        }
+        String mpaa = currentMovie.getMpaa_rating();
+        if (mpaa.equals("Unrated")) {
+            tvRating.setText(R.string.unrated);
+        } else {
+            tvRating.setText(mpaa);
+        }
+
         tvRuntime.setText(currentMovie.getRuntime()+" min");
 
         SimpleDateFormat iso = new SimpleDateFormat("dd/MM/yyyy");
-        tvTheater.setText(iso.format(currentMovie.getRelease_dates().getTheater()));
-        tvDVD.setText(iso.format(currentMovie.getRelease_dates().getDvd()));
+        Date theater = currentMovie.getRelease_dates().getTheater();
+        if (theater.getTime()==0) {
+            tvTheater.setText(R.string.unknown);
+        } else {
+            tvTheater.setText(iso.format(theater));
+        }
+        Date dvd = currentMovie.getRelease_dates().getDvd();
+        if (dvd.getTime()==0) {
+            tvDVD.setText(R.string.unknown);
+        } else {
+            tvDVD.setText(iso.format(dvd));
+        }
+
         VolleySingleton.getInstance(this).getImageLoader().get(currentMovie.getPosters().getDetailed(), new ImageLoader.ImageListener() {
             @Override
             public void onResponse(ImageLoader.ImageContainer imageContainer, boolean b) {
@@ -206,6 +232,8 @@ public class MovieActivity extends Activity {
                 startActivity(myIntent);
             }
         });
+        tvEmptySimilar = (TextView)findViewById(R.id.empty_similar);
+        tvEmptySimilar.setText(R.string.empty_similar);
 
     }
 
