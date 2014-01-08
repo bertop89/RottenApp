@@ -83,6 +83,12 @@ public class MovieActivity extends Activity {
         db.getWritableDatabase();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        db.close();
+    }
+
     private void representSimilar() {
         String URL = currentMovie.getLinks().getSimilar() + "?limit=4&apikey="+apikey;
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -314,8 +320,8 @@ public class MovieActivity extends Activity {
             case R.id.action_settings:
                 return true;
             case android.R.id.home:
-                Intent upIntent = new Intent(this, ListActivity.class);
-                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                Intent upIntent = new Intent(this, MainActivity.class);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 NavUtils.navigateUpTo(this, upIntent);
                 return true;
             case R.id.action_favourite:

@@ -107,6 +107,8 @@ public class MySQLiteHelper extends SQLiteOpenHelper {
 
         Log.d("getAllBooks()", movies.toString());
 
+        db.close();
+
         // return books
         return movies;
     }

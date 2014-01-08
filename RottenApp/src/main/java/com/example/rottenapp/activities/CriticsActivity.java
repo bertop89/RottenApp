@@ -101,7 +101,7 @@ public class CriticsActivity extends Activity {
             // Respond to the action bar's Up/Home button
             case android.R.id.home:
                 Intent upIntent = new Intent(this, MovieActivity.class);
-                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 NavUtils.navigateUpTo(this, upIntent);
                 return true;
         }
