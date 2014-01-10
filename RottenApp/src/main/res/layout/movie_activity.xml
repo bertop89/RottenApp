@@ -308,7 +308,7 @@
 
             </RelativeLayout>
 
-            <com.example.rottenapp.helpers.ExpandableHeightGridView
+            <com.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -325,7 +325,7 @@
                 android:verticalSpacing="20dp"
                 >
 
-            </com.example.rottenapp.helpers.ExpandableHeightGridView>
+            </com.rottenapp.helpers.ExpandableHeightGridView>
 
             <TextView android:id="@+id/empty_cast"
                 android:layout_width="wrap_content"
@@ -387,7 +387,7 @@
 
             </RelativeLayout>
 
-            <com.example.rottenapp.helpers.ExpandableHeightGridView
+            <com.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridSimilar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -403,7 +403,7 @@
                 android:scrollbars="none"
                 android:layout_marginBottom="10dp">
 
-            </com.example.rottenapp.helpers.ExpandableHeightGridView>
+            </com.rottenapp.helpers.ExpandableHeightGridView>
 
             <TextView android:id="@+id/empty_similar"
                 android:layout_width="wrap_content"
