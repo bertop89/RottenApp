@@ -23,10 +23,12 @@ android {
 }
 
 dependencies {
-	compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.android.support:appcompat-v7:18.0.+'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    compile 'com.github.chrisbanes.photoview:library:+'
+    compile 'com.android.support:support-v4:18.0.0'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/volley.jar')
     compile files('libs/CWAC-MergeAdapter.jar')
     compile files('libs/CWAC-SackOfViewsAdapter.jar')
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
 }

@@ -58,5 +58,8 @@
     <string name="empty_similar">No similar movies found</string>
     <string name="empty_cast">No cast available</string>
     <string name="add_calendar">Add to calendar</string>
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 
 </resources>

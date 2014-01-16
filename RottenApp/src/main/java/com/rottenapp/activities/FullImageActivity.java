@@ -17,9 +17,12 @@ import com.android.volley.toolbox.ImageLoader;
 import com.rottenapp.R;
 import com.rottenapp.helpers.VolleySingleton;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class FullImageActivity extends Activity {
 
     ImageView fullPoster;
+    PhotoViewAttacher mAttacher;
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +39,7 @@ public class FullImageActivity extends Activity {
                 if (imageContainer.getBitmap() != null) {
                     progressBar.setVisibility(View.GONE);
                     fullPoster.setImageBitmap(imageContainer.getBitmap());
+                    mAttacher = new PhotoViewAttacher(fullPoster);
                 }
             }
 
