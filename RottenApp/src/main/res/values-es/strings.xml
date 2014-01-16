@@ -49,6 +49,7 @@
     <string name="unknown">Desconocido</string>
     <string name="empty_similar">No se encontraron películas similares.</string>
     <string name="empty_cast">No se encontró reparto.</string>
+    <string name="add_calendar">Añadir al Calendario</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

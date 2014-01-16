@@ -2,6 +2,7 @@ package com.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.provider.CalendarContract;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -45,6 +46,7 @@ import java.lang.reflect.Type;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -308,6 +310,10 @@ public class MovieActivity extends Activity {
             favItem.setIcon(R.drawable.ic_action_not_important);
         }
 
+        if (currentMovie.getRelease_dates().getTheater().getTime()>System.currentTimeMillis()) {
+            menu.add(Menu.NONE, 1, Menu.NONE, R.string.add_calendar);
+        }
+
         return true;
     }
 
@@ -317,6 +323,14 @@ public class MovieActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
+            case 1:
+                Intent intent = new Intent(Intent.ACTION_INSERT);
+                intent.setType("vnd.android.cursor.item/event");
+                intent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,currentMovie.getRelease_dates().getTheater().getTime());
+                intent.putExtra(CalendarContract.Events.TITLE, currentMovie.getTitle());
+                intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
+                startActivity(intent);
+                return true;
             case R.id.action_settings:
                 return true;
             case android.R.id.home:

@@ -13,7 +13,6 @@
     <application
         android:name="com.rottenapp.data.Global"
         android:allowBackup="true"
-        android:debuggable="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >

@@ -57,5 +57,6 @@
     <string name="unknown">Unknown</string>
     <string name="empty_similar">No similar movies found</string>
     <string name="empty_cast">No cast available</string>
+    <string name="add_calendar">Add to calendar</string>
 
 </resources>
