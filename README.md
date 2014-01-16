@@ -1,4 +1,4 @@
-RottenApp
+RottenApp [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.rottenapp) 
 =========
 
 RottenApp is an Android Application using the Rotten Tomatoes API. It is my first serious application so be easy on the critics :P
