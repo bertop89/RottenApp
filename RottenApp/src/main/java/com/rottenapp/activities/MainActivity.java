@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -25,18 +26,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.commonsware.cwac.merge.MergeAdapter;
-import com.rottenapp.fragments.FavouritesFragment;
-import com.rottenapp.helpers.InternalStorage;
-import com.rottenapp.helpers.URLHelper;
-import com.rottenapp.models.Movie;
-import com.rottenapp.models.NavDrawerItem;
-import com.rottenapp.adapters.NavDrawerListAdapter;
-import com.rottenapp.R;
-import com.rottenapp.helpers.VolleySingleton;
-import com.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.rottenapp.R;
+import com.rottenapp.adapters.MovieAdapter;
+import com.rottenapp.adapters.NavDrawerListAdapter;
+import com.rottenapp.fragments.FavouritesFragment;
+import com.rottenapp.helpers.InternalStorage;
+import com.rottenapp.helpers.URLHelper;
+import com.rottenapp.helpers.VolleySingleton;
+import com.rottenapp.models.Movie;
+import com.rottenapp.models.NavDrawerItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,11 +62,13 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-
     private ArrayList<NavDrawerItem> navDrawerItems;
+
+    private Handler messageHandler = new Handler();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         loadDrawer();
@@ -183,6 +186,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         }
         switch (item.getItemId()) {
             case R.id.action_settings:
+                Intent myIntent = new Intent(this, PreferencesActivity.class);
+                startActivityForResult(myIntent, 1);
                 return true;
             case R.id.refresh:
                 PlaceholderFragment fragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag("main");
@@ -200,6 +205,24 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
                 }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            if(resultCode == RESULT_OK){
+
+                // Workaround based on http://stackoverflow.com/questions/10844112/runtimeexception-performing-pause-of-activity-that-is-not-resumed
+                final Activity ctx = this;
+                messageHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        ctx.recreate();
+                    }
+                }, 1);
+            }
+        }
     }
 
     @Override

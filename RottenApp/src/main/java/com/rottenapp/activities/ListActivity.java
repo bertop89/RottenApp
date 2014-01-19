@@ -2,32 +2,29 @@ package com.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.SearchView;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.rottenapp.helpers.URLHelper;
-import com.rottenapp.models.Movie;
-import com.rottenapp.R;
-import com.rottenapp.helpers.VolleySingleton;
-import com.rottenapp.adapters.MovieAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.rottenapp.R;
+import com.rottenapp.adapters.MovieAdapter;
+import com.rottenapp.helpers.VolleySingleton;
+import com.rottenapp.models.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,17 +34,18 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends Activity implements SearchView.OnQueryTextListener {
+public class ListActivity extends Activity {
 
     private int type;
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
-    private SearchView searchView;
+
     private ListView listView;
     ProgressBar loading;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -73,27 +71,11 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
 
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        MenuItem searchItem = menu.findItem(R.id.action_search);
-        searchView = (SearchView) searchItem.getActionView();
-        searchView.setQueryHint(getString(R.string.search_film));
-        searchView.setOnQueryTextListener(this);
-
-        return true;
-    }
-
-    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         switch (item.getItemId()) {
-            case R.id.action_settings:
-                return true;
             case android.R.id.home:
                 Intent upIntent = new Intent(this, MainActivity.class);
                 upIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
@@ -136,24 +118,6 @@ public class ListActivity extends Activity implements SearchView.OnQueryTextList
 
         // add it to the RequestQueue
         VolleySingleton.getInstance(this).getRequestQueue().add(getRequest);
-    }
-
-    @Override
-    public boolean onQueryTextSubmit(String s) {
-        searchView.clearFocus();
-        searchView.setQuery("", false);
-        searchView.setIconified(true);
-        String URL = URLHelper.getSearchURL(s);
-        Intent myIntent = new Intent(this, ListActivity.class);
-        myIntent.putExtra("URL",URL);
-        myIntent.putExtra("title",getString(R.string.title_activity_search));
-        startActivity(myIntent);
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String s) {
-        return false;
     }
 
     /**

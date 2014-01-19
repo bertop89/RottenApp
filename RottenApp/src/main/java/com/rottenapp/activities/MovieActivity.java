@@ -2,17 +2,16 @@ package com.rottenapp.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.provider.CalendarContract;
-import android.support.v4.app.NavUtils;
-import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.provider.CalendarContract;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -23,30 +22,26 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.rottenapp.adapters.CastAdapter;
-
-import com.rottenapp.adapters.SimilarAdapter;
-import com.rottenapp.data.Global;
-import com.rottenapp.helpers.ExpandableHeightGridView;
-
-import com.rottenapp.models.Cast;
-import com.rottenapp.models.Movie;
-import com.rottenapp.data.MySQLiteHelper;
-import com.rottenapp.R;
-import com.rottenapp.helpers.VolleySingleton;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import com.rottenapp.R;
+import com.rottenapp.adapters.CastAdapter;
+import com.rottenapp.adapters.SimilarAdapter;
+import com.rottenapp.data.Global;
+import com.rottenapp.data.MySQLiteHelper;
+import com.rottenapp.helpers.ExpandableHeightGridView;
+import com.rottenapp.helpers.VolleySingleton;
+import com.rottenapp.models.Cast;
+import com.rottenapp.models.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -69,6 +64,7 @@ public class MovieActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_activity);
         Intent i = getIntent();
@@ -330,8 +326,6 @@ public class MovieActivity extends Activity {
                 intent.putExtra(CalendarContract.Events.TITLE, currentMovie.getTitle());
                 intent.putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true);
                 startActivity(intent);
-                return true;
-            case R.id.action_settings:
                 return true;
             case android.R.id.home:
                 Intent upIntent = new Intent(this, MainActivity.class);

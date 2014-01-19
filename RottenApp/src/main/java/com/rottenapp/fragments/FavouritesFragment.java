@@ -2,6 +2,7 @@ package com.rottenapp.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -12,11 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.rottenapp.models.Movie;
-import com.rottenapp.data.MySQLiteHelper;
 import com.rottenapp.R;
 import com.rottenapp.activities.MovieActivity;
 import com.rottenapp.adapters.MovieAdapter;
+import com.rottenapp.data.MySQLiteHelper;
+import com.rottenapp.models.Movie;
 
 import java.util.ArrayList;
 
@@ -29,6 +30,7 @@ public class FavouritesFragment extends Fragment {
     TextView tvEmpty;
     ArrayList<Movie>  movies;
     MySQLiteHelper db;
+    Context context;
 
     public FavouritesFragment() {
     }
@@ -58,6 +60,7 @@ public class FavouritesFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         db = new MySQLiteHelper(activity);
+        context = activity;
 
     }
 
@@ -79,7 +82,7 @@ public class FavouritesFragment extends Fragment {
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            favouritesView.setAdapter(new MovieAdapter(getActivity(),movies,2));
+            favouritesView.setAdapter(new MovieAdapter(context,movies,2));
             favouritesView.setEmptyView(tvEmpty);
             super.onPostExecute(aVoid);
         }

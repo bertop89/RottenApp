@@ -43,6 +43,7 @@ public class CriticsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
         listView = (ListView) findViewById(R.id.lvMainList);

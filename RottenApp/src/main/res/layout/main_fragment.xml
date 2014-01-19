@@ -18,7 +18,7 @@
             android:id="@+id/listMain"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="#b5b5b5"
+            android:divider="?android:attr/listDivider"
             android:dividerHeight="1dp"
             android:scrollbars="none"
             >

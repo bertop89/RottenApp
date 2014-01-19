@@ -41,6 +41,7 @@ public class CastActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.grid_layout);
         getActionBar().setDisplayHomeAsUpEnabled(true);

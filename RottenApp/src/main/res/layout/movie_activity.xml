@@ -304,7 +304,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="2dp"
                     android:layout_below="@+id/angry_btn"
-                    android:background="@color/counter_text_color"/>
+                    android:background="?android:attr/listDivider"/>
 
             </RelativeLayout>
 
@@ -383,7 +383,7 @@
                     android:layout_width="fill_parent"
                     android:layout_height="2dp"
                     android:layout_below="@+id/bSeemoresimilar"
-                    android:background="@color/counter_text_color"/>
+                    android:background="?android:attr/listDivider"/>
 
             </RelativeLayout>
 
@@ -415,5 +415,11 @@
         </LinearLayout>
 
     </ScrollView>
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_gravity="right" />
 
 </LinearLayout>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
+    <string name="action_settings">Ajustes</string>
     <string name="search">Buscar</string>
 
     <string name="title_activity_movie">Película</string>
@@ -50,6 +50,8 @@
     <string name="empty_similar">No se encontraron películas similares.</string>
     <string name="empty_cast">No se encontró reparto.</string>
     <string name="add_calendar">Añadir al Calendario</string>
+    <string name="pref_theme">Tema de la App</string>
+    <string name="pref_style">Estilo</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

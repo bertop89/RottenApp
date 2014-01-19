@@ -50,6 +50,10 @@
             android:name="com.rottenapp.activities.SimilarActivity"
             android:label="@string/title_activity_similar" >
         </activity>
+        <activity
+            android:name="com.rottenapp.activities.PreferencesActivity"
+            android:label="@string/action_settings" >
+        </activity>
     </application>
 
 </manifest>
