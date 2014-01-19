@@ -19,7 +19,8 @@
         android:layout_below="@+id/ivSimilar"
         android:maxWidth="115dp"
         android:singleLine="true"
-        android:textColor="@android:color/black"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textStyle="bold"
         android:text="Similar 1"
         />
 </RelativeLayout>
