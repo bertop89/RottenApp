@@ -13,9 +13,11 @@ RottenApp is an Android Application using the Rotten Tomatoes API. It is my firs
 * Movies can be faved and quickly accessed from Navigation Drawer
 * Movies can be shared externally along with their link
 * Search movies functionality
+* Creates calendar reminders for upcoming movies
 * Uses [Volley](http://android.googlesource.com/platform/frameworks/volley) for network requests
 * Uses [ActionBar-PullToRefresh](http://github.com/chrisbanes/ActionBar-PullToRefresh) to update lists
 * Uses [Gson](http://code.google.com/p/google-gson/) to handle JSON
+* Uses [PhotoView](http://github.com/chrisbanes/PhotoView) to handle pinch zoom in images
 
 
 
