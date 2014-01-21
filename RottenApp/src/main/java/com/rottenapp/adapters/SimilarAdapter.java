@@ -50,8 +50,9 @@ public class SimilarAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView == null)
+        if (convertView == null) {
             convertView = inflater.inflate(R.layout.similar_item, null);
+        }
 
         TextView tvSimilar = (TextView) convertView.findViewById(R.id.tvSimilar);
         NetworkImageView ivSimilar = (NetworkImageView) convertView.findViewById(R.id.ivSimilar);

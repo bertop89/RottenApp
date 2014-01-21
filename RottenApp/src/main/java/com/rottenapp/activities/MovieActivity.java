@@ -188,14 +188,16 @@ public class MovieActivity extends Activity {
         tvRuntime.setText(currentMovie.getRuntime()+" min");
 
         SimpleDateFormat iso = new SimpleDateFormat("dd/MM/yyyy");
+
         Date theater = currentMovie.getRelease_dates().getTheater();
         if (theater.getTime()==0) {
             tvTheater.setText(R.string.unknown);
         } else {
             tvTheater.setText(iso.format(theater));
         }
+
         Date dvd = currentMovie.getRelease_dates().getDvd();
-        if (dvd.getTime()==0) {
+        if (dvd.getTime()==0 || dvd.getTime()==-3600000) {
             tvDVD.setText(R.string.unknown);
         } else {
             tvDVD.setText(iso.format(dvd));
