@@ -56,7 +56,7 @@ public class MainActivity extends BaseTopActivity implements SearchView.OnQueryT
         setContentView(R.layout.main_activity);
         setupNavDrawer();
 
-        setupViews(savedInstanceState);
+        setupViews();
         /*
         if (savedInstanceState == null) {
             // on first time display view for first nav item
