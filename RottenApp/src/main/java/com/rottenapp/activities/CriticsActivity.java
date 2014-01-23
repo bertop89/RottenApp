@@ -9,19 +9,19 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.rottenapp.models.Critic;
-import com.rottenapp.R;
-import com.rottenapp.helpers.VolleySingleton;
-import com.rottenapp.adapters.CriticsAdapter;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.rottenapp.R;
+import com.rottenapp.adapters.CriticsAdapter;
+import com.rottenapp.helpers.VolleySingleton;
+import com.rottenapp.models.Critic;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +38,7 @@ public class CriticsActivity extends Activity {
 
     private ArrayList criticList;
     Type typeList = new TypeToken<List<Critic>>(){}.getType();
-    ListView listView;
+    GridView listView;
     ProgressBar loading;
 
     @Override
@@ -46,7 +46,7 @@ public class CriticsActivity extends Activity {
         setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_layout);
-        listView = (ListView) findViewById(R.id.lvMainList);
+        listView = (GridView) findViewById(R.id.lvMainList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {

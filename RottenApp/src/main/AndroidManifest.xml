@@ -27,6 +27,10 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.rottenapp.activities.FavouritesActivity"
+            android:label="@string/title_activity_favourites" >
+        </activity>
+        <activity
             android:name="com.rottenapp.activities.MovieActivity"
             android:label="@string/title_activity_movie" >
         </activity>

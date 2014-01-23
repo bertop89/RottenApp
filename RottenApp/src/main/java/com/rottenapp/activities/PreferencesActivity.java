@@ -42,6 +42,7 @@ public class PreferencesActivity extends Activity {
             case android.R.id.home:
                 returnIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
                 NavUtils.navigateUpTo(this, returnIntent);
+                overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -94,6 +95,7 @@ public class PreferencesActivity extends Activity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
 
             }
         }

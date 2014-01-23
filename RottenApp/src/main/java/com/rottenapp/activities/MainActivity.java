@@ -1,15 +1,9 @@
 package com.rottenapp.activities;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -31,13 +25,11 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.rottenapp.R;
 import com.rottenapp.adapters.MovieAdapter;
-import com.rottenapp.adapters.NavDrawerListAdapter;
-import com.rottenapp.fragments.FavouritesFragment;
+import com.rottenapp.adapters.TabStripAdapter;
 import com.rottenapp.helpers.InternalStorage;
 import com.rottenapp.helpers.URLHelper;
 import com.rottenapp.helpers.VolleySingleton;
 import com.rottenapp.models.Movie;
-import com.rottenapp.models.NavDrawerItem;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,113 +45,36 @@ import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
 import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
-public class MainActivity extends Activity implements SearchView.OnQueryTextListener {
+public class MainActivity extends BaseTopActivity implements SearchView.OnQueryTextListener {
 
     private SearchView searchView;
-    private String[] mDrawerArray;
-    private TypedArray navMenuIcons;
-
-    private DrawerLayout mDrawerLayout;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private ListView mDrawerList;
-    private ArrayList<NavDrawerItem> navDrawerItems;
-
-    private Handler messageHandler = new Handler();
+    private TabStripAdapter mTabsAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
-        loadDrawer();
+        setupNavDrawer();
+
+        setupViews(savedInstanceState);
+        /*
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             displayView(0);
-        }
+        }*/
     }
 
-    private void displayView(int position) {
-        Fragment fragment = null;
-        String tag = null;
-        switch (position) {
-            case 0:
-                fragment = new PlaceholderFragment();
-                tag = "main";
-                break;
-            case 1:
-                fragment = new FavouritesFragment();
-                tag = "favourites";
-                break;
-        default:
-            break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment,tag).commit();
-
-            // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            getActionBar().setTitle(mDrawerArray[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
-    }
-
-    private void loadDrawer() {
-        //Load Navigation Drawer
-        mDrawerArray = getResources().getStringArray(R.array.drawer_list);
-        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
-
-        //Add Items to the Drawer
-        navDrawerItems = new ArrayList<NavDrawerItem>();
-        navDrawerItems.add(new NavDrawerItem(mDrawerArray[0], navMenuIcons.getResourceId(0, -1)));
-        navDrawerItems.add(new NavDrawerItem(mDrawerArray[1], navMenuIcons.getResourceId(1, -1)));
-
-        // Set the adapter for the list view
-        mDrawerList.setAdapter(new NavDrawerListAdapter(getApplicationContext(),navDrawerItems));
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                displayView(i);
-            }
-        });
-        mDrawerToggle = new ActionBarDrawerToggle(
-                this,                  /* host Activity */
-                mDrawerLayout,         /* DrawerLayout object */
-                R.drawable.ic_drawer,  /* nav drawer icon to replace 'Up' caret */
-                R.string.drawer_open,  /* "open drawer" description */
-                R.string.drawer_close  /* "close drawer" description */
-        ) {
-
-        };
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-    }
-
-
-
-
-
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
-        mDrawerToggle.syncState();
+    private void setupViews() {
+        ViewPager pager = (ViewPager) findViewById(R.id.mainPager);
+        mTabsAdapter = new TabStripAdapter(getSupportFragmentManager(),this);
+        pager.setAdapter(mTabsAdapter);
+        pager.setCurrentItem(0);
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+    protected void onStart() {
+        super.onStart();
+        setDrawerSelectedItem(0);
     }
 
     @Override
@@ -178,19 +93,14 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Intent myIntent = new Intent(this, PreferencesActivity.class);
                 startActivityForResult(myIntent, 1);
+                overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
                 return true;
             case R.id.refresh:
-                PlaceholderFragment fragment = (PlaceholderFragment) getFragmentManager().findFragmentByTag("main");
+                PlaceholderFragment fragment = (PlaceholderFragment) getSupportFragmentManager().findFragmentByTag("main");
                 try {
                     fragment.mPullToRefreshLayout.setRefreshing(true);
                     fragment.pendingRequest+=4;
@@ -212,15 +122,8 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1) {
             if(resultCode == RESULT_OK){
-
-                // Workaround based on http://stackoverflow.com/questions/10844112/runtimeexception-performing-pause-of-activity-that-is-not-resumed
-                final Activity ctx = this;
-                messageHandler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        ctx.recreate();
-                    }
-                }, 1);
+                recreate();
+                overridePendingTransition(R.anim.abc_fade_in,R.anim.abc_fade_out);
             }
         }
     }
@@ -639,5 +542,6 @@ public class MainActivity extends Activity implements SearchView.OnQueryTextList
             refreshTopDVD();
         }
     }
+
 
 }

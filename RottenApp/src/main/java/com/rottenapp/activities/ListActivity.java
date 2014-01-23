@@ -11,7 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ListView;
+import android.widget.GridView;
 import android.widget.ProgressBar;
 
 import com.android.volley.Request;
@@ -40,7 +40,7 @@ public class ListActivity extends Activity {
     private ArrayList movieList;
     Type typeList = new TypeToken<List<Movie>>(){}.getType();
 
-    private ListView listView;
+    private GridView listView;
     ProgressBar loading;
 
     @Override
@@ -53,7 +53,7 @@ public class ListActivity extends Activity {
         type = getIntent().getIntExtra("type",2);
         getRequest(getIntent().getStringExtra("URL"));
 
-        listView = (ListView) findViewById(R.id.lvMainList);
+        listView = (GridView) findViewById(R.id.lvMainList);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

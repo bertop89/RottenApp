@@ -1,13 +1,13 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="similar">#ff010101</item>
         <!-- Customize your theme here. -->
     </style>
 
     <!-- Dark application theme. -->
-    <style name="DarkAppTheme" parent="Theme.AppCompat">
+    <style name="DarkAppTheme" parent="android:Theme.Holo">
         <!-- Customize your theme here. -->
         <item name="similar">#bebebe</item>
     </style>

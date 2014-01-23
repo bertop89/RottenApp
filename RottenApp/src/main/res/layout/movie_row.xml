@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="103dp"
+    android:background="@drawable/card_background_inverse"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        >
+
+        <com.android.volley.toolbox.NetworkImageView
+            android:id="@+id/laList_image"
+            android:layout_width="68dp"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginRight="8dp"
+            android:contentDescription="Movie Poster"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/laTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_toRightOf="@id/laList_image"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAppearance="?android:textAppearanceMedium"
+            android:fontFamily="sans-serif-light"
+            tools:text="Longest movie title you can think of" />
+
+        <TextView
+            android:id="@+id/laYear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/laTitle"
+            android:layout_toRightOf="@id/laList_image"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingRight="4dp"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:fontFamily="sans-serif-light"
+            tools:text="11/08/1989" />
+
+        <TextView
+            android:id="@+id/laScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/laYear"
+            android:layout_toRightOf="@id/laList_image"
+            android:paddingRight="4dp"
+            android:textAppearance="?android:textAppearanceSmall"
+            android:fontFamily="sans-serif-light"
+            tools:text="99%" />
+
+    </RelativeLayout>
+</FrameLayout>

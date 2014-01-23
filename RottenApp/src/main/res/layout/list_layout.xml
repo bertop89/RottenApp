@@ -1,3 +1,9 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
 <!-- The favourites list -->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -15,14 +21,20 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:visibility="invisible" />
 
-    <ListView
+    <GridView
         android:id="@+id/lvMainList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="#b5b5b5"
-        android:dividerHeight="1dp"
         android:scrollbars="none"
-        xmlns:android="http://schemas.android.com/apk/res/android" />
+        android:padding="8dp"
+        android:columnWidth="285dp"
+        android:fastScrollEnabled="false"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="5dp"
+        />
 
     <TextView android:id="@android:id/empty"
         android:layout_margin="10dp"
@@ -34,4 +46,8 @@
         android:visibility="visible" />
 
 </FrameLayout>
+
+    <include layout="@layout/drawer_left" />
+
+</android.support.v4.widget.DrawerLayout>
 

@@ -54,29 +54,39 @@ public class MovieAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View vi = view;
-        if (vi == null)
-            vi = inflater.inflate(R.layout.row, null);
 
-        TextView laTitle = (TextView) vi.findViewById(R.id.laTitle);
-        TextView laYear = (TextView) vi.findViewById(R.id.laYear);
-        TextView laScore = (TextView) vi.findViewById(R.id.laScore);
-        NetworkImageView laImage = (NetworkImageView) vi.findViewById(R.id.laList_image);
+
+        final ViewHolder viewHolder;
+
+        if (view == null) {
+            view = inflater.inflate(R.layout.movie_row, viewGroup, false);
+
+            viewHolder = new ViewHolder();
+            viewHolder.laTitle = (TextView) view.findViewById(R.id.laTitle);
+            viewHolder.laYear = (TextView) view.findViewById(R.id.laYear);
+            viewHolder.laScore = (TextView) view.findViewById(R.id.laScore);
+            viewHolder.laImage = (NetworkImageView) view.findViewById(R.id.laList_image);
+
+            view.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) view.getTag();
+        }
 
         Movie m = (Movie)data.get(i);
-        laTitle.setText(m.getTitle());
+
+        viewHolder.laTitle.setText(m.getTitle());
 
         SimpleDateFormat iso = new SimpleDateFormat("dd/MM/yyyy");
 
         switch (type) {
             case 0:
-                laYear.setText(iso.format(m.getRelease_dates().getTheater()));
+                viewHolder.laYear.setText(iso.format(m.getRelease_dates().getTheater()));
                 break;
             case 1:
-                laYear.setText(iso.format(m.getRelease_dates().getDvd()));
+                viewHolder.laYear.setText(iso.format(m.getRelease_dates().getDvd()));
                 break;
             case 2:
-                laYear.setText(m.getYear());
+                viewHolder.laYear.setText(m.getYear());
                 break;
             default:
                 break;
@@ -85,16 +95,25 @@ public class MovieAdapter extends BaseAdapter {
 
         String score = m.getRatings().getCritics_score();
         if (score.equals("-1") || score.equals("")) {
-            laScore.setText("——");
+            viewHolder.laScore.setText("——");
         } else {
-            laScore.setText(score+"%");
+            viewHolder.laScore.setText(score+"%");
         }
 
 
-        if (laImage!=null) {
-            laImage.setImageUrl(m.getPosters().getThumbnail(),mImageLoader);
+        if (viewHolder.laImage!=null) {
+            viewHolder.laImage.setImageUrl(m.getPosters().getThumbnail(),mImageLoader);
         }
 
-        return vi;
+        return view;
     }
+
+    static class ViewHolder {
+        TextView laTitle;
+        TextView laYear;
+        TextView laScore;
+        NetworkImageView laImage;
+    }
+
+
 }
