@@ -34,20 +34,32 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
+import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
+import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
+
 /**
  * Created by Alberto Polidura on 23/01/14.
  */
-public class ActivityFragment extends Fragment implements AdapterView.OnItemClickListener {
+public class ActivityFragment extends Fragment implements AdapterView.OnItemClickListener, OnRefreshListener {
 
     private GridView mGridView;
     private MovieAdapter mAdapter;
     private ArrayList mList;
     private Type typeList = new TypeToken<List<Movie>>(){}.getType();
+    private PullToRefreshLayout mPullToRefreshLayout;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.list_layout, container, false);
         mGridView = (GridView) rootView.findViewById(R.id.lvMainList);
+
+        mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.ptr_layout);
+        ActionBarPullToRefresh.from(getActivity())
+                .allChildrenArePullable()
+                .listener(this)
+                .setup(mPullToRefreshLayout);
+
         return rootView;
     }
 
@@ -58,7 +70,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
         mAdapter = new MovieAdapter(getActivity(),mList,0);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
-        refreshData();
+        loadData();
     }
 
     @Override
@@ -71,7 +83,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
         startActivity(myIntent);
     }
 
-    public void refreshData() {
+    public void loadData() {
         final String type = getArguments().getString("type");
         String cachedEntries = null;
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
@@ -81,53 +93,63 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
             mList.addAll((Collection) gson.fromJson(cachedEntries, typeList));
             mAdapter.notifyDataSetChanged();
         } catch (IOException e) {
-            String URL = null;
-            if (type.equals("TopBox")) {
-                URL = URLHelper.getTopBoxOffice(5);
-            } else if (type.equals("UpcomingBox")) {
-                URL = URLHelper.getUpcomingURL(5);
-            } else if (type.equals("TopDVD")) {
-                URL = URLHelper.getTopDVD(5);
-            } else if (type.equals("UpcomingDVD")) {
-                URL = URLHelper.getUpcomingDVD(5);
-            }
-            // prepare the Request
-            JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
-                    new Response.Listener<JSONObject>()
-                    {
-                        @Override
-                        public void onResponse(JSONObject response) {
-                            // display response
-                            JSONArray movies = new JSONArray();
-                            try {
-                                movies = response.getJSONArray("movies");
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
-                            Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                            mList.clear();
-                            mList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
-                            mAdapter.notifyDataSetChanged();
-                            try {
-                                InternalStorage.writeObject(getActivity(), type, movies.toString());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    },
-                    new Response.ErrorListener()
-                    {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-                            Log.d("Error.Response", error.toString());
-                        }
-                    }
-            );
-
-            // add it to the RequestQueue
-            VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+            refreshData(type);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void refreshData(final String type) {
+        String URL = null;
+        if (type.equals("TopBox")) {
+            URL = URLHelper.getTopBoxOffice(5);
+        } else if (type.equals("UpcomingBox")) {
+            URL = URLHelper.getUpcomingURL(5);
+        } else if (type.equals("TopDVD")) {
+            URL = URLHelper.getTopDVD(5);
+        } else if (type.equals("UpcomingDVD")) {
+            URL = URLHelper.getUpcomingDVD(5);
+        }
+        // prepare the Request
+        JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONObject>()
+                {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        // display response
+                        JSONArray movies = new JSONArray();
+                        try {
+                            movies = response.getJSONArray("movies");
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
+                        mList.clear();
+                        mList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
+                        mAdapter.notifyDataSetChanged();
+                        try {
+                            InternalStorage.writeObject(getActivity(), type, movies.toString());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        mPullToRefreshLayout.setRefreshComplete();
+                    }
+                },
+                new Response.ErrorListener()
+                {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error.Response", error.toString());
+                    }
+                }
+        );
+
+        // add it to the RequestQueue
+        VolleySingleton.getInstance(getActivity()).getRequestQueue().add(getRequest);
+    }
+
+    @Override
+    public void onRefreshStarted(View view) {
+        refreshData(getArguments().getString("type"));
     }
 }
