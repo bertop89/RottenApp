@@ -48,6 +48,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
     private ArrayList mList;
     private Type typeList = new TypeToken<List<Movie>>(){}.getType();
     private PullToRefreshLayout mPullToRefreshLayout;
+    private String type;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -60,6 +61,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
                 .listener(this)
                 .setup(mPullToRefreshLayout);
 
+        type = getArguments().getString("type");
         return rootView;
     }
 
@@ -67,7 +69,11 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mList = new ArrayList<Movie>();
-        mAdapter = new MovieAdapter(getActivity(),mList,0);
+        int typeAdapter = 0;
+        if (type.equals("TopDVD") || type.equals("UpcomingDVD")) {
+            typeAdapter = 1;
+        }
+        mAdapter = new MovieAdapter(getActivity(),mList,typeAdapter);
         mGridView.setAdapter(mAdapter);
         mGridView.setOnItemClickListener(this);
         loadData();
@@ -84,7 +90,6 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
     }
 
     public void loadData() {
-        final String type = getArguments().getString("type");
         String cachedEntries = null;
         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
 
@@ -93,22 +98,23 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
             mList.addAll((Collection) gson.fromJson(cachedEntries, typeList));
             mAdapter.notifyDataSetChanged();
         } catch (IOException e) {
-            refreshData(type);
+            refreshData();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
 
-    public void refreshData(final String type) {
+    public void refreshData() {
+        mPullToRefreshLayout.setRefreshing(true);
         String URL = null;
         if (type.equals("TopBox")) {
-            URL = URLHelper.getTopBoxOffice(5);
+            URL = URLHelper.getTopBoxOffice(10);
         } else if (type.equals("UpcomingBox")) {
-            URL = URLHelper.getUpcomingURL(5);
+            URL = URLHelper.getUpcomingURL(10);
         } else if (type.equals("TopDVD")) {
-            URL = URLHelper.getTopDVD(5);
+            URL = URLHelper.getTopDVD(10);
         } else if (type.equals("UpcomingDVD")) {
-            URL = URLHelper.getUpcomingDVD(5);
+            URL = URLHelper.getUpcomingDVD(10);
         }
         // prepare the Request
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -132,6 +138,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
+                        Log.e("Refreshing",type);
                         mPullToRefreshLayout.setRefreshComplete();
                     }
                 },
@@ -150,6 +157,6 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public void onRefreshStarted(View view) {
-        refreshData(getArguments().getString("type"));
+        refreshData();
     }
 }

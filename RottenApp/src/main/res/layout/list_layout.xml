@@ -4,56 +4,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<!-- The favourites list -->
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/favourites_container"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".FavouritesActivity"
-    tools:ignore="MergeRootFrame" >
-
-    <ProgressBar
-        android:id="@+id/progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:visibility="invisible" />
-
-    <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/ptr_layout"
+    <!-- The favourites list -->
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/favourites_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:context=".FavouritesActivity"
+        tools:ignore="MergeRootFrame" >
 
-        <GridView
-            android:id="@+id/lvMainList"
+        <ProgressBar
+            android:id="@+id/progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:visibility="invisible" />
+
+        <uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/ptr_layout"
             android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <GridView
+                android:id="@+id/lvMainList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="none"
+                android:padding="8dp"
+                android:columnWidth="285dp"
+                android:fastScrollEnabled="false"
+                android:gravity="center"
+                android:horizontalSpacing="8dp"
+                android:listSelector="@android:color/transparent"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="5dp"
+                />
+
+        </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
+
+        <TextView android:id="@android:id/empty"
+            android:layout_margin="10dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="none"
-            android:padding="8dp"
-            android:columnWidth="285dp"
-            android:fastScrollEnabled="false"
-            android:gravity="center"
-            android:horizontalSpacing="8dp"
-            android:listSelector="@android:color/transparent"
-            android:numColumns="auto_fit"
-            android:verticalSpacing="5dp"
-            />
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColor="@android:color/darker_gray"
+            android:visibility="visible" />
 
-    </uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout>
-
-    <TextView android:id="@android:id/empty"
-        android:layout_margin="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/darker_gray"
-        android:visibility="visible" />
-
-</FrameLayout>
+    </FrameLayout>
 
     <include layout="@layout/drawer_left" />
 
