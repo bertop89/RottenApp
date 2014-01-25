@@ -9,7 +9,7 @@ import android.util.SparseArray;
 import android.view.ViewGroup;
 
 import com.rottenapp.R;
-import com.rottenapp.activities.ActivityFragment;
+import com.rottenapp.fragments.ActivityFragment;
 
 /**
  * Created by Alberto Polidura on 23/01/14.

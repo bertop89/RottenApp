@@ -1,4 +1,4 @@
-package com.rottenapp.activities;
+package com.rottenapp.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,6 +18,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.rottenapp.R;
+import com.rottenapp.activities.MovieActivity;
 import com.rottenapp.adapters.MovieAdapter;
 import com.rottenapp.helpers.InternalStorage;
 import com.rottenapp.helpers.URLHelper;
@@ -52,7 +53,7 @@ public class ActivityFragment extends Fragment implements AdapterView.OnItemClic
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.list_layout, container, false);
+        View rootView = inflater.inflate(R.layout.main_fragment, container, false);
         mGridView = (GridView) rootView.findViewById(R.id.lvMainList);
 
         mPullToRefreshLayout = (PullToRefreshLayout) rootView.findViewById(R.id.ptr_layout);

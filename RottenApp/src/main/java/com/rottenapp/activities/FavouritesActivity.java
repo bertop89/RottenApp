@@ -14,7 +14,7 @@ public class FavouritesActivity extends BaseTopActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.favourites_activity);
         setupNavDrawer();
 
         Fragment fragment = new FavouritesFragment();

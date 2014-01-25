@@ -38,7 +38,7 @@ public class FavouritesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.list_layout, container, false);
+        View rootView = inflater.inflate(R.layout.main_fragment, container, false);
         favouritesView = (GridView) rootView.findViewById(R.id.lvMainList);
         favouritesView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

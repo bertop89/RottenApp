@@ -7,8 +7,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SearchView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.rottenapp.R;
 import com.rottenapp.adapters.TabStripAdapter;
+import com.rottenapp.fragments.ActivityFragment;
 import com.rottenapp.helpers.URLHelper;
 
 public class MainActivity extends BaseTopActivity implements SearchView.OnQueryTextListener {
@@ -31,6 +33,10 @@ public class MainActivity extends BaseTopActivity implements SearchView.OnQueryT
         mTabsAdapter = new TabStripAdapter(getSupportFragmentManager(),this);
         pager.setAdapter(mTabsAdapter);
         pager.setCurrentItem(0);
+
+        // Bind the tabs to the ViewPager
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setViewPager(pager);
     }
 
     @Override

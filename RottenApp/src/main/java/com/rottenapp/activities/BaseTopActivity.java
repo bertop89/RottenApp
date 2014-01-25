@@ -124,6 +124,6 @@ public abstract class BaseTopActivity extends BaseActivity implements AdapterVie
         }
 
         overridePendingTransition(R.anim.abc_fade_in, R.anim.abc_fade_out);
-        getActionBar().setTitle(mDrawerArray[position]);
+
     }
 }
