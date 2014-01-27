@@ -26,10 +26,8 @@ public class FullImageActivity extends Activity {
     ProgressBar progressBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(PreferencesActivity.THEME);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.full_image);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         String url = getIntent().getStringExtra("url");
         fullPoster = (ImageView)findViewById(R.id.fullPoster);

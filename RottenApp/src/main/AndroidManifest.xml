@@ -36,7 +36,9 @@
         </activity>
         <activity
             android:name="com.rottenapp.activities.FullImageActivity"
-            android:label="@string/title_activity_full_image" >
+            android:label="@string/title_activity_full_image"
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
+            >
         </activity>
         <activity
             android:name="com.rottenapp.activities.ListActivity"
