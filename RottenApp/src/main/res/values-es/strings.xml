@@ -52,6 +52,12 @@
     <string name="add_calendar">Añadir al Calendario</string>
     <string name="pref_theme">Tema de la App</string>
     <string name="pref_style">Estilo</string>
+    <string name="more">Más</string>
+    <string name="google">Google</string>
+    <string name="youtube">Youtube</string>
+    <string name="amazon">Amazon</string>
+    <string name="imdb">IMDb</string>
+    <string name="rotten">Rotten Tomatoes</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

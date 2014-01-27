@@ -65,8 +65,9 @@
                             android:layout_width="wrap_content"
                             android:layout_gravity="left|top"
                             android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:fontFamily="sans-serif-light"
                             android:id="@+id/tvTitle"
-                            android:text="Here goes the longest movie title you can think of"
+                            tools:text="Here goes the longest movie title you can think of"
                             android:singleLine="true"
                             android:enabled="true"
                             android:maxWidth="260dp"
@@ -77,8 +78,9 @@
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceSmall"
+                            android:fontFamily="sans-serif-light"
                             android:id="@+id/tvYear"
-                            android:text="year"
+                            tools:text="year"
                             android:layout_gravity="left|top"
                         />
 
@@ -106,6 +108,7 @@
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:fontFamily="sans-serif-light"
                             android:id="@+id/tvCritics"
                             android:layout_gravity="center_vertical" />
 
@@ -121,6 +124,7 @@
                             android:layout_height="wrap_content"
                             android:layout_width="wrap_content"
                             android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:fontFamily="sans-serif-light"
                             android:id="@+id/tvAudience"
                             android:layout_gravity="center_vertical" />
 
@@ -145,8 +149,12 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:id="@+id/tvSynopsis"
-                android:text="No synopsis available"
+                tools:text="No synopsis available"
+                android:fontFamily="sans-serif-light"
+                android:lineSpacingMultiplier="1.2"
+                android:maxEms="20"
                 android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_marginBottom="8dp"
                 />
 
@@ -182,11 +190,15 @@
                         android:paddingRight="5dp"
                         android:text="@string/rating"
                         android:id="@+id/tvRatingText"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        />
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:id="@+id/tvRatingValue"/>
+                        android:id="@+id/tvRatingValue"
+                        android:fontFamily="sans-serif-light"
+                        />
 
                 </LinearLayout>
 
@@ -203,11 +215,15 @@
                         android:paddingRight="5dp"
                         android:text="@string/runtime"
                         android:id="@+id/tvRunningText"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        />
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:id="@+id/tvRunningValue"/>
+                        android:id="@+id/tvRunningValue"
+                        android:fontFamily="sans-serif-light"
+                        />
 
                 </LinearLayout>
 
@@ -224,11 +240,15 @@
                         android:paddingRight="5dp"
                         android:text="@string/theater_release"
                         android:id="@+id/tvTheaterRelease"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        />
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:id="@+id/tvTheaterReleaseDate"/>
+                        android:id="@+id/tvTheaterReleaseDate"
+                        android:fontFamily="sans-serif-light"
+                        />
 
                 </LinearLayout>
 
@@ -236,6 +256,7 @@
                 <LinearLayout
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
+                    android:layout_marginBottom="8dp"
                     >
 
                     <TextView
@@ -244,11 +265,15 @@
                         android:paddingRight="5dp"
                         android:text="@string/dvd_release"
                         android:id="@+id/tvDVDRelease"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:textAllCaps="true"
+                        />
                     <TextView
                         android:layout_height="wrap_content"
                         android:layout_width="wrap_content"
-                        android:id="@+id/tvDVDReleaseDate"/>
+                        android:id="@+id/tvDVDReleaseDate"
+                        android:fontFamily="sans-serif-light"
+                        />
 
                 </LinearLayout>
 
@@ -410,7 +435,89 @@
                 android:layout_height="wrap_content"
                 android:visibility="visible"
                 android:layout_marginLeft="10dp"
-                android:layout_marginBottom="10dp" />
+                android:layout_marginBottom="10dp"
+                android:fontFamily="sans-serif-light"
+                />
+
+            <!-- More Separator -->
+            <TextView
+                android:id="@+id/moreSeparator"
+                android:text="@string/more"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="?android:listSeparatorTextViewStyle"
+                />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:dividerPadding="12dip"
+                android:showDividers="middle"
+                >
+
+                <Button
+                    android:id="@+id/buttonGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:fontFamily="sans-serif-light"
+                    android:text="@string/google" />
+
+                <Button
+                    android:id="@+id/buttonYoutube"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/youtube" />
+
+                <Button
+                    android:id="@+id/buttonAmazon"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/amazon" />
+
+                <Button
+                    android:id="@+id/buttonImdb"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/imdb" />
+
+                <Button
+                    android:id="@+id/buttonRotten"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:gravity="center_vertical|left"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:fontFamily="sans-serif-light"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="@string/rotten" />
+
+
+                </LinearLayout>
 
         </LinearLayout>
 

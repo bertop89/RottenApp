@@ -4,15 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.provider.CalendarContract;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -31,6 +29,7 @@ import com.rottenapp.adapters.SimilarAdapter;
 import com.rottenapp.data.Global;
 import com.rottenapp.data.MySQLiteHelper;
 import com.rottenapp.helpers.ExpandableHeightGridView;
+import com.rottenapp.helpers.Utils;
 import com.rottenapp.helpers.VolleySingleton;
 import com.rottenapp.models.Cast;
 import com.rottenapp.models.Movie;
@@ -51,6 +50,7 @@ public class MovieActivity extends Activity {
     ImageView ivCritics, ivAudience,ivPoster;
     ProgressBar progressBar;
     TextView tvTitle, tvYear, tvCritics, tvAudience, tvSynopsis, tvRating, tvRuntime, tvTheater, tvDVD, tvEmptySimilar, tvEmptyCast;
+    Button bGoogle, bYoutube, bAmazon, bImdb, bRottenTomatoes;
     View headerCast, headerSimilar;
     MySQLiteHelper db;
     private String apikey;
@@ -140,6 +140,12 @@ public class MovieActivity extends Activity {
         tvRuntime = (TextView) findViewById(R.id.tvRunningValue);
         tvTheater = (TextView) findViewById(R.id.tvTheaterReleaseDate);
         tvDVD = (TextView) findViewById(R.id.tvDVDReleaseDate);
+        bGoogle = (Button) findViewById(R.id.buttonGoogle);
+        bYoutube = (Button) findViewById(R.id.buttonYoutube);
+        bAmazon = (Button) findViewById(R.id.buttonAmazon);
+        bImdb = (Button) findViewById(R.id.buttonImdb);
+        bRottenTomatoes = (Button) findViewById(R.id.buttonRotten);
+
 
         tvEmptyCast = (TextView)findViewById(R.id.empty_cast);
         tvEmptyCast.setText(R.string.empty_cast);
@@ -240,6 +246,13 @@ public class MovieActivity extends Activity {
         });
         tvEmptySimilar = (TextView)findViewById(R.id.empty_similar);
         tvEmptySimilar.setText(R.string.empty_similar);
+
+        Utils.setupGoogleButton(currentMovie.getTitle(),bGoogle);
+        Utils.setupYoutubeButton(currentMovie.getTitle(),bYoutube);
+        Utils.setupAmazonButton(currentMovie.getTitle(),bAmazon);
+        Utils.setupImdbButton(currentMovie.getTitle(),bImdb);
+        Utils.setupRottenTomatoesButton(currentMovie.getLinks().getAlternate(),bRottenTomatoes);
+
 
     }
 
@@ -359,22 +372,6 @@ public class MovieActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.movie_fragment, container, false);
-            return rootView;
-        }
     }
 
 }

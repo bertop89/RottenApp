@@ -62,5 +62,11 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="pref_theme">App theme</string>
     <string name="pref_style">Style</string>
+    <string name="more">More</string>
+    <string name="google">Google</string>
+    <string name="youtube">Youtube</string>
+    <string name="amazon">Amazon</string>
+    <string name="imdb">IMDb</string>
+    <string name="rotten">Rotten Tomatoes</string>
 
 </resources>
