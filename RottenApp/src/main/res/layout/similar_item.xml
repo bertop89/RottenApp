@@ -1,26 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="100dp"
+    android:layout_height="215dp"
+    android:paddingBottom="4dp"
+    android:background="@drawable/card_background_inverse"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        <com.android.volley.toolbox.NetworkImageView
+            android:layout_width="match_parent"
+            android:layout_height="147dp"
+            android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
+            android:id="@+id/ivSimilar"
+            android:src="@drawable/ic_launcher"
+            android:layout_marginBottom="8dp"
+            android:layout_centerHorizontal="true" />
 
-    <com.android.volley.toolbox.NetworkImageView
-        android:layout_width="75dp"
-        android:layout_height="125dp"
-        android:id="@+id/ivSimilar"
-        android:src="@drawable/ic_launcher"
-        android:layout_marginBottom="8dp"
-        android:layout_centerHorizontal="true" />
+        <TextView
+            android:id="@+id/tvSimilar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ivSimilar"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="?android:textColorTertiary"
+            android:textStyle="bold"
+            tools:text="Similar 1"
+            />
+    </RelativeLayout>
 
-    <TextView
-        android:id="@+id/tvSimilar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ivSimilar"
-        android:maxWidth="115dp"
-        android:singleLine="true"
-        android:textColor="?android:textColorTertiary"
-        android:textStyle="bold"
-        android:text="Similar 1"
-        />
-</RelativeLayout>
+</FrameLayout>

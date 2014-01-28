@@ -88,7 +88,7 @@ public class MovieActivity extends Activity {
     }
 
     private void representSimilar() {
-        String URL = currentMovie.getLinks().getSimilar() + "?limit=4&apikey="+apikey;
+        String URL = currentMovie.getLinks().getSimilar() + "?limit=3&apikey="+apikey;
         JsonObjectRequest getRequest = new JsonObjectRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONObject>()
                 {

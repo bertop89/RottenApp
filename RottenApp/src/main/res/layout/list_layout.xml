@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"
             android:scrollbars="none"
             android:padding="8dp"
+            android:clipToPadding="false"
             android:columnWidth="285dp"
             android:fastScrollEnabled="false"
             android:gravity="center"
