@@ -30,8 +30,7 @@
             android:layout_marginLeft="4dp"
             android:ellipsize="end"
             android:singleLine="true"
-            android:textColor="?android:textColorTertiary"
-            android:textStyle="bold"
+            android:fontFamily="sans-serif-light"
             tools:text="Similar 1"
             />
     </RelativeLayout>
