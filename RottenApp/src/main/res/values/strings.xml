@@ -57,9 +57,7 @@
     <string name="empty_similar">No similar movies found</string>
     <string name="empty_cast">No cast available</string>
     <string name="add_calendar">Add to calendar</string>
-    <string name="title_activity_fullscreen">FullscreenActivity</string>
-    <string name="dummy_button">Dummy Button</string>
-    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="title_activity_fullscreen">Pantalla Completa</string>
     <string name="pref_theme">App theme</string>
     <string name="pref_style">Style</string>
     <string name="more">More</string>
@@ -68,5 +66,6 @@
     <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="rotten">Rotten Tomatoes</string>
+    <string name="moviePoster">Movie Poster</string>
 
 </resources>

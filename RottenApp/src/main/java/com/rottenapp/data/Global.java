@@ -18,7 +18,6 @@ public class Global extends Application {
     }
 
     public String getApikey() {
-        String apikey = "d2uywhtvna2y9fhm4eq4ydzc";
-        return apikey;
+        return "d2uywhtvna2y9fhm4eq4ydzc";
     }
 }

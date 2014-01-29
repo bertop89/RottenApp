@@ -23,8 +23,6 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.rottenapp.R;
 import com.rottenapp.activities.CastActivity;
-import com.rottenapp.activities.CriticsActivity;
-import com.rottenapp.activities.FullImageActivity;
 import com.rottenapp.activities.MovieActivity;
 import com.rottenapp.activities.SimilarActivity;
 import com.rottenapp.adapters.CastAdapter;
@@ -68,11 +66,6 @@ public class MovieFragment extends Fragment {
 
     public MovieFragment(){
 
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
     }
 
     @Override

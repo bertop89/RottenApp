@@ -18,7 +18,7 @@
             android:layout_height="100dp"
             android:layout_alignParentLeft="true"
             android:layout_marginRight="8dp"
-            android:contentDescription="Movie Poster"
+            android:contentDescription="@string/moviePoster"
             android:scaleType="centerCrop" />
 
         <TextView

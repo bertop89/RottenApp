@@ -38,7 +38,7 @@
                     android:layout_width="100dp"
                     android:layout_height="147dp"
                     android:id="@+id/ivPoster"
-                    android:contentDescription="Movie Poster"
+                    android:contentDescription="@string/moviePoster"
                     android:layout_gravity="left|top"
                     android:onClick="openFullPoster"
                     android:layout_marginRight="15dp"

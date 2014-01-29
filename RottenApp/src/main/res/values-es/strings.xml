@@ -10,7 +10,6 @@
     <string name="runtime">Duración</string>
     <string name="genre">Género</string>
     <string name="rating">Clasificación</string>
-    <string name="release">Estreno</string>
     <string name="director">Director</string>
 
 
@@ -58,6 +57,7 @@
     <string name="amazon">Amazon</string>
     <string name="imdb">IMDb</string>
     <string name="rotten">Rotten Tomatoes</string>
+    <string name="moviePoster">Movie Poster</string>
 
     <string-array name="drawer_list">
         <item>Inicio</item>

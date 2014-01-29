@@ -22,7 +22,7 @@ public class URLHelper {
 
 
     public static String getSearchURL(String query) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         try {
             sb.append(MOVIE).append(APIKEY).append(QUERY_KEY_PARAM).append(URLEncoder.encode(query, DEFAULT_ENCODING));
         } catch (UnsupportedEncodingException e) {
@@ -32,7 +32,7 @@ public class URLHelper {
     }
 
     public static String getUpcomingURL(int num_results) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (num_results==0) {
             sb.append(UPCOMING).append(APIKEY);
         } else {
@@ -42,7 +42,7 @@ public class URLHelper {
     }
 
     public static String getTopBoxOffice(int num_results) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (num_results==0) {
             sb.append(BOX_OFFICE).append(APIKEY);
         } else {
@@ -52,7 +52,7 @@ public class URLHelper {
     }
 
     public static String getTopDVD(int num_results) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (num_results==0) {
             sb.append(TOP_DVD).append(APIKEY);
         } else {
@@ -62,7 +62,7 @@ public class URLHelper {
     }
 
     public static String getUpcomingDVD(int num_results) {
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         if (num_results==0) {
             sb.append(UPCOMING_DVD).append(APIKEY);
         } else {

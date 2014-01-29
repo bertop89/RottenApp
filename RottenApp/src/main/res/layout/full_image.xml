@@ -19,7 +19,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:id="@+id/fullPoster"
-        android:contentDescription="Movie Poster"
+        android:contentDescription="@string/moviePoster"
         />
 
 </RelativeLayout>
