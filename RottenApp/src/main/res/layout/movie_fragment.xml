@@ -18,6 +18,7 @@
             android:layout_width="match_parent"
             android:orientation="vertical">
 
+            <!-- Movie Header -->
             <LinearLayout
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
@@ -140,9 +141,16 @@
                 android:text="@string/synopsis"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:paddingLeft="8dp" />
+
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
                 android:layout_marginBottom="8dp"
-                style="?android:listSeparatorTextViewStyle"
-                />
+                android:background="?android:attr/listDivider"/>
 
             <!-- Synopsis -->
             <TextView
@@ -158,14 +166,25 @@
                 android:layout_marginBottom="8dp"
                 />
 
+
+
             <!-- Details Separator -->
             <TextView
                 android:id="@+id/tvDetailsSeparator"
                 android:text="@string/details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:paddingLeft="8dp"
+                />
+
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
                 android:layout_marginBottom="8dp"
-                style="?android:listSeparatorTextViewStyle"
+                android:background="?android:attr/listDivider"
                 />
 
             <!-- Details -->
@@ -333,6 +352,7 @@
 
             </RelativeLayout>
 
+            <!-- Cast -->
             <com.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridView"
                 android:layout_width="match_parent"
@@ -412,6 +432,7 @@
 
             </RelativeLayout>
 
+            <!-- Similar -->
             <com.rottenapp.helpers.ExpandableHeightGridView
                 android:id="@+id/gridSimilar"
                 android:layout_width="match_parent"
@@ -446,7 +467,16 @@
                 android:text="@string/more"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="?android:listSeparatorTextViewStyle"
+                android:textStyle="bold"
+                android:textAllCaps="true"
+                android:paddingLeft="8dp"
+                />
+
+            <View
+                android:layout_marginTop="4dp"
+                android:layout_width="fill_parent"
+                android:layout_height="2dp"
+                android:background="?android:attr/listDivider"
                 />
 
             <LinearLayout
