@@ -40,6 +40,7 @@ import org.json.JSONObject;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class MovieFragment extends Fragment {
     ArrayList<Cast> cast = new ArrayList<Cast>();
 
     ExpandableHeightGridView gridSimilar;
+    SimilarAdapter similarAdapter;
     ArrayList<Movie> similarList;
     private Type typeList = new TypeToken<List<Movie>>(){}.getType();
 
@@ -218,6 +220,10 @@ public class MovieFragment extends Fragment {
         tvEmptySimilar = (TextView)v.findViewById(R.id.empty_similar);
         tvEmptySimilar.setText(R.string.empty_similar);
 
+        similarList = new ArrayList<Movie>();
+        similarAdapter = new SimilarAdapter(getActivity(), similarList);
+        gridSimilar.setAdapter(similarAdapter);
+        gridSimilar.setEmptyView(tvEmptySimilar);
 
     }
 
@@ -261,13 +267,11 @@ public class MovieFragment extends Fragment {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-                        similarList = new ArrayList<Movie>();
                         Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd").create();
-                        similarList = gson.fromJson(movies.toString(),typeList);
+                        similarList.clear();
+                        similarList.addAll((Collection) gson.fromJson(movies.toString(), typeList));
                         gridSimilar.setFocusable(false);
-                        gridSimilar.setAdapter(new SimilarAdapter(getActivity(), similarList));
-                        gridSimilar.setEmptyView(tvEmptySimilar);
+                        similarAdapter.notifyDataSetChanged();
                         gridSimilar.setExpanded(true);
                     }
                 },

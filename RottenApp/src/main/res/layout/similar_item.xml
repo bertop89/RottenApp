@@ -17,7 +17,6 @@
             android:layout_alignParentTop="true"
             android:scaleType="centerCrop"
             android:id="@+id/ivSimilar"
-            android:src="@drawable/ic_launcher"
             android:layout_marginBottom="8dp"
             android:layout_centerHorizontal="true" />
 
