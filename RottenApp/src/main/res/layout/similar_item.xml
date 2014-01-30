@@ -4,7 +4,7 @@
     android:layout_width="100dp"
     android:layout_height="215dp"
     android:paddingBottom="4dp"
-    android:background="@drawable/card_background_inverse"
+    android:background="?attr/cardBackground"
     android:foreground="?android:attr/selectableItemBackground"
     >
     <RelativeLayout

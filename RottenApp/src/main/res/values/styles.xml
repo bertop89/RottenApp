@@ -2,10 +2,12 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+        <item name="cardBackground">@drawable/card_background_inverse</item>
     </style>
 
     <!-- Dark application theme. -->
     <style name="DarkAppTheme" parent="android:Theme.Holo">
+        <item name="cardBackground">@drawable/card_background</item>
     </style>
 
 
