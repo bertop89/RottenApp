@@ -21,5 +21,5 @@ RottenApp is an Android Application using the Rotten Tomatoes API. It is my firs
 
 
 
-![ScreenShot](http://i.imgur.com/KHYfeqm.png) ![ScreenShot](http://i.imgur.com/fnyJA02.png) ![ScreenShot](http://i.imgur.com/FHheltB.png) 
+![ScreenShot](http://i.imgur.com/7oeRYPa.png) ![ScreenShot](http://i.imgur.com/HwN2ziL.png) ![ScreenShot](http://i.imgur.com/nB4s9xU.png) 
 
